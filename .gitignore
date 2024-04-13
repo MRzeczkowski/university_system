@@ -1,3 +1,4 @@
-./data/
-./log/
-./sercrets/
+data
+log
+secrets
+.DS_Store
