@@ -5,6 +5,14 @@ CREATE SCHEMA Students;
 CREATE SCHEMA Academics;
 CREATE SCHEMA Administration;
 
+CREATE TABLE Administration.Genders (
+    Id INT PRIMARY KEY,
+    Description VARCHAR(50) UNIQUE
+);
+
+INSERT INTO Administration.Genders (Id, Description)
+VALUES (1, 'Male'), (2, 'Female'), (3, 'Prefer Not to Say');
+
 CREATE TABLE Administration.Persons (
     Id INT PRIMARY KEY,
     FirstName VARCHAR(50),
@@ -13,18 +21,19 @@ CREATE TABLE Administration.Persons (
     Phone CHAR(14) UNIQUE,
     DateOfBirth DATE,
     Address VARCHAR(255),
-    Gender CHAR(1),
+    GenderId INT,
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
-    IsDeleted BIT NOT NULL DEFAULT 0
+    IsDeleted BIT NOT NULL DEFAULT 0,
+    CONSTRAINT FK_Persons_Gender FOREIGN KEY (GenderId) REFERENCES Administration.Genders(Id)
 );
 
 CREATE TABLE Students.StudentStatuses (
-    StatusId INT PRIMARY KEY,
+    Id INT PRIMARY KEY,
     StatusDescription VARCHAR(50)
 );
 
-INSERT INTO Students.StudentStatuses (StatusId, StatusDescription)
+INSERT INTO Students.StudentStatuses (Id, StatusDescription)
 VALUES (1, 'Enrolled'), (2, 'Graduated'), (3, 'Suspended'), (4, 'Withdrawn');
 
 CREATE TABLE Students.Students (
@@ -36,15 +45,15 @@ CREATE TABLE Students.Students (
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0,
     CONSTRAINT FK_Students_Person FOREIGN KEY (PersonId) REFERENCES Administration.Persons(Id),
-    CONSTRAINT FK_Students_Status FOREIGN KEY (StatusId) REFERENCES Students.StudentStatuses(StatusId)
+    CONSTRAINT FK_Students_Status FOREIGN KEY (StatusId) REFERENCES Students.StudentStatuses(Id)
 );
 
 CREATE TABLE Academics.ProfessorStatuses (
-    StatusId INT PRIMARY KEY,
+    Id INT PRIMARY KEY,
     StatusDescription VARCHAR(50)
 );
 
-INSERT INTO Academics.ProfessorStatuses (StatusId, StatusDescription)
+INSERT INTO Academics.ProfessorStatuses (Id, StatusDescription)
 VALUES (1, 'Active'), (2, 'On Leave'), (3, 'Retired'), (4, 'Emeritus');
 
 CREATE TABLE Academics.Professors (
@@ -52,14 +61,13 @@ CREATE TABLE Academics.Professors (
     PersonId INT,
     DepartmentId INT,
     Title VARCHAR(10),
-    HireDate DATE,
-    StatusId INT,
+    StatusId INT DEFAULT 1,
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0,
     CONSTRAINT FK_Professors_Person FOREIGN KEY (PersonId) REFERENCES Administration.Persons(Id),
     CONSTRAINT FK_Professors_Department FOREIGN KEY (DepartmentId) REFERENCES Administration.Departments(Id),
-    CONSTRAINT FK_Professors_Status FOREIGN KEY (StatusId) REFERENCES Academics.ProfessorStatuses(StatusId)
+    CONSTRAINT FK_Professors_Status FOREIGN KEY (StatusId) REFERENCES Academics.ProfessorStatuses(Id)
 );
 
 CREATE TABLE Academics.Courses (
