@@ -58,6 +58,17 @@ CREATE TABLE Administration.Departments (
     IsDeleted BIT NOT NULL DEFAULT 0
 );
 
+CREATE TABLE Administration.AdministrativeEmployees (
+    EmployeeId INT PRIMARY KEY,
+    PersonId INT,
+    DepartmentId INT,
+    CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
+    ModifiedDate DATETIME2,
+    IsDeleted BIT NOT NULL DEFAULT 0,
+    CONSTRAINT FK_AdminEmployees_Person FOREIGN KEY (PersonId) REFERENCES Administration.Persons(Id),
+    CONSTRAINT FK_AdminEmployees_Department FOREIGN KEY (DepartmentId) REFERENCES Administration.Departments(Id)
+);
+
 CREATE TABLE Academics.ProfessorStatuses (
     Id INT PRIMARY KEY,
     StatusDescription VARCHAR(50)
