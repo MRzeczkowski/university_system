@@ -1,12 +1,10 @@
 CREATE DATABASE University;
 USE University;
 
--- Schemas for organization
 CREATE SCHEMA Students;
 CREATE SCHEMA Academics;
 CREATE SCHEMA Administration;
 
--- Common Persons table in Administration schema
 CREATE TABLE Administration.Persons (
     Id INT PRIMARY KEY,
     FirstName VARCHAR(50),
@@ -16,38 +14,54 @@ CREATE TABLE Administration.Persons (
     DateOfBirth DATE,
     Address VARCHAR(255),
     Gender VARCHAR(10),
-    Status VARCHAR(20),
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0
 );
 
--- Students table in Students schema
+CREATE TABLE Students.StudentStatuses (
+    StatusId INT PRIMARY KEY,
+    StatusDescription VARCHAR(50)
+);
+
+INSERT INTO Students.StudentStatuses (StatusId, StatusDescription)
+VALUES (1, 'Enrolled'), (2, 'Graduated'), (3, 'Suspended'), (4, 'Withdrawn');
+
 CREATE TABLE Students.Students (
     Id INT PRIMARY KEY,
     PersonId INT,
     EnrollmentYear INT,
+    StatusId INT,
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0,
-    FOREIGN KEY (PersonId) REFERENCES Administration.Persons(Id)
+    FOREIGN KEY (PersonId) REFERENCES Administration.Persons(Id),
+    FOREIGN KEY (StatusId) REFERENCES Students.StudentStatuses(StatusId)
 );
 
--- Professors table in Academics schema
+CREATE TABLE Academics.ProfessorStatuses (
+    StatusId INT PRIMARY KEY,
+    StatusDescription VARCHAR(50)
+);
+
+INSERT INTO Academics.ProfessorStatuses (StatusId, StatusDescription)
+VALUES (1, 'Active'), (2, 'On Leave'), (3, 'Retired'), (4, 'Emeritus');
+
 CREATE TABLE Academics.Professors (
     Id INT PRIMARY KEY,
     PersonId INT,
     DepartmentId INT,
     Title VARCHAR(10),
     HireDate DATE,
+    StatusId INT,
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0,
     FOREIGN KEY (PersonId) REFERENCES Administration.Persons(Id),
-    FOREIGN KEY (DepartmentId) REFERENCES Administration.Departments(Id)
+    FOREIGN KEY (DepartmentId) REFERENCES Administration.Departments(Id),
+    FOREIGN KEY (StatusId) REFERENCES Academics.ProfessorStatuses(StatusId)
 );
 
--- Courses table in Academics schema
 CREATE TABLE Academics.Courses (
     Id INT PRIMARY KEY,
     CourseName VARCHAR(100),
@@ -58,7 +72,6 @@ CREATE TABLE Academics.Courses (
     FOREIGN KEY (DepartmentId) REFERENCES Administration.Departments(Id)
 );
 
--- Classrooms table in Academics schema
 CREATE TABLE Academics.Classrooms (
     Id INT PRIMARY KEY,
     Building VARCHAR(50),
@@ -77,7 +90,6 @@ CREATE TABLE Students.AttendanceStatuses (
 INSERT INTO Students.AttendanceStatuses (StatusId, StatusName)
 VALUES (1, 'Present'), (2, 'Absent'), (3, 'Excused');
 
--- Attendance table in Students schema
 CREATE TABLE Students.Attendance (
     Id INT PRIMARY KEY,
     EnrollmentId INT,
@@ -90,7 +102,6 @@ CREATE TABLE Students.Attendance (
     FOREIGN KEY (StatusId) REFERENCES Students.AttendanceStatuses(StatusId)
 );
 
--- Course Offerings table in Academics schema
 CREATE TABLE Academics.CourseOfferings (
     Id INT PRIMARY KEY,
     CourseId INT,
@@ -106,7 +117,6 @@ CREATE TABLE Academics.CourseOfferings (
     FOREIGN KEY (ClassroomId) REFERENCES Academics.Classrooms(Id)
 );
 
--- Enrollments table in Students schema
 CREATE TABLE Students.Enrollments (
     Id INT PRIMARY KEY,
     StudentId INT,
@@ -119,7 +129,6 @@ CREATE TABLE Students.Enrollments (
     FOREIGN KEY (OfferingId) REFERENCES Academics.CourseOfferings(Id)
 );
 
--- Grades table in Students schema
 CREATE TABLE Students.Grades (
     Id INT PRIMARY KEY,
     EnrollmentId INT,
@@ -131,7 +140,6 @@ CREATE TABLE Students.Grades (
     FOREIGN KEY (EnrollmentId) REFERENCES Students.Enrollments(Id)
 );
 
--- Departments table in Administration schema
 CREATE TABLE Administration.Departments (
     Id INT PRIMARY KEY,
     Name VARCHAR(100),
@@ -144,7 +152,6 @@ CREATE TABLE Administration.Departments (
     FOREIGN KEY (DeanId) REFERENCES Academics.Professors(Id)
 );
 
--- Advisors table in Students schema
 CREATE TABLE Students.Advisors (
     StudentId INT,
     ProfessorId INT,
