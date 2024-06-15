@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using UniversitySystem.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using UniversitySystem.Entities;
 
 namespace UniversitySystem.Context;
 
