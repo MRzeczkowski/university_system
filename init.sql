@@ -16,7 +16,10 @@ CREATE TABLE Administration.Persons (
     DateOfBirth DATE,
     Address VARCHAR(255),
     Gender VARCHAR(10),
-    Status VARCHAR(20)
+    Status VARCHAR(20),
+    CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
+    ModifiedDate DATETIME2,
+    IsDeleted BIT NOT NULL DEFAULT 0
 );
 
 -- Students table in Students schema
@@ -24,6 +27,9 @@ CREATE TABLE Students.Students (
     Id INT PRIMARY KEY,
     PersonId INT,
     EnrollmentYear INT,
+    CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
+    ModifiedDate DATETIME2,
+    IsDeleted BIT NOT NULL DEFAULT 0,
     FOREIGN KEY (PersonId) REFERENCES Administration.Persons(Id)
 );
 
@@ -34,6 +40,9 @@ CREATE TABLE Academics.Professors (
     DepartmentId INT,
     Title VARCHAR(10),
     HireDate DATE,
+    CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
+    ModifiedDate DATETIME2,
+    IsDeleted BIT NOT NULL DEFAULT 0,
     FOREIGN KEY (PersonId) REFERENCES Administration.Persons(Id),
     FOREIGN KEY (DepartmentId) REFERENCES Administration.Departments(Id)
 );
@@ -43,6 +52,9 @@ CREATE TABLE Academics.Courses (
     Id INT PRIMARY KEY,
     CourseName VARCHAR(100),
     DepartmentId INT,
+    CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
+    ModifiedDate DATETIME2,
+    IsDeleted BIT NOT NULL DEFAULT 0,
     FOREIGN KEY (DepartmentId) REFERENCES Administration.Departments(Id)
 );
 
@@ -51,7 +63,10 @@ CREATE TABLE Academics.Classrooms (
     Id INT PRIMARY KEY,
     Building VARCHAR(50),
     RoomNumber VARCHAR(10),
-    Capacity INT
+    Capacity INT,
+    CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
+    ModifiedDate DATETIME2,
+    IsDeleted BIT NOT NULL DEFAULT 0
 );
 
 CREATE TABLE Students.AttendanceStatuses (
@@ -68,6 +83,9 @@ CREATE TABLE Students.Attendance (
     EnrollmentId INT,
     DateOfClass DATE,
     StatusId INT,
+    CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
+    ModifiedDate DATETIME2,
+    IsDeleted BIT NOT NULL DEFAULT 0,
     FOREIGN KEY (EnrollmentId) REFERENCES Students.Enrollments(Id),
     FOREIGN KEY (StatusId) REFERENCES Students.AttendanceStatuses(StatusId)
 );
@@ -80,6 +98,9 @@ CREATE TABLE Academics.CourseOfferings (
     Year INT,
     ProfessorId INT,
     ClassroomId INT,
+    CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
+    ModifiedDate DATETIME2,
+    IsDeleted BIT NOT NULL DEFAULT 0,
     FOREIGN KEY (CourseId) REFERENCES Academics.Courses(Id),
     FOREIGN KEY (ProfessorId) REFERENCES Academics.Professors(Id),
     FOREIGN KEY (ClassroomId) REFERENCES Academics.Classrooms(Id)
@@ -91,6 +112,9 @@ CREATE TABLE Students.Enrollments (
     StudentId INT,
     OfferingId INT,
     EnrollmentDate DATE,
+    CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
+    ModifiedDate DATETIME2,
+    IsDeleted BIT NOT NULL DEFAULT 0,
     FOREIGN KEY (StudentId) REFERENCES Students.Students(Id),
     FOREIGN KEY (OfferingId) REFERENCES Academics.CourseOfferings(Id)
 );
@@ -101,6 +125,9 @@ CREATE TABLE Students.Grades (
     EnrollmentId INT,
     Grade DECIMAL(4,2),
     GradeDate DATE,
+    CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
+    ModifiedDate DATETIME2,
+    IsDeleted BIT NOT NULL DEFAULT 0,
     FOREIGN KEY (EnrollmentId) REFERENCES Students.Enrollments(Id)
 );
 
@@ -111,6 +138,9 @@ CREATE TABLE Administration.Departments (
     Budget DECIMAL(18, 2),
     StartDate DATE,
     DeanId INT,
+    CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
+    ModifiedDate DATETIME2,
+    IsDeleted BIT NOT NULL DEFAULT 0,
     FOREIGN KEY (DeanId) REFERENCES Academics.Professors(Id)
 );
 
@@ -119,6 +149,9 @@ CREATE TABLE Students.Advisors (
     StudentId INT,
     ProfessorId INT,
     AssignmentDate DATE,
+    CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
+    ModifiedDate DATETIME2,
+    IsDeleted BIT NOT NULL DEFAULT 0,
     FOREIGN KEY (StudentId) REFERENCES Students.Students(Id),
     FOREIGN KEY (ProfessorId) REFERENCES Academics.Professors(Id),
     PRIMARY KEY (StudentId, ProfessorId)
