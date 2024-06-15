@@ -35,8 +35,8 @@ CREATE TABLE Students.Students (
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0,
-    FOREIGN KEY (PersonId) REFERENCES Administration.Persons(Id),
-    FOREIGN KEY (StatusId) REFERENCES Students.StudentStatuses(StatusId)
+    CONSTRAINT FK_Students_Person FOREIGN KEY (PersonId) REFERENCES Administration.Persons(Id),
+    CONSTRAINT FK_Students_Status FOREIGN KEY (StatusId) REFERENCES Students.StudentStatuses(StatusId)
 );
 
 CREATE TABLE Academics.ProfessorStatuses (
@@ -57,9 +57,9 @@ CREATE TABLE Academics.Professors (
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0,
-    FOREIGN KEY (PersonId) REFERENCES Administration.Persons(Id),
-    FOREIGN KEY (DepartmentId) REFERENCES Administration.Departments(Id),
-    FOREIGN KEY (StatusId) REFERENCES Academics.ProfessorStatuses(StatusId)
+    CONSTRAINT FK_Professors_Person FOREIGN KEY (PersonId) REFERENCES Administration.Persons(Id),
+    CONSTRAINT FK_Professors_Department FOREIGN KEY (DepartmentId) REFERENCES Administration.Departments(Id),
+    CONSTRAINT FK_Professors_Status FOREIGN KEY (StatusId) REFERENCES Academics.ProfessorStatuses(StatusId)
 );
 
 CREATE TABLE Academics.Courses (
@@ -69,7 +69,7 @@ CREATE TABLE Academics.Courses (
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0,
-    FOREIGN KEY (DepartmentId) REFERENCES Administration.Departments(Id)
+    CONSTRAINT FK_Courses_Department FOREIGN KEY (DepartmentId) REFERENCES Administration.Departments(Id)
 );
 
 CREATE TABLE Academics.Classrooms (
@@ -98,8 +98,8 @@ CREATE TABLE Students.Attendance (
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0,
-    FOREIGN KEY (EnrollmentId) REFERENCES Students.Enrollments(Id),
-    FOREIGN KEY (StatusId) REFERENCES Students.AttendanceStatuses(StatusId)
+    CONSTRAINT FK_Attendance_Enrollment FOREIGN KEY (EnrollmentId) REFERENCES Students.Enrollments(Id),
+    CONSTRAINT FK_Attendance_Status FOREIGN KEY (StatusId) REFERENCES Students.AttendanceStatuses(StatusId)
 );
 
 CREATE TABLE Academics.CourseOfferings (
@@ -112,9 +112,9 @@ CREATE TABLE Academics.CourseOfferings (
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0,
-    FOREIGN KEY (CourseId) REFERENCES Academics.Courses(Id),
-    FOREIGN KEY (ProfessorId) REFERENCES Academics.Professors(Id),
-    FOREIGN KEY (ClassroomId) REFERENCES Academics.Classrooms(Id)
+    CONSTRAINT FK_CourseOfferings_Course FOREIGN KEY (CourseId) REFERENCES Academics.Courses(Id),
+    CONSTRAINT FK_CourseOfferings_Professor FOREIGN KEY (ProfessorId) REFERENCES Academics.Professors(Id),
+    CONSTRAINT FK_CourseOfferings_Classroom FOREIGN KEY (ClassroomId) REFERENCES Academics.Classrooms(Id)
 );
 
 CREATE TABLE Students.Enrollments (
@@ -125,8 +125,8 @@ CREATE TABLE Students.Enrollments (
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0,
-    FOREIGN KEY (StudentId) REFERENCES Students.Students(Id),
-    FOREIGN KEY (OfferingId) REFERENCES Academics.CourseOfferings(Id)
+    CONSTRAINT FK_Enrollments_Student FOREIGN KEY (StudentId) REFERENCES Students.Students(Id),
+    CONSTRAINT FK_Enrollments_CourseOffering FOREIGN KEY (OfferingId) REFERENCES Academics.CourseOfferings(Id)
 );
 
 CREATE TABLE Students.Grades (
@@ -137,7 +137,7 @@ CREATE TABLE Students.Grades (
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0,
-    FOREIGN KEY (EnrollmentId) REFERENCES Students.Enrollments(Id)
+    CONSTRAINT FK_Grades_Enrollment FOREIGN KEY (EnrollmentId) REFERENCES Students.Enrollments(Id)
 );
 
 CREATE TABLE Administration.Departments (
@@ -148,7 +148,7 @@ CREATE TABLE Administration.Departments (
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0,
-    FOREIGN KEY (DeanId) REFERENCES Academics.Professors(Id)
+    CONSTRAINT FK_Departments_Dean FOREIGN KEY (DeanId) REFERENCES Academics.Professors(Id)
 );
 
 CREATE TABLE Students.Advisors (
@@ -158,7 +158,7 @@ CREATE TABLE Students.Advisors (
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0,
-    FOREIGN KEY (StudentId) REFERENCES Students.Students(Id),
-    FOREIGN KEY (ProfessorId) REFERENCES Academics.Professors(Id),
+    CONSTRAINT FK_Advisors_Student FOREIGN KEY (StudentId) REFERENCES Students.Students(Id),
+    CONSTRAINT FK_Advisors_Professor FOREIGN KEY (ProfessorId) REFERENCES Academics.Professors(Id),
     PRIMARY KEY (StudentId, ProfessorId)
 );
