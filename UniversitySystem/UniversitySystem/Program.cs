@@ -1,4 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using UniversitySystem.Context;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<UniversityContext>(options => options.UseSqlServer(
+    builder.Configuration.GetConnectionString("DefaultConnection"),
+    o => o.CommandTimeout(3600))
+);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
