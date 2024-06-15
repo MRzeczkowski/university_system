@@ -9,7 +9,7 @@ public partial class Advisor
 
     public int ProfessorId { get; set; }
 
-    public DateOnly? AssignmentDate { get; set; }
+    public DateOnly AssignmentDate { get; set; }
 
     public DateTime CreatedDate { get; set; }
 

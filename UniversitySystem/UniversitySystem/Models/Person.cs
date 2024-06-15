@@ -7,19 +7,19 @@ public partial class Person
 {
     public int Id { get; set; }
 
-    public string? FirstName { get; set; }
+    public string FirstName { get; set; } = null!;
 
-    public string? LastName { get; set; }
+    public string LastName { get; set; } = null!;
 
-    public string? Email { get; set; }
+    public string Email { get; set; } = null!;
 
-    public string? Phone { get; set; }
+    public string Phone { get; set; } = null!;
 
-    public DateOnly? DateOfBirth { get; set; }
+    public DateOnly DateOfBirth { get; set; }
 
-    public string? Address { get; set; }
+    public int AddressId { get; set; }
 
-    public int? GenderId { get; set; }
+    public int GenderId { get; set; }
 
     public DateTime CreatedDate { get; set; }
 
@@ -27,9 +27,11 @@ public partial class Person
 
     public bool IsDeleted { get; set; }
 
+    public virtual Address Address { get; set; } = null!;
+
     public virtual ICollection<AdministrativeEmployee> AdministrativeEmployees { get; set; } = new List<AdministrativeEmployee>();
 
-    public virtual Gender? Gender { get; set; }
+    public virtual Gender Gender { get; set; } = null!;
 
     public virtual ICollection<Professor> Professors { get; set; } = new List<Professor>();
 

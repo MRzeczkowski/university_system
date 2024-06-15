@@ -7,13 +7,13 @@ public partial class Professor
 {
     public int Id { get; set; }
 
-    public int? PersonId { get; set; }
+    public int PersonId { get; set; }
 
-    public int? DepartmentId { get; set; }
+    public int DepartmentId { get; set; }
 
-    public int? TitleId { get; set; }
+    public int TitleId { get; set; }
 
-    public int? StatusId { get; set; }
+    public int StatusId { get; set; }
 
     public DateTime CreatedDate { get; set; }
 
@@ -27,11 +27,11 @@ public partial class Professor
 
     public virtual ICollection<Dean> Deans { get; set; } = new List<Dean>();
 
-    public virtual Department? Department { get; set; }
+    public virtual Department Department { get; set; } = null!;
 
-    public virtual Person? Person { get; set; }
+    public virtual Person Person { get; set; } = null!;
 
-    public virtual ProfessorStatus? Status { get; set; }
+    public virtual ProfessorStatus Status { get; set; } = null!;
 
-    public virtual Title? Title { get; set; }
+    public virtual Title Title { get; set; } = null!;
 }

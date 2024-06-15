@@ -7,31 +7,45 @@ CREATE SCHEMA Administration;
 
 CREATE TABLE Administration.Genders (
     Id INT PRIMARY KEY,
-    Description VARCHAR(50) UNIQUE
+    Description VARCHAR(50) NOT NULL UNIQUE
 );
 
 INSERT INTO Administration.Genders (Id, Description)
 VALUES (1, 'Male'), (2, 'Female'), (3, 'Prefer Not to Say');
 
+CREATE TABLE Administration.Addresses (
+    Id INT PRIMARY KEY,
+    Street VARCHAR(255) NOT NULL,
+    HouseNumber INT NOT NULL,
+    FlatNumber INT,
+    City VARCHAR(100) NOT NULL,
+    PostalCode VARCHAR(10) NOT NULL,
+    Country VARCHAR(50) NOT NULL,
+    CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
+    ModifiedDate DATETIME2,
+    IsDeleted BIT NOT NULL DEFAULT 0
+);
+
 CREATE TABLE Administration.Persons (
     Id INT PRIMARY KEY,
-    FirstName VARCHAR(50),
-    LastName VARCHAR(50),
-    Email VARCHAR(100) UNIQUE,
-    Phone CHAR(14) UNIQUE,
-    DateOfBirth DATE,
-    Address VARCHAR(255),
-    GenderId INT,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) NOT NULL UNIQUE,
+    Phone CHAR(14) NOT NULL UNIQUE,
+    DateOfBirth DATE NOT NULL,
+    AddressId INT NOT NULL,
+    GenderId INT NOT NULL,
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0,
     CONSTRAINT FK_Persons_Gender FOREIGN KEY (GenderId) REFERENCES Administration.Genders(Id),
+    CONSTRAINT FK_Persons_Address FOREIGN KEY (AddressId) REFERENCES Administration.Addresses(Id),
     CONSTRAINT CHK_Persons_DateOfBirth CHECK (DateOfBirth <= CONVERT(DATE, GETDATE()))
 );
 
 CREATE TABLE Students.StudentStatuses (
     Id INT PRIMARY KEY,
-    StatusDescription VARCHAR(50)
+    StatusDescription VARCHAR(50) NOT NULL
 );
 
 INSERT INTO Students.StudentStatuses (Id, StatusDescription)
@@ -39,9 +53,9 @@ VALUES (1, 'Enrolled'), (2, 'Graduated'), (3, 'Suspended'), (4, 'Withdrawn');
 
 CREATE TABLE Students.Students (
     Id INT PRIMARY KEY,
-    PersonId INT,
-    EnrollmentYear INT,
-    StatusId INT DEFAULT 1,
+    PersonId INT NOT NULL,
+    EnrollmentYear INT NOT NULL,
+    StatusId INT NOT NULL DEFAULT 1,
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0,
@@ -51,8 +65,8 @@ CREATE TABLE Students.Students (
 
 CREATE TABLE Administration.Departments (
     Id INT PRIMARY KEY,
-    Name VARCHAR(100),
-    Budget DECIMAL(18, 2),
+    Name VARCHAR(100) NOT NULL,
+    Budget DECIMAL(18, 2) NOT NULL,
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0
@@ -60,8 +74,8 @@ CREATE TABLE Administration.Departments (
 
 CREATE TABLE Administration.AdministrativeEmployees (
     EmployeeId INT PRIMARY KEY,
-    PersonId INT,
-    DepartmentId INT,
+    PersonId INT NOT NULL,
+    DepartmentId INT NOT NULL,
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0,
@@ -71,7 +85,7 @@ CREATE TABLE Administration.AdministrativeEmployees (
 
 CREATE TABLE Academics.ProfessorStatuses (
     Id INT PRIMARY KEY,
-    StatusDescription VARCHAR(50)
+    StatusDescription VARCHAR(50) NOT NULL
 );
 
 INSERT INTO Academics.ProfessorStatuses (Id, StatusDescription)
@@ -79,22 +93,18 @@ VALUES (1, 'Active'), (2, 'On Leave'), (3, 'Retired'), (4, 'Emeritus');
 
 CREATE TABLE Academics.Titles (
     Id INT PRIMARY KEY,
-    TitleName VARCHAR(50) UNIQUE
+    TitleName VARCHAR(50) NOT NULL UNIQUE
 );
 
 INSERT INTO Academics.Titles (Id, TitleName)
-VALUES (1, 'Professor'), 
-       (2, 'Associate Professor'), 
-       (3, 'Assistant Professor'), 
-       (4, 'Lecturer'), 
-       (5, 'Senior Lecturer');
-     
+VALUES (1, 'Professor'), (2, 'Associate Professor'), (3, 'Assistant Professor'), (4, 'Lecturer'), (5, 'Senior Lecturer');
+
 CREATE TABLE Academics.Professors (
     Id INT PRIMARY KEY,
-    PersonId INT,
-    DepartmentId INT,
-    TitleId INT,
-    StatusId INT DEFAULT 1,
+    PersonId INT NOT NULL,
+    DepartmentId INT NOT NULL,
+    TitleId INT NOT NULL,
+    StatusId INT NOT NULL DEFAULT 1,
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0,
@@ -105,9 +115,9 @@ CREATE TABLE Academics.Professors (
 );
 
 CREATE TABLE Administration.Deans (
-    DepartmentId INT,
-    ProfessorId INT,
-    EffectiveDate DATE,
+    DepartmentId INT NOT NULL,
+    ProfessorId INT NOT NULL,
+    EffectiveDate DATE NOT NULL,
     PRIMARY KEY (DepartmentId, ProfessorId),
     CONSTRAINT FK_Deans_Department FOREIGN KEY (DepartmentId) REFERENCES Administration.Departments(Id),
     CONSTRAINT FK_Deans_Professor FOREIGN KEY (ProfessorId) REFERENCES Academics.Professors(Id)
@@ -115,8 +125,8 @@ CREATE TABLE Administration.Deans (
 
 CREATE TABLE Academics.Courses (
     Id INT PRIMARY KEY,
-    CourseName VARCHAR(100),
-    DepartmentId INT,
+    CourseName VARCHAR(100) NOT NULL,
+    DepartmentId INT NOT NULL,
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0,
@@ -125,34 +135,43 @@ CREATE TABLE Academics.Courses (
 
 CREATE TABLE Academics.Classrooms (
     Id INT PRIMARY KEY,
-    Building VARCHAR(50),
-    RoomNumber VARCHAR(10),
-    Capacity INT,
+    Building VARCHAR(50) NOT NULL,
+    RoomNumber VARCHAR(10) NOT NULL,
+    Capacity INT NOT NULL,
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0
 );
 
+CREATE TABLE Academics.Semesters (
+    Id INT PRIMARY KEY,
+    Name VARCHAR(10) NOT NULL UNIQUE
+);
+
+INSERT INTO Academics.Semesters (Id, Name)
+VALUES (1, 'Summer'), (2, 'Winter');
+
 CREATE TABLE Academics.CourseOfferings (
     Id INT PRIMARY KEY,
-    CourseId INT,
-    Semester VARCHAR(10),
-    Year INT,
-    ProfessorId INT,
-    ClassroomId INT,
+    CourseId INT NOT NULL,
+    SemesterId INT NOT NULL,
+    Year INT NOT NULL,
+    ProfessorId INT NOT NULL,
+    ClassroomId INT NOT NULL,
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0,
     CONSTRAINT FK_CourseOfferings_Course FOREIGN KEY (CourseId) REFERENCES Academics.Courses(Id),
     CONSTRAINT FK_CourseOfferings_Professor FOREIGN KEY (ProfessorId) REFERENCES Academics.Professors(Id),
-    CONSTRAINT FK_CourseOfferings_Classroom FOREIGN KEY (ClassroomId) REFERENCES Academics.Classrooms(Id)
+    CONSTRAINT FK_CourseOfferings_Classroom FOREIGN KEY (ClassroomId) REFERENCES Academics.Classrooms(Id),
+    CONSTRAINT FK_CourseOfferings_Semester FOREIGN KEY (SemesterId) REFERENCES Academics.Semesters(Id)
 );
 
 CREATE TABLE Students.Enrollments (
     Id INT PRIMARY KEY,
-    StudentId INT,
-    OfferingId INT,
-    EnrollmentDate DATE,
+    StudentId INT NOT NULL,
+    OfferingId INT NOT NULL,
+    EnrollmentDate DATE NOT NULL,
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0,
@@ -162,7 +181,7 @@ CREATE TABLE Students.Enrollments (
 
 CREATE TABLE Students.AttendanceStatuses (
     Id INT PRIMARY KEY,
-    StatusName VARCHAR(10)
+    StatusName VARCHAR(10) NOT NULL
 );
 
 INSERT INTO Students.AttendanceStatuses (Id, StatusName)
@@ -170,9 +189,9 @@ VALUES (1, 'Absent'), (2, 'Present'), (3, 'Excused');
 
 CREATE TABLE Students.Attendance (
     Id INT PRIMARY KEY,
-    EnrollmentId INT,
-    DateOfClass DATE,
-    StatusId INT DEFAULT 1,
+    EnrollmentId INT NOT NULL,
+    DateOfClass DATE NOT NULL,
+    StatusId INT NOT NULL DEFAULT 1,
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0,
@@ -182,19 +201,20 @@ CREATE TABLE Students.Attendance (
 
 CREATE TABLE Students.Grades (
     Id INT PRIMARY KEY,
-    EnrollmentId INT,
-    Grade DECIMAL(5,2),
-    GradeDate DATE,
+    EnrollmentId INT NOT NULL,
+    Grade DECIMAL(5,2) NOT NULL,
+    GradeDate DATE NOT NULL,
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0,
-    CONSTRAINT FK_Grades_Enrollment FOREIGN KEY (EnrollmentId) REFERENCES Students.Enrollments(Id)
+    CONSTRAINT FK_Grades_Enrollment FOREIGN KEY (EnrollmentId) REFERENCES Students.Enrollments(Id),
+    CONSTRAINT CHK_Grades_Grade CHECK (Grade IN (2, 3, 3.5, 4, 4.5, 5))
 );
 
 CREATE TABLE Students.Advisors (
-    StudentId INT,
-    ProfessorId INT,
-    AssignmentDate DATE,
+    StudentId INT NOT NULL,
+    ProfessorId INT NOT NULL,
+    AssignmentDate DATE NOT NULL,
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,
     IsDeleted BIT NOT NULL DEFAULT 0,

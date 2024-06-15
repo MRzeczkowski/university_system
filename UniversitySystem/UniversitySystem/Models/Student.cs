@@ -7,11 +7,11 @@ public partial class Student
 {
     public int Id { get; set; }
 
-    public int? PersonId { get; set; }
+    public int PersonId { get; set; }
 
-    public int? EnrollmentYear { get; set; }
+    public int EnrollmentYear { get; set; }
 
-    public int? StatusId { get; set; }
+    public int StatusId { get; set; }
 
     public DateTime CreatedDate { get; set; }
 
@@ -23,7 +23,7 @@ public partial class Student
 
     public virtual ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
 
-    public virtual Person? Person { get; set; }
+    public virtual Person Person { get; set; } = null!;
 
-    public virtual StudentStatus? Status { get; set; }
+    public virtual StudentStatus Status { get; set; } = null!;
 }

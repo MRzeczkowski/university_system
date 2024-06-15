@@ -7,11 +7,11 @@ public partial class Enrollment
 {
     public int Id { get; set; }
 
-    public int? StudentId { get; set; }
+    public int StudentId { get; set; }
 
-    public int? OfferingId { get; set; }
+    public int OfferingId { get; set; }
 
-    public DateOnly? EnrollmentDate { get; set; }
+    public DateOnly EnrollmentDate { get; set; }
 
     public DateTime CreatedDate { get; set; }
 
@@ -23,7 +23,7 @@ public partial class Enrollment
 
     public virtual ICollection<Grade> Grades { get; set; } = new List<Grade>();
 
-    public virtual CourseOffering? Offering { get; set; }
+    public virtual CourseOffering Offering { get; set; } = null!;
 
-    public virtual Student? Student { get; set; }
+    public virtual Student Student { get; set; } = null!;
 }

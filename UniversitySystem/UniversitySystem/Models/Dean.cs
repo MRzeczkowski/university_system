@@ -9,7 +9,7 @@ public partial class Dean
 
     public int ProfessorId { get; set; }
 
-    public DateOnly? EffectiveDate { get; set; }
+    public DateOnly EffectiveDate { get; set; }
 
     public virtual Department Department { get; set; } = null!;
 
