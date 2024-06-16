@@ -1,0 +1,27 @@
+@model IEnumerable<UpcomingClassViewModel>
+
+<h2>Upcoming Classes</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Course Name</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Professor</th>
+            <th>Room</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var classSession in Model)
+    {
+        <tr>
+            <td>@classSession.CourseName</td>
+            <td>@classSession.SessionStart.ToString("g")</td>
+            <td>@classSession.SessionEnd.ToString("g")</td>
+            <td>@classSession.ProfessorName</td>
+            <td>@classSession.Room</td>
+        </tr>
+    }
+    </tbody>
+</table>

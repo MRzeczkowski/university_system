@@ -167,6 +167,14 @@ CREATE TABLE Academics.CourseOfferings (
     CONSTRAINT FK_CourseOfferings_Semester FOREIGN KEY (SemesterId) REFERENCES Academics.Semesters(Id)
 );
 
+CREATE TABLE Academics.ClassSessions (
+    SessionId INT PRIMARY KEY,
+    OfferingId INT NOT NULL,
+    SessionStart DATETIME2 NOT NULL,
+    SessionEnd DATETIME2 NOT NULL,
+    CONSTRAINT FK_ClassSessions_CourseOfferings FOREIGN KEY (OfferingId) REFERENCES Academics.CourseOfferings(Id)
+);
+
 CREATE TABLE Students.Enrollments (
     Id INT PRIMARY KEY,
     StudentId INT NOT NULL,
@@ -258,3 +266,6 @@ CREATE INDEX idx_Grades_EnrollmentId ON Students.Grades(EnrollmentId);
 
 CREATE INDEX idx_Advisors_StudentId ON Students.Advisors(StudentId);
 CREATE INDEX idx_Advisors_ProfessorId ON Students.Advisors(ProfessorId);
+
+CREATE NONCLUSTERED INDEX IDX_ClassSessions_OfferingId_SessionStart
+ON Academics.ClassSessions (OfferingId, SessionStart);

@@ -23,6 +23,8 @@ public partial class CourseOffering
 
     public bool IsDeleted { get; set; }
 
+    public virtual ICollection<ClassSession> ClassSessions { get; set; } = new List<ClassSession>();
+
     public virtual Classroom Classroom { get; set; } = null!;
 
     public virtual Course Course { get; set; } = null!;

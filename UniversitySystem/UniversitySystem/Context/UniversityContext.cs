@@ -26,6 +26,8 @@ public partial class UniversityContext : DbContext
 
     public virtual DbSet<AttendanceStatus> AttendanceStatuses { get; set; }
 
+    public virtual DbSet<ClassSession> ClassSessions { get; set; }
+
     public virtual DbSet<Classroom> Classrooms { get; set; }
 
     public virtual DbSet<Course> Courses { get; set; }
@@ -165,6 +167,22 @@ public partial class UniversityContext : DbContext
             entity.Property(e => e.StatusName)
                 .HasMaxLength(10)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<ClassSession>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__ClassSes__3214EC07AC2FF6BE");
+
+            entity.ToTable("ClassSessions", "Academics");
+
+            entity.HasIndex(e => new { e.OfferingId, e.SessionStart }, "IDX_ClassSessions_OfferingId_SessionStart");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Offering).WithMany(p => p.ClassSessions)
+                .HasForeignKey(d => d.OfferingId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ClassSessions_CourseOfferings");
         });
 
         modelBuilder.Entity<Classroom>(entity =>
