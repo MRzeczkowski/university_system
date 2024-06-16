@@ -1,6 +1,9 @@
-﻿namespace UniversitySystem.Entities;
+﻿using System;
+using System.Collections.Generic;
 
-public class Attendance
+namespace UniversitySystem.Entities;
+
+public partial class Attendance
 {
     public int Id { get; set; }
 

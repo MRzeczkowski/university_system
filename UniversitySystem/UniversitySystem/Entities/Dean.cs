@@ -1,6 +1,9 @@
-﻿namespace UniversitySystem.Entities;
+﻿using System;
+using System.Collections.Generic;
 
-public class Dean
+namespace UniversitySystem.Entities;
+
+public partial class Dean
 {
     public int DepartmentId { get; set; }
 

@@ -77,11 +77,11 @@ VALUES
 (3, 3, '2023-02-01', 3, GETDATE(), GETDATE(), 0);
 
 -- Seed Grades
-INSERT INTO Students.Grades (Id, EnrollmentId, Grade, GradeDate, CreatedDate, ModifiedDate, IsDeleted)
+INSERT INTO Students.Grades (Id, EnrollmentId, Points, FinalGrade, GradeDate, CreatedDate, ModifiedDate, IsDeleted)
 VALUES
-(1, 1, 4.0, '2023-05-01', GETDATE(), GETDATE(), 0),
-(2, 2, 4.5, '2023-10-01', GETDATE(), GETDATE(), 0),
-(3, 3, 3.5, '2023-05-01', GETDATE(), GETDATE(), 0);
+(1, 1, 75, 4.0, '2023-05-01', GETDATE(), GETDATE(), 0),
+(2, 2, 85, 4.5, '2023-10-01', GETDATE(), GETDATE(), 0),
+(3, 3, 55, 3.5, '2023-05-01', GETDATE(), GETDATE(), 0);
 
 -- Seed Advisors
 INSERT INTO Students.Advisors (StudentId, ProfessorId, AssignmentDate, CreatedDate, ModifiedDate, IsDeleted)

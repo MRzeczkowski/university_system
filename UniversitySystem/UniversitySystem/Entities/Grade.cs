@@ -1,12 +1,17 @@
-﻿namespace UniversitySystem.Entities;
+﻿using System;
+using System.Collections.Generic;
 
-public class Grade
+namespace UniversitySystem.Entities;
+
+public partial class Grade
 {
     public int Id { get; set; }
 
     public int EnrollmentId { get; set; }
 
-    public decimal Grade1 { get; set; }
+    public int Points { get; set; }
+
+    public decimal FinalGrade { get; set; }
 
     public DateOnly GradeDate { get; set; }
 

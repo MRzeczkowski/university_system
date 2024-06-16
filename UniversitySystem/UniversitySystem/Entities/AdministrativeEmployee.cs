@@ -1,6 +1,9 @@
-﻿namespace UniversitySystem.Entities;
+﻿using System;
+using System.Collections.Generic;
 
-public class AdministrativeEmployee
+namespace UniversitySystem.Entities;
+
+public partial class AdministrativeEmployee
 {
     public int EmployeeId { get; set; }
 

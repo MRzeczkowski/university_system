@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using UniversitySystem.Entities;
 
 namespace UniversitySystem.Context;
@@ -55,7 +57,7 @@ public partial class UniversityContext : DbContext
     public virtual DbSet<Title> Titles { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("name=ConnectionStrings:DefaultConnection");
+        => optionsBuilder.UseSqlServer("Name=ConnectionStrings:DefaultConnection");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -284,15 +286,13 @@ public partial class UniversityContext : DbContext
 
         modelBuilder.Entity<Grade>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Grades__3214EC07BFC049F4");
+            entity.HasKey(e => e.Id).HasName("PK__Grades__3214EC07F23C8620");
 
             entity.ToTable("Grades", "Students");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.Grade1)
-                .HasColumnType("decimal(5, 2)")
-                .HasColumnName("Grade");
+            entity.Property(e => e.FinalGrade).HasColumnType("decimal(5, 2)");
 
             entity.HasOne(d => d.Enrollment).WithMany(p => p.Grades)
                 .HasForeignKey(d => d.EnrollmentId)

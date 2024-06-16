@@ -1,6 +1,9 @@
-﻿namespace UniversitySystem.Entities;
+﻿using System;
+using System.Collections.Generic;
 
-public class Semester
+namespace UniversitySystem.Entities;
+
+public partial class Semester
 {
     public int Id { get; set; }
 

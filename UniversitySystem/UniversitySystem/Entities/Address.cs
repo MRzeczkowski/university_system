@@ -1,6 +1,9 @@
-﻿namespace UniversitySystem.Entities;
+﻿using System;
+using System.Collections.Generic;
 
-public class Address
+namespace UniversitySystem.Entities;
+
+public partial class Address
 {
     public int Id { get; set; }
 

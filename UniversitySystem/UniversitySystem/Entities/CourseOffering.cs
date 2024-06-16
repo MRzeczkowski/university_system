@@ -1,6 +1,9 @@
-﻿namespace UniversitySystem.Entities;
+﻿using System;
+using System.Collections.Generic;
 
-public class CourseOffering
+namespace UniversitySystem.Entities;
+
+public partial class CourseOffering
 {
     public int Id { get; set; }
 

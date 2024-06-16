@@ -202,7 +202,8 @@ CREATE TABLE Students.Attendance (
 CREATE TABLE Students.Grades (
     Id INT PRIMARY KEY,
     EnrollmentId INT NOT NULL,
-    Grade DECIMAL(5,2) NOT NULL,
+    Points INT NOT NULL,
+    FinalGrade DECIMAL(5,2) NOT NULL,
     GradeDate DATE NOT NULL,
     CreatedDate DATETIME2 NOT NULL DEFAULT GETDATE(),
     ModifiedDate DATETIME2,

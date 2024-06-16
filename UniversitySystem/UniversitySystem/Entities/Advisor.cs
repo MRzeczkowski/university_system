@@ -1,6 +1,9 @@
-﻿namespace UniversitySystem.Entities;
+﻿using System;
+using System.Collections.Generic;
 
-public class Advisor
+namespace UniversitySystem.Entities;
+
+public partial class Advisor
 {
     public int StudentId { get; set; }
 
