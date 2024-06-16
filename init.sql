@@ -223,3 +223,38 @@ CREATE TABLE Students.Advisors (
     CONSTRAINT FK_Advisors_Professor FOREIGN KEY (ProfessorId) REFERENCES Academics.Professors(Id),
     PRIMARY KEY (StudentId, ProfessorId)
 );
+
+CREATE INDEX idx_Persons_GenderId ON Administration.Persons(GenderId);
+CREATE INDEX idx_Persons_AddressId ON Administration.Persons(AddressId);
+
+CREATE INDEX idx_Students_PersonId ON Students.Students(PersonId);
+CREATE INDEX idx_Students_StatusId ON Students.Students(StatusId);
+
+CREATE INDEX idx_AdminEmployees_PersonId ON Administration.AdministrativeEmployees(PersonId);
+CREATE INDEX idx_AdminEmployees_DepartmentId ON Administration.AdministrativeEmployees(DepartmentId);
+
+CREATE INDEX idx_Professors_PersonId ON Academics.Professors(PersonId);
+CREATE INDEX idx_Professors_DepartmentId ON Academics.Professors(DepartmentId);
+CREATE INDEX idx_Professors_TitleId ON Academics.Professors(TitleId);
+CREATE INDEX idx_Professors_StatusId ON Academics.Professors(StatusId);
+
+CREATE INDEX idx_Deans_DepartmentId ON Administration.Deans(DepartmentId);
+CREATE INDEX idx_Deans_ProfessorId ON Administration.Deans(ProfessorId);
+
+CREATE INDEX idx_Courses_DepartmentId ON Academics.Courses(DepartmentId);
+
+CREATE INDEX idx_CourseOfferings_CourseId ON Academics.CourseOfferings(CourseId);
+CREATE INDEX idx_CourseOfferings_SemesterId ON Academics.CourseOfferings(SemesterId);
+CREATE INDEX idx_CourseOfferings_ProfessorId ON Academics.CourseOfferings(ProfessorId);
+CREATE INDEX idx_CourseOfferings_ClassroomId ON Academics.CourseOfferings(ClassroomId);
+
+CREATE INDEX idx_Enrollments_StudentId ON Students.Enrollments(StudentId);
+CREATE INDEX idx_Enrollments_OfferingId ON Students.Enrollments(OfferingId);
+
+CREATE INDEX idx_Attendance_EnrollmentId ON Students.Attendance(EnrollmentId);
+CREATE INDEX idx_Attendance_StatusId ON Students.Attendance(StatusId);
+
+CREATE INDEX idx_Grades_EnrollmentId ON Students.Grades(EnrollmentId);
+
+CREATE INDEX idx_Advisors_StudentId ON Students.Advisors(StudentId);
+CREATE INDEX idx_Advisors_ProfessorId ON Students.Advisors(ProfessorId);

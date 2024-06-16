@@ -19,8 +19,10 @@ public class GradesController : Controller
             .Select(g => new StudentGradesViewModel
             {
                 StudentName = $"{g.Enrollment.Student.Person.FirstName} {g.Enrollment.Student.Person.LastName}",
+                Deparment = g.Enrollment.Offering.Course.Department.Name,
                 CourseName = g.Enrollment.Offering.Course.CourseName,
-                Semester = $"{g.Enrollment.Offering.Year}/{g.Enrollment.Offering.Semester.Name}",
+                Semester =
+                    $"{g.Enrollment.Offering.Year}/{g.Enrollment.Offering.Year + 1} {g.Enrollment.Offering.Semester.Name}",
                 GradeValue = g.FinalGrade,
                 GradeDate = g.GradeDate
             })
