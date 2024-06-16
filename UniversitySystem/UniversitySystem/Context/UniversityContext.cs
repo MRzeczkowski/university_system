@@ -89,6 +89,10 @@ public partial class UniversityContext : DbContext
 
             entity.ToTable("AdministrativeEmployees", "Administration");
 
+            entity.HasIndex(e => e.DepartmentId, "idx_AdminEmployees_DepartmentId");
+
+            entity.HasIndex(e => e.PersonId, "idx_AdminEmployees_PersonId");
+
             entity.Property(e => e.EmployeeId).ValueGeneratedNever();
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
 
@@ -109,6 +113,10 @@ public partial class UniversityContext : DbContext
 
             entity.ToTable("Advisors", "Students");
 
+            entity.HasIndex(e => e.ProfessorId, "idx_Advisors_ProfessorId");
+
+            entity.HasIndex(e => e.StudentId, "idx_Advisors_StudentId");
+
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
 
             entity.HasOne(d => d.Professor).WithMany(p => p.Advisors)
@@ -127,6 +135,10 @@ public partial class UniversityContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK__Attendan__3214EC0709E1F83F");
 
             entity.ToTable("Attendance", "Students");
+
+            entity.HasIndex(e => e.EnrollmentId, "idx_Attendance_EnrollmentId");
+
+            entity.HasIndex(e => e.StatusId, "idx_Attendance_StatusId");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
@@ -177,6 +189,8 @@ public partial class UniversityContext : DbContext
 
             entity.ToTable("Courses", "Academics");
 
+            entity.HasIndex(e => e.DepartmentId, "idx_Courses_DepartmentId");
+
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.CourseName)
                 .HasMaxLength(100)
@@ -194,6 +208,14 @@ public partial class UniversityContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK__CourseOf__3214EC073F1823CA");
 
             entity.ToTable("CourseOfferings", "Academics");
+
+            entity.HasIndex(e => e.ClassroomId, "idx_CourseOfferings_ClassroomId");
+
+            entity.HasIndex(e => e.CourseId, "idx_CourseOfferings_CourseId");
+
+            entity.HasIndex(e => e.ProfessorId, "idx_CourseOfferings_ProfessorId");
+
+            entity.HasIndex(e => e.SemesterId, "idx_CourseOfferings_SemesterId");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
@@ -225,6 +247,10 @@ public partial class UniversityContext : DbContext
 
             entity.ToTable("Deans", "Administration");
 
+            entity.HasIndex(e => e.DepartmentId, "idx_Deans_DepartmentId");
+
+            entity.HasIndex(e => e.ProfessorId, "idx_Deans_ProfessorId");
+
             entity.HasOne(d => d.Department).WithMany(p => p.Deans)
                 .HasForeignKey(d => d.DepartmentId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -255,6 +281,10 @@ public partial class UniversityContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK__Enrollme__3214EC074F200B81");
 
             entity.ToTable("Enrollments", "Students");
+
+            entity.HasIndex(e => e.OfferingId, "idx_Enrollments_OfferingId");
+
+            entity.HasIndex(e => e.StudentId, "idx_Enrollments_StudentId");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
@@ -290,6 +320,8 @@ public partial class UniversityContext : DbContext
 
             entity.ToTable("Grades", "Students");
 
+            entity.HasIndex(e => e.EnrollmentId, "idx_Grades_EnrollmentId");
+
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.FinalGrade).HasColumnType("decimal(5, 2)");
@@ -309,6 +341,10 @@ public partial class UniversityContext : DbContext
             entity.HasIndex(e => e.Phone, "UQ__Persons__5C7E359ED5D78A15").IsUnique();
 
             entity.HasIndex(e => e.Email, "UQ__Persons__A9D10534C66CDE75").IsUnique();
+
+            entity.HasIndex(e => e.AddressId, "idx_Persons_AddressId");
+
+            entity.HasIndex(e => e.GenderId, "idx_Persons_GenderId");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
@@ -342,6 +378,14 @@ public partial class UniversityContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK__Professo__3214EC072A95EB5C");
 
             entity.ToTable("Professors", "Academics");
+
+            entity.HasIndex(e => e.DepartmentId, "idx_Professors_DepartmentId");
+
+            entity.HasIndex(e => e.PersonId, "idx_Professors_PersonId");
+
+            entity.HasIndex(e => e.StatusId, "idx_Professors_StatusId");
+
+            entity.HasIndex(e => e.TitleId, "idx_Professors_TitleId");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
@@ -399,6 +443,10 @@ public partial class UniversityContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK__Students__3214EC0795BD6843");
 
             entity.ToTable("Students", "Students");
+
+            entity.HasIndex(e => e.PersonId, "idx_Students_PersonId");
+
+            entity.HasIndex(e => e.StatusId, "idx_Students_StatusId");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
