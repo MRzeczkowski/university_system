@@ -19,10 +19,15 @@
                asp-controller="Home" asp-action="Index">
                 Home
             </a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-area=""
-               asp-controller="Grades" asp-action="Index">
-                Grades
-            </a>
+
+            @if (User.IsInRole("Student"))
+            {
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-area=""
+                   asp-controller="Grades" asp-action="Index">
+                    Grades
+                </a>
+            }
+
         </div>
     </div>
     <!-- Page content wrapper-->

@@ -28,16 +28,13 @@ public class AccountController : Controller
             var claims = new List<Claim>
             {
                 new(ClaimTypes.Name, model.Username),
-                new(ClaimTypes.Role, "Administrator")
+                new(ClaimTypes.Role, "AdministrativeEmployee")
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var authProperties = new AuthenticationProperties();
+            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity),
-                authProperties);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
 
             return RedirectToAction("Index", "Home");
         }
@@ -47,9 +44,11 @@ public class AccountController : Controller
         return View(model);
     }
 
-    public async Task<IActionResult> Logout()
+    public IActionResult Logout()
     {
-        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        return RedirectToAction("Login");
+        HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+        TempData["LogoutMessage"] = "You have been successfully logged out.";
+        return RedirectToAction("Login", "Account");
     }
 }

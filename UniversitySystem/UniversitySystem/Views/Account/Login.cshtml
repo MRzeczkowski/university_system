@@ -4,6 +4,13 @@
     ViewData["Title"] = "Login";
 }
 
+@if (TempData["LogoutMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["LogoutMessage"]
+    </div>
+}
+
 <form asp-action="Login" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
