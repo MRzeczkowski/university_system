@@ -7,6 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.6" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.6" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.6" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -14,9 +16,53 @@
         </PackageReference>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="8.0.6" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.6">
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+          <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
         <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Views\Account\AccessDenied.cshtml" />
+      <AdditionalFiles Include="Views\Account\ConfirmEmail.cshtml" />
+      <AdditionalFiles Include="Views\Account\ConfirmEmailChange.cshtml" />
+      <AdditionalFiles Include="Views\Account\ExternalLogin.cshtml" />
+      <AdditionalFiles Include="Views\Account\ForgotPassword.cshtml" />
+      <AdditionalFiles Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+      <AdditionalFiles Include="Views\Account\Lockout.cshtml" />
+      <AdditionalFiles Include="Views\Account\Login.cshtml" />
+      <AdditionalFiles Include="Views\Account\LoginWith2fa.cshtml" />
+      <AdditionalFiles Include="Views\Account\LoginWithRecoveryCode.cshtml" />
+      <AdditionalFiles Include="Views\Account\Logout.cshtml" />
+      <AdditionalFiles Include="Views\Account\Manage\ChangePassword.cshtml" />
+      <AdditionalFiles Include="Views\Account\Manage\DeletePersonalData.cshtml" />
+      <AdditionalFiles Include="Views\Account\Manage\Disable2fa.cshtml" />
+      <AdditionalFiles Include="Views\Account\Manage\DownloadPersonalData.cshtml" />
+      <AdditionalFiles Include="Views\Account\Manage\Email.cshtml" />
+      <AdditionalFiles Include="Views\Account\Manage\EnableAuthenticator.cshtml" />
+      <AdditionalFiles Include="Views\Account\Manage\ExternalLogins.cshtml" />
+      <AdditionalFiles Include="Views\Account\Manage\GenerateRecoveryCodes.cshtml" />
+      <AdditionalFiles Include="Views\Account\Manage\Index.cshtml" />
+      <AdditionalFiles Include="Views\Account\Manage\PersonalData.cshtml" />
+      <AdditionalFiles Include="Views\Account\Manage\ResetAuthenticator.cshtml" />
+      <AdditionalFiles Include="Views\Account\Manage\SetPassword.cshtml" />
+      <AdditionalFiles Include="Views\Account\Manage\ShowRecoveryCodes.cshtml" />
+      <AdditionalFiles Include="Views\Account\Manage\TwoFactorAuthentication.cshtml" />
+      <AdditionalFiles Include="Views\Account\Manage\_Layout.cshtml" />
+      <AdditionalFiles Include="Views\Account\Manage\_ManageNav.cshtml" />
+      <AdditionalFiles Include="Views\Account\Manage\_StatusMessage.cshtml" />
+      <AdditionalFiles Include="Views\Account\Manage\_ViewImports.cshtml" />
+      <AdditionalFiles Include="Views\Account\Register.cshtml" />
+      <AdditionalFiles Include="Views\Account\RegisterConfirmation.cshtml" />
+      <AdditionalFiles Include="Views\Account\ResendEmailConfirmation.cshtml" />
+      <AdditionalFiles Include="Views\Account\ResetPassword.cshtml" />
+      <AdditionalFiles Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+      <AdditionalFiles Include="Views\Account\_StatusMessage.cshtml" />
+      <AdditionalFiles Include="Views\Account\_ViewImports.cshtml" />
     </ItemGroup>
 
 </Project>

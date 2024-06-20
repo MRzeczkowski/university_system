@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using UniversitySystem.Entities;
 
 namespace UniversitySystem.Context;
 
-public partial class UniversityContext : DbContext
+public partial class UniversityContext : IdentityDbContext<IdentityUser>
 {
     public UniversityContext()
     {
