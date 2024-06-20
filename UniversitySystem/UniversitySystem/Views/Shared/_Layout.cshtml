@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - UniversitySystem</title>
+    <title>@ViewData["Title"] - University</title>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="~/assets/favicon.ico"/>
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet"/>
+    <link href="~/css/styles.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="d-flex" id="wrapper">
@@ -49,13 +49,17 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Dropdown
+                                Account
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#!">Action</a>
-                                <a class="dropdown-item" href="#!">Another action</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Login">
+                                    Login
+                                </a>
+                                <a class="dropdown-item" asp-controller="Account" asp-action="Logout">
+                                    Logout
+                                </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#!">Something else here</a>
+                                <a class="dropdown-item" href="#!">Settings</a>
                             </div>
                         </li>
                     </ul>
@@ -72,7 +76,7 @@
 </div>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/scripts.js"></script>
+<script src="~/js/scripts.js"></script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
