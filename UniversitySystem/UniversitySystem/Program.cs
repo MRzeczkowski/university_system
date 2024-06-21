@@ -1,13 +1,21 @@
+using UniversitySystem.Models;
+
 namespace UniversitySystem;
 
-public class Program
+public static class Program
 {
     public static void Main(string[] args)
     {
-        CreateWebHostBuilder(args).Build().Run();
+        var app = CreateWebHostBuilder(args).Build();
+
+        var scope = app.Services.CreateScope();
+        
+        SampleData.Initialize(scope.ServiceProvider);
+
+        app.Run();
     }
 
-    public static IHostBuilder CreateWebHostBuilder(string[] args) =>
+    private static IHostBuilder CreateWebHostBuilder(string[] args) =>
         Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
 }
