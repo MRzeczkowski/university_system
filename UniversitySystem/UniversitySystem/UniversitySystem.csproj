@@ -70,7 +70,12 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Migrations\" />
       <Folder Include="Views\Account\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Migrations\20240621153153_AdjustForIdentity.Designer.cs" />
     </ItemGroup>
 
 </Project>

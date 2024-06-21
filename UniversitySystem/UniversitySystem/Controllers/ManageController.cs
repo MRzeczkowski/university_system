@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using UniversitySystem.Extensions;
+using UniversitySystem.Models;
 using UniversitySystem.Models.ManageViewModels;
 using UniversitySystem.Services;
 
@@ -12,14 +13,14 @@ namespace UniversitySystem.Controllers;
 [Route("[controller]/[action]")]
 public class ManageController : Controller
 {
-    private readonly UserManager<IdentityUser> _userManager;
-    private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly IEmailSender _emailSender;
     private readonly ILogger _logger;
 
     public ManageController(
-        UserManager<IdentityUser> userManager,
-        SignInManager<IdentityUser> signInManager,
+        UserManager<ApplicationUser> userManager,
+        SignInManager<ApplicationUser> signInManager,
         IEmailSender emailSender,
         ILogger<ManageController> logger)
     {
@@ -108,7 +109,7 @@ public class ManageController : Controller
         }
 
         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-        var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+        var callbackUrl = Url.EmailConfirmationLink(user.Id.ToString(), code, Request.Scheme);
         var email = user.Email;
         await _emailSender.SendEmailConfirmationAsync(email!, callbackUrl!);
 

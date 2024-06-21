@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using UniversitySystem.Context;
+using UniversitySystem.Models;
 using UniversitySystem.Services;
 
 namespace UniversitySystem;
@@ -34,7 +35,7 @@ public class Startup
             options.UseLazyLoadingProxies();
         });
 
-        services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+        services.AddIdentity<ApplicationUser, ApplicationRole>()
             .AddEntityFrameworkStores<UniversityContext>();
 
         services.Configure<IdentityOptions>(options =>

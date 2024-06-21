@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using UniversitySystem.Entities;
+using UniversitySystem.Models;
 
 namespace UniversitySystem.Context;
 
-public partial class UniversityContext : IdentityDbContext<IdentityUser>
+public partial class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationRole, long>
 {
-    public UniversityContext()
-    {
-    }
-
     public UniversityContext(DbContextOptions<UniversityContext> options)
         : base(options)
     {
@@ -59,9 +53,6 @@ public partial class UniversityContext : IdentityDbContext<IdentityUser>
     public virtual DbSet<StudentStatus> StudentStatuses { get; set; }
 
     public virtual DbSet<Title> Titles { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Name=ConnectionStrings:DefaultConnection");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -508,6 +499,8 @@ public partial class UniversityContext : IdentityDbContext<IdentityUser>
                 .HasMaxLength(50)
                 .IsUnicode(false);
         });
+        
+        base.OnModelCreating(modelBuilder);
 
         OnModelCreatingPartial(modelBuilder);
     }

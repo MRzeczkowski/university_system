@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics.CodeAnalysis;
 using UniversitySystem.Extensions;
+using UniversitySystem.Models;
 using UniversitySystem.Models.AccountViewModels;
 using UniversitySystem.Services;
 
@@ -14,14 +15,14 @@ namespace UniversitySystem.Controllers;
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public class AccountController : Controller
 {
-    private readonly UserManager<IdentityUser> _userManager;
-    private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly IEmailSender _emailSender;
     private readonly ILogger _logger;
 
     public AccountController(
-        UserManager<IdentityUser> userManager,
-        SignInManager<IdentityUser> signInManager,
+        UserManager<ApplicationUser> userManager,
+        SignInManager<ApplicationUser> signInManager,
         IEmailSender emailSender,
         ILogger<AccountController> logger)
     {
@@ -103,14 +104,14 @@ public class AccountController : Controller
             return View(model);
         }
 
-        var user = new IdentityUser { UserName = model.Email, Email = model.Email };
+        var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
         var result = await _userManager.CreateAsync(user, model.Password);
         if (result.Succeeded)
         {
             _logger.LogInformation("User created a new account with password.");
 
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme)!;
+            var callbackUrl = Url.EmailConfirmationLink(user.Id.ToString(), code, Request.Scheme)!;
             await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
             await _signInManager.SignInAsync(user, isPersistent: false);
@@ -180,7 +181,7 @@ public class AccountController : Controller
         // For more information on how to enable account confirmation and password reset please
         // visit https://go.microsoft.com/fwlink/?LinkID=532713
         var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-        var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
+        var callbackUrl = Url.ResetPasswordCallbackLink(user.Id.ToString(), code, Request.Scheme);
         await _emailSender.SendEmailAsync(model.Email, "Reset Password",
             $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
         return RedirectToAction(nameof(ForgotPasswordConfirmation));
