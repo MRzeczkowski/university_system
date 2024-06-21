@@ -824,20 +824,6 @@ namespace UniversitySystem.Migrations
                 column: "GenderId");
 
             migrationBuilder.CreateIndex(
-                name: "UQ__Persons__5C7E359ED5D78A15",
-                schema: "Administration",
-                table: "Persons",
-                column: "Phone",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "UQ__Persons__A9D10534C66CDE75",
-                schema: "Administration",
-                table: "Persons",
-                column: "Email",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "idx_Professors_DepartmentId",
                 schema: "Academics",
                 table: "Professors",
