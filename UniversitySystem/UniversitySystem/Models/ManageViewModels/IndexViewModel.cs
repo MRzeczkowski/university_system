@@ -4,7 +4,7 @@ namespace UniversitySystem.Models.ManageViewModels
 {
     public class IndexViewModel
     {
-        public string Username { get; set; }
+        public string? Username { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
 
@@ -14,7 +14,7 @@ namespace UniversitySystem.Models.ManageViewModels
 
         [Phone]
         [Display(Name = "Phone number")]
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
 
         public string? StatusMessage { get; set; }
     }

@@ -43,9 +43,9 @@ public class ManageController : Controller
 
         var model = new IndexViewModel
         {
-            Username = user.UserName!,
+            Username = user.UserName,
             Email = user.Email!,
-            PhoneNumber = user.PhoneNumber!,
+            PhoneNumber = user.PhoneNumber,
             IsEmailConfirmed = user.EmailConfirmed,
             StatusMessage = StatusMessage
         };
