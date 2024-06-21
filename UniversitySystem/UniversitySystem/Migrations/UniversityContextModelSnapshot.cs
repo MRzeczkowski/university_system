@@ -313,9 +313,6 @@ namespace UniversitySystem.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PersonId")
-                        .HasColumnType("int");
-
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
@@ -341,10 +338,6 @@ namespace UniversitySystem.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.HasIndex("PersonId")
-                        .IsUnique()
-                        .HasFilter("[PersonId] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -691,9 +684,6 @@ namespace UniversitySystem.Migrations
                     b.Property<int>("AddressId")
                         .HasColumnType("int");
 
-                    b.Property<long>("AspNetUserId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -977,15 +967,6 @@ namespace UniversitySystem.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("UniversitySystem.Entities.ApplicationUser", b =>
-                {
-                    b.HasOne("UniversitySystem.Entities.Person", "Person")
-                        .WithOne("ApplicationUser")
-                        .HasForeignKey("UniversitySystem.Entities.ApplicationUser", "PersonId");
-
-                    b.Navigation("Person");
-                });
-
             modelBuilder.Entity("UniversitySystem.Entities.Attendance", b =>
                 {
                     b.HasOne("UniversitySystem.Entities.Enrollment", "Enrollment")
@@ -1237,9 +1218,6 @@ namespace UniversitySystem.Migrations
             modelBuilder.Entity("UniversitySystem.Entities.Person", b =>
                 {
                     b.Navigation("AdministrativeEmployees");
-
-                    b.Navigation("ApplicationUser")
-                        .IsRequired();
 
                     b.Navigation("Professors");
 
