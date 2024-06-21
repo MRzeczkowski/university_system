@@ -8,10 +8,8 @@
 <table class="table">
     <thead>
     <tr>
-        <th>Student Name</th>
-        <th>Department</th>
-        <th>Course</th>
         <th>Semester</th>
+        <th>Course</th>
         <th>Grade</th>
         <th>Date Awarded</th>
     </tr>
@@ -20,10 +18,8 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>@item.StudentName</td>
-            <td>@item.Deparment</td>
-            <td>@item.CourseName</td>
             <td>@item.Semester</td>
+            <td>@item.CourseName</td>
             <td>@item.GradeValue</td>
             <td>@item.GradeDate.ToShortDateString()</td>
         </tr>
