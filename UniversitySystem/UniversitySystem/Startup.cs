@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using UniversitySystem.Context;
@@ -30,13 +29,14 @@ public class Startup
         services.AddDbContext<UniversityContext>(options =>
         {
             options.UseSqlServer(
-                Configuration.GetConnectionString("DefaultConnection"), 
+                Configuration.GetConnectionString("DefaultConnection"),
                 o => o.CommandTimeout(3600));
             options.UseLazyLoadingProxies();
         });
 
         services.AddIdentity<ApplicationUser, ApplicationRole>()
-            .AddEntityFrameworkStores<UniversityContext>();
+            .AddEntityFrameworkStores<UniversityContext>()
+            .AddDefaultTokenProviders();
 
         services.Configure<IdentityOptions>(options =>
         {
@@ -91,7 +91,6 @@ public class Startup
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-        app.UseCookiePolicy();
 
         app.UseRouting();
 
@@ -102,5 +101,7 @@ public class Startup
         {
             endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
         });
+
+        app.UseCookiePolicy();
     }
 }

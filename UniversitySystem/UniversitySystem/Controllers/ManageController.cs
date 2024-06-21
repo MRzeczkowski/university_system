@@ -30,7 +30,7 @@ public class ManageController : Controller
     }
 
     [TempData]
-    public string StatusMessage { get; set; } = null!;
+    public string? StatusMessage { get; set; }
 
     [HttpGet]
     public async Task<IActionResult> Index()
