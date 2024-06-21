@@ -39,24 +39,6 @@
       <AdditionalFiles Include="Views\Account\LoginWith2fa.cshtml" />
       <AdditionalFiles Include="Views\Account\LoginWithRecoveryCode.cshtml" />
       <AdditionalFiles Include="Views\Account\Logout.cshtml" />
-      <AdditionalFiles Include="Views\Account\Manage\ChangePassword.cshtml" />
-      <AdditionalFiles Include="Views\Account\Manage\DeletePersonalData.cshtml" />
-      <AdditionalFiles Include="Views\Account\Manage\Disable2fa.cshtml" />
-      <AdditionalFiles Include="Views\Account\Manage\DownloadPersonalData.cshtml" />
-      <AdditionalFiles Include="Views\Account\Manage\Email.cshtml" />
-      <AdditionalFiles Include="Views\Account\Manage\EnableAuthenticator.cshtml" />
-      <AdditionalFiles Include="Views\Account\Manage\ExternalLogins.cshtml" />
-      <AdditionalFiles Include="Views\Account\Manage\GenerateRecoveryCodes.cshtml" />
-      <AdditionalFiles Include="Views\Account\Manage\Index.cshtml" />
-      <AdditionalFiles Include="Views\Account\Manage\PersonalData.cshtml" />
-      <AdditionalFiles Include="Views\Account\Manage\ResetAuthenticator.cshtml" />
-      <AdditionalFiles Include="Views\Account\Manage\SetPassword.cshtml" />
-      <AdditionalFiles Include="Views\Account\Manage\ShowRecoveryCodes.cshtml" />
-      <AdditionalFiles Include="Views\Account\Manage\TwoFactorAuthentication.cshtml" />
-      <AdditionalFiles Include="Views\Account\Manage\_Layout.cshtml" />
-      <AdditionalFiles Include="Views\Account\Manage\_ManageNav.cshtml" />
-      <AdditionalFiles Include="Views\Account\Manage\_StatusMessage.cshtml" />
-      <AdditionalFiles Include="Views\Account\Manage\_ViewImports.cshtml" />
       <AdditionalFiles Include="Views\Account\Register.cshtml" />
       <AdditionalFiles Include="Views\Account\RegisterConfirmation.cshtml" />
       <AdditionalFiles Include="Views\Account\ResendEmailConfirmation.cshtml" />
@@ -64,6 +46,27 @@
       <AdditionalFiles Include="Views\Account\ResetPasswordConfirmation.cshtml" />
       <AdditionalFiles Include="Views\Account\_StatusMessage.cshtml" />
       <AdditionalFiles Include="Views\Account\_ViewImports.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Account\Manage\ChangePassword.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account\Manage\DeletePersonalData.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account\Manage\Disable2fa.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account\Manage\DownloadPersonalData.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account\Manage\Email.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account\Manage\EnableAuthenticator.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account\Manage\ExternalLogins.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account\Manage\GenerateRecoveryCodes.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account\Manage\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account\Manage\PersonalData.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account\Manage\ResetAuthenticator.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account\Manage\SetPassword.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account\Manage\ShowRecoveryCodes.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account\Manage\TwoFactorAuthentication.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account\Manage\_Layout.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account\Manage\_ManageNav.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account\Manage\_StatusMessage.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account\Manage\_ViewImports.cshtml" />
     </ItemGroup>
 
 </Project>
