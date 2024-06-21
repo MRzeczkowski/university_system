@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using UniversitySystem.Context;
-using UniversitySystem.Models;
+using UniversitySystem.Entities;
 using UniversitySystem.Services;
 
 namespace UniversitySystem;

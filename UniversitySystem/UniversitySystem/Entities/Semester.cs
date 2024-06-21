@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace UniversitySystem.Entities;
+﻿namespace UniversitySystem.Entities;
 
 public partial class Semester
 {

@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics.CodeAnalysis;
+using UniversitySystem.Entities;
 using UniversitySystem.Extensions;
-using UniversitySystem.Models;
 using UniversitySystem.Models.AccountViewModels;
 using UniversitySystem.Services;
 

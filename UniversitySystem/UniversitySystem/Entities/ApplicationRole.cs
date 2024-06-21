@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace UniversitySystem.Models;
+namespace UniversitySystem.Entities;
 
 public class ApplicationRole : IdentityRole<long>;

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using UniversitySystem.Entities;
-using UniversitySystem.Models;
 
 namespace UniversitySystem.Context;
 
@@ -349,29 +348,18 @@ public partial class UniversityContext : IdentityDbContext<ApplicationUser, Appl
 
             entity.ToTable("Persons", "Administration");
 
-            entity.HasIndex(e => e.Phone, "UQ__Persons__5C7E359ED5D78A15").IsUnique();
-
-            entity.HasIndex(e => e.Email, "UQ__Persons__A9D10534C66CDE75").IsUnique();
-
             entity.HasIndex(e => e.AddressId, "idx_Persons_AddressId");
 
             entity.HasIndex(e => e.GenderId, "idx_Persons_GenderId");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.Email)
-                .HasMaxLength(100)
-                .IsUnicode(false);
             entity.Property(e => e.FirstName)
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.LastName)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.Phone)
-                .HasMaxLength(14)
-                .IsUnicode(false)
-                .IsFixedLength();
 
             entity.HasOne(d => d.Address).WithMany(p => p.People)
                 .HasForeignKey(d => d.AddressId)
@@ -499,7 +487,7 @@ public partial class UniversityContext : IdentityDbContext<ApplicationUser, Appl
                 .HasMaxLength(50)
                 .IsUnicode(false);
         });
-        
+
         base.OnModelCreating(modelBuilder);
 
         OnModelCreatingPartial(modelBuilder);
