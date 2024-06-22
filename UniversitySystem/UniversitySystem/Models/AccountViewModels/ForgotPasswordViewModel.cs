@@ -4,8 +4,6 @@ namespace UniversitySystem.Models.AccountViewModels
 {
     public class ForgotPasswordViewModel
     {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Required] [EmailAddress] public string Email { get; init; } = null!;
     }
 }

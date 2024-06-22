@@ -22,7 +22,7 @@ public class UpcomingClassesController : Controller
                 CourseName = cs.Offering.Course.CourseName,
                 SessionStart = cs.SessionStart,
                 SessionEnd = cs.SessionEnd,
-                ProfessorName = $"{cs.Offering.Professor.Person.FirstName} {cs.Offering.Professor.Person.LastName}",
+                ProfessorName = $"{cs.Offering.Professor.User.FirstName} {cs.Offering.Professor.User.LastName}",
                 Room = cs.Offering.Classroom.RoomNumber
             })
             .OrderBy(cs => cs.SessionStart)

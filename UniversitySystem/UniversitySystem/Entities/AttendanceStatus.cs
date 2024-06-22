@@ -1,10 +1,10 @@
 ﻿namespace UniversitySystem.Entities;
 
-public partial class AttendanceStatus
+public class AttendanceStatus
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
 
-    public string StatusName { get; set; } = null!;
+    public string StatusName { get; init; } = null!;
 
-    public virtual ICollection<Attendance> Attendances { get; set; } = new List<Attendance>();
+    public virtual ICollection<Attendance> Attendances { get; init; } = new List<Attendance>();
 }

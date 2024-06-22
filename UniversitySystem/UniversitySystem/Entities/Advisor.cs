@@ -1,20 +1,20 @@
 ﻿namespace UniversitySystem.Entities;
 
-public partial class Advisor
+public class Advisor
 {
-    public int StudentId { get; set; }
+    public int StudentId { get; init; }
 
-    public int ProfessorId { get; set; }
+    public int ProfessorId { get; init; }
 
-    public DateOnly AssignmentDate { get; set; }
+    public DateOnly AssignmentDate { get; init; }
 
-    public DateTime CreatedDate { get; set; }
+    public DateTime CreatedDate { get; init; }
 
-    public DateTime? ModifiedDate { get; set; }
+    public DateTime? ModifiedDate { get; init; }
 
-    public bool IsDeleted { get; set; }
+    public bool IsDeleted { get; init; }
 
-    public virtual Professor Professor { get; set; } = null!;
+    public virtual ProfessorProfile Professor { get; init; } = null!;
 
-    public virtual Student Student { get; set; } = null!;
+    public virtual StudentProfile Student { get; init; } = null!;
 }

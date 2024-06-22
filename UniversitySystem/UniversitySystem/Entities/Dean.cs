@@ -1,14 +1,14 @@
 ﻿namespace UniversitySystem.Entities;
 
-public partial class Dean
+public class Dean
 {
-    public int DepartmentId { get; set; }
+    public int DepartmentId { get; init; }
+    
+    public virtual Department Department { get; init; } = null!;
 
-    public int ProfessorId { get; set; }
+    public int ProfessorId { get; init; }
+    
+    public virtual ProfessorProfile Professor { get; init; } = null!;
 
-    public DateOnly EffectiveDate { get; set; }
-
-    public virtual Department Department { get; set; } = null!;
-
-    public virtual Professor Professor { get; set; } = null!;
+    public DateOnly EffectiveDate { get; init; }
 }

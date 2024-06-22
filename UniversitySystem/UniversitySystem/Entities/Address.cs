@@ -1,26 +1,26 @@
 ﻿namespace UniversitySystem.Entities;
 
-public partial class Address
+public class Address
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
 
-    public string Street { get; set; } = null!;
+    public string Street { get; init; } = null!;
 
-    public int HouseNumber { get; set; }
+    public int HouseNumber { get; init; }
 
-    public int? FlatNumber { get; set; }
+    public int? FlatNumber { get; init; }
 
-    public string City { get; set; } = null!;
+    public string City { get; init; } = null!;
 
-    public string PostalCode { get; set; } = null!;
+    public string PostalCode { get; init; } = null!;
 
-    public string Country { get; set; } = null!;
+    public string Country { get; init; } = null!;
 
-    public DateTime CreatedDate { get; set; }
+    public DateTime CreatedDate { get; init; }
 
-    public DateTime? ModifiedDate { get; set; }
+    public DateTime? ModifiedDate { get; init; }
 
-    public bool IsDeleted { get; set; }
+    public bool IsDeleted { get; init; }
 
-    public virtual ICollection<Person> People { get; set; } = new List<Person>();
+    public virtual ApplicationUser User { get; init; } = null!;
 }

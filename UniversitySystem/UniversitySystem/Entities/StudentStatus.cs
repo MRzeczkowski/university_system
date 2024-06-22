@@ -1,10 +1,10 @@
 ﻿namespace UniversitySystem.Entities;
 
-public partial class StudentStatus
+public class StudentStatus
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
 
-    public string StatusDescription { get; set; } = null!;
+    public string StatusDescription { get; init; } = null!;
 
-    public virtual ICollection<Student> Students { get; set; } = new List<Student>();
+    public virtual ICollection<StudentProfile> Students { get; init; } = new List<StudentProfile>();
 }

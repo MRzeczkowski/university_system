@@ -1,22 +1,22 @@
 ﻿namespace UniversitySystem.Entities;
 
-public partial class Attendance
+public class Attendance
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
 
-    public int EnrollmentId { get; set; }
+    public int EnrollmentId { get; init; }
 
-    public DateOnly DateOfClass { get; set; }
+    public DateOnly DateOfClass { get; init; }
 
-    public int StatusId { get; set; }
+    public int StatusId { get; init; }
 
-    public DateTime CreatedDate { get; set; }
+    public DateTime CreatedDate { get; init; }
 
-    public DateTime? ModifiedDate { get; set; }
+    public DateTime? ModifiedDate { get; init; }
 
-    public bool IsDeleted { get; set; }
+    public bool IsDeleted { get; init; }
 
-    public virtual Enrollment Enrollment { get; set; } = null!;
+    public virtual Enrollment Enrollment { get; init; } = null!;
 
-    public virtual AttendanceStatus Status { get; set; } = null!;
+    public virtual AttendanceStatus Status { get; init; } = null!;
 }

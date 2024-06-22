@@ -1,10 +1,10 @@
 ﻿namespace UniversitySystem.Entities;
 
-public partial class Gender
+public class Gender
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
 
-    public string Description { get; set; } = null!;
+    public string Description { get; init; } = null!;
 
-    public virtual ICollection<Person> People { get; set; } = new List<Person>();
+    public virtual ICollection<ApplicationUser> Users { get; init; } = new List<ApplicationUser>();
 }

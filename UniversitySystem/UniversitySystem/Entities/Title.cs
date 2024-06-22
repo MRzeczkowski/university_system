@@ -1,10 +1,10 @@
 ﻿namespace UniversitySystem.Entities;
 
-public partial class Title
+public class Title
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
 
-    public string TitleName { get; set; } = null!;
+    public string TitleName { get; init; } = null!;
 
-    public virtual ICollection<Professor> Professors { get; set; } = new List<Professor>();
+    public virtual ICollection<ProfessorProfile> Professors { get; init; } = new List<ProfessorProfile>();
 }

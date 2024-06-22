@@ -2,11 +2,11 @@ namespace UniversitySystem.Models;
 
 public class StudentGradesViewModel
 {
-    public string Semester { get; set; }
+    public string Semester { get; init; } = null!;
 
-    public string CourseName { get; set; }
+    public string CourseName { get; init; } = null!;
 
-    public decimal GradeValue { get; set; }
+    public decimal GradeValue { get; init; }
 
-    public DateOnly GradeDate { get; set; }
+    public DateOnly GradeDate { get; init; }
 }

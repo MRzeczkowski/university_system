@@ -1,26 +1,26 @@
 ﻿namespace UniversitySystem.Entities;
 
-public partial class Enrollment
+public class Enrollment
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
 
-    public int StudentId { get; set; }
+    public int StudentId { get; init; }
 
-    public int OfferingId { get; set; }
+    public virtual StudentProfile Student { get; init; } = null!;
 
-    public DateOnly EnrollmentDate { get; set; }
+    public int OfferingId { get; init; }
 
-    public DateTime CreatedDate { get; set; }
+    public virtual CourseOffering Offering { get; init; } = null!;
 
-    public DateTime? ModifiedDate { get; set; }
+    public DateOnly EnrollmentDate { get; init; }
 
-    public bool IsDeleted { get; set; }
+    public DateTime CreatedDate { get; init; }
 
-    public virtual ICollection<Attendance> Attendances { get; set; } = new List<Attendance>();
+    public DateTime? ModifiedDate { get; init; }
 
-    public virtual ICollection<Grade> Grades { get; set; } = new List<Grade>();
+    public bool IsDeleted { get; init; }
 
-    public virtual CourseOffering Offering { get; set; } = null!;
+    public virtual ICollection<Attendance> Attendances { get; init; } = new List<Attendance>();
 
-    public virtual Student Student { get; set; } = null!;
+    public virtual ICollection<Grade> Grades { get; init; } = new List<Grade>();
 }

@@ -1,57 +1,57 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using UniversitySystem.Entities;
 
 namespace UniversitySystem.Context;
 
-public partial class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationRole, long>
+[SuppressMessage("ReSharper", "StringLiteralTypo")]
+public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationRole, long>
 {
     public UniversityContext(DbContextOptions<UniversityContext> options)
         : base(options)
     {
     }
 
-    public virtual DbSet<Address> Addresses { get; set; }
+    public virtual DbSet<Address> Addresses { get; init; } = null!;
 
-    public virtual DbSet<AdministrativeEmployee> AdministrativeEmployees { get; set; }
+    public virtual DbSet<AdminProfile> AdministrativeEmployees { get; init; } = null!;
 
-    public virtual DbSet<Advisor> Advisors { get; set; }
+    public virtual DbSet<Advisor> Advisors { get; init; } = null!;
 
-    public virtual DbSet<Attendance> Attendances { get; set; }
+    public virtual DbSet<Attendance> Attendances { get; init; } = null!;
 
-    public virtual DbSet<AttendanceStatus> AttendanceStatuses { get; set; }
+    public virtual DbSet<AttendanceStatus> AttendanceStatuses { get; init; } = null!;
 
-    public virtual DbSet<ClassSession> ClassSessions { get; set; }
+    public virtual DbSet<ClassSession> ClassSessions { get; init; } = null!;
 
-    public virtual DbSet<Classroom> Classrooms { get; set; }
+    public virtual DbSet<Classroom> Classrooms { get; init; } = null!;
 
-    public virtual DbSet<Course> Courses { get; set; }
+    public virtual DbSet<Course> Courses { get; init; } = null!;
 
-    public virtual DbSet<CourseOffering> CourseOfferings { get; set; }
+    public virtual DbSet<CourseOffering> CourseOfferings { get; init; } = null!;
 
-    public virtual DbSet<Dean> Deans { get; set; }
+    public virtual DbSet<Dean> Deans { get; init; } = null!;
 
-    public virtual DbSet<Department> Departments { get; set; }
+    public virtual DbSet<Department> Departments { get; init; } = null!;
 
-    public virtual DbSet<Enrollment> Enrollments { get; set; }
+    public virtual DbSet<Enrollment> Enrollments { get; init; } = null!;
 
-    public virtual DbSet<Gender> Genders { get; set; }
+    public virtual DbSet<Gender> Genders { get; init; } = null!;
 
-    public virtual DbSet<Grade> Grades { get; set; }
+    public virtual DbSet<Grade> Grades { get; init; } = null!;
 
-    public virtual DbSet<Person> Persons { get; set; }
+    public virtual DbSet<ProfessorProfile> Professors { get; init; } = null!;
 
-    public virtual DbSet<Professor> Professors { get; set; }
+    public virtual DbSet<ProfessorStatus> ProfessorStatuses { get; init; } = null!;
 
-    public virtual DbSet<ProfessorStatus> ProfessorStatuses { get; set; }
+    public virtual DbSet<Semester> Semesters { get; init; } = null!;
 
-    public virtual DbSet<Semester> Semesters { get; set; }
+    public virtual DbSet<StudentProfile> Students { get; init; } = null!;
 
-    public virtual DbSet<Student> Students { get; set; }
+    public virtual DbSet<StudentStatus> StudentStatuses { get; init; } = null!;
 
-    public virtual DbSet<StudentStatus> StudentStatuses { get; set; }
-
-    public virtual DbSet<Title> Titles { get; set; }
+    public virtual DbSet<Title> Titles { get; init; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -77,28 +77,23 @@ public partial class UniversityContext : IdentityDbContext<ApplicationUser, Appl
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<AdministrativeEmployee>(entity =>
+        modelBuilder.Entity<AdminProfile>(entity =>
         {
-            entity.HasKey(e => e.EmployeeId).HasName("PK__Administ__7AD04F11FCAB43D0");
+            entity.HasKey(e => e.Id).HasName("PK__Administ__7AD04F11FCAB43D0");
 
             entity.ToTable("AdministrativeEmployees", "Administration");
 
             entity.HasIndex(e => e.DepartmentId, "idx_AdminEmployees_DepartmentId");
 
-            entity.HasIndex(e => e.PersonId, "idx_AdminEmployees_PersonId");
+            entity.HasIndex(e => e.UserId, "idx_AdminEmployees_UserId");
 
-            entity.Property(e => e.EmployeeId).ValueGeneratedNever();
+            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
 
-            entity.HasOne(d => d.Department).WithMany(p => p.AdministrativeEmployees)
-                .HasForeignKey(d => d.DepartmentId)
+            entity.HasOne(d => d.User).WithOne(p => p.AdminProfile)
+                .HasForeignKey<AdminProfile>(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_AdminEmployees_Department");
-
-            entity.HasOne(d => d.Person).WithMany(p => p.AdministrativeEmployees)
-                .HasForeignKey(d => d.PersonId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_AdminEmployees_Person");
+                .HasConstraintName("FK_AdminEmployees_User");
         });
 
         modelBuilder.Entity<Advisor>(entity =>
@@ -342,37 +337,7 @@ public partial class UniversityContext : IdentityDbContext<ApplicationUser, Appl
                 .HasConstraintName("FK_Grades_Enrollment");
         });
 
-        modelBuilder.Entity<Person>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__Persons__3214EC07F320E7FC");
-
-            entity.ToTable("Persons", "Administration");
-
-            entity.HasIndex(e => e.AddressId, "idx_Persons_AddressId");
-
-            entity.HasIndex(e => e.GenderId, "idx_Persons_GenderId");
-
-            entity.Property(e => e.Id).ValueGeneratedNever();
-            entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.FirstName)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.LastName)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-
-            entity.HasOne(d => d.Address).WithMany(p => p.People)
-                .HasForeignKey(d => d.AddressId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Persons_Address");
-
-            entity.HasOne(d => d.Gender).WithMany(p => p.People)
-                .HasForeignKey(d => d.GenderId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Persons_Gender");
-        });
-
-        modelBuilder.Entity<Professor>(entity =>
+        modelBuilder.Entity<ProfessorProfile>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Professo__3214EC072A95EB5C");
 
@@ -380,7 +345,7 @@ public partial class UniversityContext : IdentityDbContext<ApplicationUser, Appl
 
             entity.HasIndex(e => e.DepartmentId, "idx_Professors_DepartmentId");
 
-            entity.HasIndex(e => e.PersonId, "idx_Professors_PersonId");
+            entity.HasIndex(e => e.UserId, "idx_Professors_UserId");
 
             entity.HasIndex(e => e.StatusId, "idx_Professors_StatusId");
 
@@ -395,10 +360,10 @@ public partial class UniversityContext : IdentityDbContext<ApplicationUser, Appl
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Professors_Department");
 
-            entity.HasOne(d => d.Person).WithMany(p => p.Professors)
-                .HasForeignKey(d => d.PersonId)
+            entity.HasOne(d => d.User).WithOne(p => p.ProfessorProfile)
+                .HasForeignKey<ProfessorProfile>(p => p.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Professors_Person");
+                .HasConstraintName("FK_Professors_User");
 
             entity.HasOne(d => d.Status).WithMany(p => p.Professors)
                 .HasForeignKey(d => d.StatusId)
@@ -437,13 +402,13 @@ public partial class UniversityContext : IdentityDbContext<ApplicationUser, Appl
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<Student>(entity =>
+        modelBuilder.Entity<StudentProfile>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Students__3214EC0795BD6843");
 
             entity.ToTable("Students", "Students");
 
-            entity.HasIndex(e => e.PersonId, "idx_Students_PersonId");
+            entity.HasIndex(e => e.UserId, "idx_Students_UserId");
 
             entity.HasIndex(e => e.StatusId, "idx_Students_StatusId");
 
@@ -451,10 +416,10 @@ public partial class UniversityContext : IdentityDbContext<ApplicationUser, Appl
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.StatusId).HasDefaultValue(1);
 
-            entity.HasOne(d => d.Person).WithMany(p => p.Students)
-                .HasForeignKey(d => d.PersonId)
+            entity.HasOne(d => d.User).WithOne(p => p.StudentProfile)
+                .HasForeignKey<StudentProfile>(s => s.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Students_Person");
+                .HasConstraintName("FK_Students_User");
 
             entity.HasOne(d => d.Status).WithMany(p => p.Students)
                 .HasForeignKey(d => d.StatusId)
@@ -490,8 +455,46 @@ public partial class UniversityContext : IdentityDbContext<ApplicationUser, Appl
 
         base.OnModelCreating(modelBuilder);
 
-        OnModelCreatingPartial(modelBuilder);
-    }
+        modelBuilder.Entity<ApplicationUser>(entity =>
+        {
+            // Primary key is already defined by IdentityUser
 
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+            entity.Property(e => e.FirstName)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            entity.Property(e => e.LastName)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            entity.Property(e => e.DateOfBirth)
+                .HasColumnType("datetime2"); // Specify the type if needed
+
+            entity.HasOne(e => e.Address)
+                .WithMany()
+                .HasForeignKey(e => e.AddressId)
+                .IsRequired();
+
+            // Gender relationship
+            entity.HasOne(e => e.Gender)
+                .WithMany()
+                .HasForeignKey(e => e.GenderId)
+                .IsRequired();
+
+            // StudentProfile one-to-one relationship
+            entity.HasOne(e => e.StudentProfile)
+                .WithOne(s => s.User)
+                .HasForeignKey<StudentProfile>(s => s.UserId);
+
+            // ProfessorProfile one-to-one relationship
+            entity.HasOne(e => e.ProfessorProfile)
+                .WithOne(p => p.User)
+                .HasForeignKey<ProfessorProfile>(p => p.UserId);
+
+            // AdminProfile one-to-one relationship
+            entity.HasOne(e => e.AdminProfile)
+                .WithOne(a => a.User)
+                .HasForeignKey<AdminProfile>(a => a.UserId);
+        });
+    }
 }

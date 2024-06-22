@@ -1,34 +1,34 @@
 ﻿namespace UniversitySystem.Entities;
 
-public partial class CourseOffering
+public class CourseOffering
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
 
-    public int CourseId { get; set; }
+    public int CourseId { get; init; }
 
-    public int SemesterId { get; set; }
+    public virtual Course Course { get; init; } = null!;
 
-    public int Year { get; set; }
+    public int SemesterId { get; init; }
 
-    public int ProfessorId { get; set; }
+    public virtual Semester Semester { get; init; } = null!;
 
-    public int ClassroomId { get; set; }
+    public int Year { get; init; }
 
-    public DateTime CreatedDate { get; set; }
+    public int ProfessorId { get; init; }
 
-    public DateTime? ModifiedDate { get; set; }
+    public virtual ProfessorProfile Professor { get; init; } = null!;
 
-    public bool IsDeleted { get; set; }
+    public int ClassroomId { get; init; }
 
-    public virtual ICollection<ClassSession> ClassSessions { get; set; } = new List<ClassSession>();
+    public virtual Classroom Classroom { get; init; } = null!;
 
-    public virtual Classroom Classroom { get; set; } = null!;
+    public DateTime CreatedDate { get; init; }
 
-    public virtual Course Course { get; set; } = null!;
+    public DateTime? ModifiedDate { get; init; }
 
-    public virtual ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
+    public bool IsDeleted { get; init; }
 
-    public virtual Professor Professor { get; set; } = null!;
+    public virtual ICollection<ClassSession> ClassSessions { get; init; } = new List<ClassSession>();
 
-    public virtual Semester Semester { get; set; } = null!;
+    public virtual ICollection<Enrollment> Enrollments { get; init; } = new List<Enrollment>();
 }

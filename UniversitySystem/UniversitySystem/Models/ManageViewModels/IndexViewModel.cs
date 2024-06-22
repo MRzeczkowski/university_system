@@ -4,18 +4,18 @@ namespace UniversitySystem.Models.ManageViewModels
 {
     public class IndexViewModel
     {
-        public string? Username { get; set; }
+        public string? Username { get; init; }
 
-        public bool IsEmailConfirmed { get; set; }
+        public bool IsEmailConfirmed { get; init; }
 
         [Required]
         [EmailAddress]
-        public string Email { get; set; }
+        public string Email { get; init; } = null!;
 
         [Phone]
         [Display(Name = "Phone number")]
-        public string? PhoneNumber { get; set; }
+        public string? PhoneNumber { get; init; }
 
-        public string? StatusMessage { get; set; }
+        public string? StatusMessage { get; init; }
     }
 }

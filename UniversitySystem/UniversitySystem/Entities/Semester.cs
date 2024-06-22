@@ -1,10 +1,10 @@
 ﻿namespace UniversitySystem.Entities;
 
-public partial class Semester
+public class Semester
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
 
-    public string Name { get; set; } = null!;
+    public string Name { get; init; } = null!;
 
-    public virtual ICollection<CourseOffering> CourseOfferings { get; set; } = new List<CourseOffering>();
+    public virtual ICollection<CourseOffering> CourseOfferings { get; init; } = new List<CourseOffering>();
 }
