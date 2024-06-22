@@ -83,8 +83,6 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
 
             entity.ToTable("AdministrativeEmployees", "Administration");
 
-            entity.HasIndex(e => e.DepartmentId, "idx_AdminEmployees_DepartmentId");
-
             entity.HasIndex(e => e.UserId, "idx_AdminEmployees_UserId");
 
             entity.Property(e => e.Id).ValueGeneratedNever();

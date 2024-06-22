@@ -8,10 +8,6 @@ public class AdminProfile
 
     public virtual ApplicationUser User { get; init; } = null!;
 
-    public int DepartmentId { get; init; }
-
-    public virtual Department Department { get; init; } = null!;
-
     public DateTime CreatedDate { get; init; }
 
     public DateTime? ModifiedDate { get; init; }
