@@ -18,9 +18,9 @@ public class ApplicationUser : IdentityUser<long>
 
     public virtual Gender Gender { get; init; } = null!;
 
-    public virtual StudentProfile StudentProfile { get; init; } = null!;
+    public virtual StudentProfile? StudentProfile { get; init; }
 
-    public virtual ProfessorProfile ProfessorProfile { get; init; } = null!;
+    public virtual ProfessorProfile? ProfessorProfile { get; init; }
 
-    public virtual AdminProfile AdminProfile { get; init; } = null!;
+    public virtual AdminProfile? AdminProfile { get; init; }
 }
