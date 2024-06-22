@@ -468,30 +468,26 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
                 .HasMaxLength(50);
 
             entity.Property(e => e.DateOfBirth)
-                .HasColumnType("datetime2"); // Specify the type if needed
+                .HasColumnType("datetime2");
 
             entity.HasOne(e => e.Address)
-                .WithMany()
-                .HasForeignKey(e => e.AddressId)
+                .WithOne(a => a.User)
+                .HasForeignKey<Address>(e => e.UserId)
                 .IsRequired();
 
-            // Gender relationship
             entity.HasOne(e => e.Gender)
-                .WithMany()
+                .WithMany(g => g.Users)
                 .HasForeignKey(e => e.GenderId)
                 .IsRequired();
 
-            // StudentProfile one-to-one relationship
             entity.HasOne(e => e.StudentProfile)
                 .WithOne(s => s.User)
                 .HasForeignKey<StudentProfile>(s => s.UserId);
 
-            // ProfessorProfile one-to-one relationship
             entity.HasOne(e => e.ProfessorProfile)
                 .WithOne(p => p.User)
                 .HasForeignKey<ProfessorProfile>(p => p.UserId);
 
-            // AdminProfile one-to-one relationship
             entity.HasOne(e => e.AdminProfile)
                 .WithOne(a => a.User)
                 .HasForeignKey<AdminProfile>(a => a.UserId);

@@ -22,5 +22,7 @@ public class Address
 
     public bool IsDeleted { get; init; }
 
+    public long UserId { get; init; }
+    
     public virtual ApplicationUser User { get; init; } = null!;
 }
