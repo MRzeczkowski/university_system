@@ -74,12 +74,17 @@ public static class SampleData
             }
         }
 
-        var user = new ApplicationUser
+        var users = new List<ApplicationUser>();
+
+        const string adminEmail = "admin@uni.com";
+        const string adminUserName = "admin";
+
+        var admin = new ApplicationUser
         {
-            Email = "admin@uni.com",
-            NormalizedEmail = "admin@uni.com".ToUpper(),
-            UserName = "admin",
-            NormalizedUserName = "ADMIN",
+            Email = adminEmail,
+            NormalizedEmail = adminEmail.ToUpper(),
+            UserName = adminUserName,
+            NormalizedUserName = adminUserName.ToUpper(),
             PhoneNumber = "+111111111111",
             EmailConfirmed = true,
             PhoneNumberConfirmed = true,
@@ -90,7 +95,7 @@ public static class SampleData
             GenderId = 1,
             Address = new Address
             {
-                Street = "Krucza", 
+                Street = "Krucza",
                 HouseNumber = 32,
                 City = "Ciechanów",
                 PostalCode = "06-400",
@@ -98,12 +103,50 @@ public static class SampleData
             }
         };
 
+        users.Add(admin);
+
+#if DEBUG
+        const string test1Email = "test1@test.com";
+
+        var test1 = new ApplicationUser
+        {
+            Email = test1Email,
+            NormalizedEmail = test1Email.ToUpper(),
+            UserName = test1Email,
+            NormalizedUserName = test1Email.ToUpper(),
+            EmailConfirmed = true,
+            SecurityStamp = Guid.NewGuid().ToString("D"),
+            LockoutEnd = DateTimeOffset.MaxValue
+        };
+
+        users.Add(test1);
+
+        const string test2Email = "test2@test.com";
+
+        var test2 = new ApplicationUser
+        {
+            Email = test2Email,
+            NormalizedEmail = test2Email.ToUpper(),
+            UserName = test2Email,
+            NormalizedUserName = test2Email.ToUpper(),
+            EmailConfirmed = true,
+            SecurityStamp = Guid.NewGuid().ToString("D"),
+            LockoutEnd = DateTimeOffset.MaxValue
+        };
+
+        users.Add(test2);
+#endif
+
         var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-        if (!context.Users.Any(u => u.UserName == user.UserName))
+        foreach (var user in users.Where(user => !context.Users.Any(u => u.UserName == user.UserName)))
         {
             userManager.CreateAsync(user, "P@$$w0rd").GetAwaiter().GetResult();
-            userManager.AddToRolesAsync(user, roles).GetAwaiter().GetResult();
+
+            if (user.UserName == adminUserName)
+            {
+                userManager.AddToRolesAsync(admin, roles).GetAwaiter().GetResult();
+            }
         }
 
         context.SaveChanges();

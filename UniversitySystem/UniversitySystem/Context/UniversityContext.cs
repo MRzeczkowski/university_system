@@ -409,6 +409,10 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
             entity.HasOne(e => e.Gender)
                 .WithMany(g => g.Users)
                 .HasForeignKey(e => e.GenderId);
+            
+            entity.HasOne(e => e.Address)
+                .WithOne(g => g.User)
+                .HasForeignKey<Address>(e => e.UserId);
 
             entity.HasOne(e => e.StudentProfile)
                 .WithOne(s => s.User)
