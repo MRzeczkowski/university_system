@@ -54,10 +54,12 @@ public class AccountController : Controller
             return View(model);
         }
 
-        // This doesn't count login failures towards account lockout
-        // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-        var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe,
+        var result = await _signInManager.PasswordSignInAsync(
+            model.UserName,
+            model.Password,
+            model.RememberMe,
             lockoutOnFailure: false);
+
         if (result.Succeeded)
         {
             _logger.LogInformation("User logged in.");
@@ -66,7 +68,8 @@ public class AccountController : Controller
 
         if (result.IsLockedOut)
         {
-            _logger.LogWarning("User account locked out.");
+            _logger.LogWarning(
+                "User account locked out. Your account may have not yet been setup by the Administration.");
             return RedirectToAction(nameof(Lockout));
         }
 
@@ -102,7 +105,11 @@ public class AccountController : Controller
             return View(model);
         }
 
-        var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+        // New user is locked out until AdministrativeEmployee sets up the rest of his account. 
+        var user = new ApplicationUser
+        {
+            UserName = model.Email, Email = model.Email, LockoutEnabled = true, LockoutEnd = DateTimeOffset.MaxValue
+        };
         var result = await _userManager.CreateAsync(user, model.Password);
         if (result.Succeeded)
         {
@@ -112,7 +119,6 @@ public class AccountController : Controller
             var callbackUrl = Url.EmailConfirmationLink(user.Id.ToString(), code, Request.Scheme)!;
             await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
-            await _signInManager.SignInAsync(user, isPersistent: false);
             _logger.LogInformation("User created a new account with password.");
             return RedirectToLocal(returnUrl);
         }

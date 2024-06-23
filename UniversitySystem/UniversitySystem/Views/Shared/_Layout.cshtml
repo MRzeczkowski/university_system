@@ -36,6 +36,14 @@
                 </a>
             }
 
+            @if (User.IsInRole("AdministrativeEmployee"))
+            {
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-area=""
+                   asp-controller="Registration" asp-action="Index">
+                    Pending User Registrations
+                </a>
+            }
+
         </div>
     </div>
     <!-- Page content wrapper-->

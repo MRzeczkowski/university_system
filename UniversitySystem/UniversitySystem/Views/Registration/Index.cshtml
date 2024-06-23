@@ -1,0 +1,27 @@
+@model IEnumerable<UserRegistrationViewModel>
+
+@{
+    ViewData["Title"] = "Pending User Registrations";
+}
+
+<h2>Pending User Registrations</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Email</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.Email</td>
+            <td>
+                <a asp-action="EditProfile" asp-route-userId="@user.UserId" class="btn btn-primary">Complete Profile</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
