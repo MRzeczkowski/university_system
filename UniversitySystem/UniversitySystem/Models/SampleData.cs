@@ -14,47 +14,47 @@ public static class SampleData
 
         if (!context.Genders.Any())
         {
-            context.Genders.Add(new Gender { Id = 1, Description = "Male" });
-            context.Genders.Add(new Gender { Id = 2, Description = "Female" });
-            context.Genders.Add(new Gender { Id = 3, Description = "Prefer Not to Say" });
+            context.Genders.Add(new Gender { Description = "Male" });
+            context.Genders.Add(new Gender { Description = "Female" });
+            context.Genders.Add(new Gender { Description = "Prefer Not to Say" });
         }
 
         if (!context.StudentStatuses.Any())
         {
-            context.StudentStatuses.Add(new StudentStatus { Id = 1, StatusDescription = "Enrolled" });
-            context.StudentStatuses.Add(new StudentStatus { Id = 2, StatusDescription = "Graduated" });
-            context.StudentStatuses.Add(new StudentStatus { Id = 3, StatusDescription = "Suspended" });
-            context.StudentStatuses.Add(new StudentStatus { Id = 4, StatusDescription = "Withdrawn" });
+            context.StudentStatuses.Add(new StudentStatus { StatusDescription = "Enrolled" });
+            context.StudentStatuses.Add(new StudentStatus { StatusDescription = "Graduated" });
+            context.StudentStatuses.Add(new StudentStatus { StatusDescription = "Suspended" });
+            context.StudentStatuses.Add(new StudentStatus { StatusDescription = "Withdrawn" });
         }
 
         if (!context.ProfessorStatuses.Any())
         {
-            context.ProfessorStatuses.Add(new ProfessorStatus { Id = 1, StatusDescription = "Active" });
-            context.ProfessorStatuses.Add(new ProfessorStatus { Id = 2, StatusDescription = "On Leave" });
-            context.ProfessorStatuses.Add(new ProfessorStatus { Id = 3, StatusDescription = "Retired" });
-            context.ProfessorStatuses.Add(new ProfessorStatus { Id = 4, StatusDescription = "Emeritus" });
+            context.ProfessorStatuses.Add(new ProfessorStatus { StatusDescription = "Active" });
+            context.ProfessorStatuses.Add(new ProfessorStatus { StatusDescription = "On Leave" });
+            context.ProfessorStatuses.Add(new ProfessorStatus { StatusDescription = "Retired" });
+            context.ProfessorStatuses.Add(new ProfessorStatus { StatusDescription = "Emeritus" });
         }
 
         if (!context.Titles.Any())
         {
-            context.Titles.Add(new Title { Id = 1, TitleName = "Professor" });
-            context.Titles.Add(new Title { Id = 2, TitleName = "Associate Professor" });
-            context.Titles.Add(new Title { Id = 3, TitleName = "Assistant Professor" });
-            context.Titles.Add(new Title { Id = 4, TitleName = "Lecturer" });
-            context.Titles.Add(new Title { Id = 5, TitleName = "Senior Lecturer" });
+            context.Titles.Add(new Title { TitleName = "Professor" });
+            context.Titles.Add(new Title { TitleName = "Associate Professor" });
+            context.Titles.Add(new Title { TitleName = "Assistant Professor" });
+            context.Titles.Add(new Title { TitleName = "Lecturer" });
+            context.Titles.Add(new Title { TitleName = "Senior Lecturer" });
         }
 
         if (!context.Semesters.Any())
         {
-            context.Semesters.Add(new Semester { Id = 1, Name = "Winter" });
-            context.Semesters.Add(new Semester { Id = 2, Name = "Summer" });
+            context.Semesters.Add(new Semester { Name = "Winter" });
+            context.Semesters.Add(new Semester { Name = "Summer" });
         }
 
         if (!context.AttendanceStatuses.Any())
         {
-            context.AttendanceStatuses.Add(new AttendanceStatus { Id = 1, StatusName = "Absent" });
-            context.AttendanceStatuses.Add(new AttendanceStatus { Id = 2, StatusName = "Present" });
-            context.AttendanceStatuses.Add(new AttendanceStatus { Id = 3, StatusName = "Excused" });
+            context.AttendanceStatuses.Add(new AttendanceStatus { StatusName = "Absent" });
+            context.AttendanceStatuses.Add(new AttendanceStatus { StatusName = "Present" });
+            context.AttendanceStatuses.Add(new AttendanceStatus { StatusName = "Excused" });
         }
 
         var roles = new[]
@@ -90,7 +90,6 @@ public static class SampleData
             GenderId = 1,
             Address = new Address
             {
-                Id = 1,
                 Street = "Krucza", 
                 HouseNumber = 32,
                 City = "Ciechanów",

@@ -38,8 +38,8 @@ public class RegistrationController : Controller
                         && (u.FirstName == null
                             || u.LastName == null
                             || u.DateOfBirth == null
-                            || u.AddressId == null
-                            || u.GenderId == null))
+                            || u.Address == null
+                            || u.Gender == null))
             .ToListAsync();
 
         var userViewModels = usersToHandle
