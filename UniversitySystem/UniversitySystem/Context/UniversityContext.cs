@@ -83,8 +83,6 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
 
             entity.ToTable("AdministrativeEmployees", "Administration");
 
-            entity.HasIndex(e => e.UserId);
-
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
 
@@ -98,8 +96,6 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
             entity.HasKey(e => new { e.StudentId, e.ProfessorId });
 
             entity.ToTable("Advisors", "Students");
-
-            entity.HasIndex(e => e.ProfessorId);
 
             entity.HasIndex(e => e.StudentId);
 
@@ -119,10 +115,6 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
             entity.HasKey(e => e.Id);
 
             entity.ToTable("Attendance", "Students");
-
-            entity.HasIndex(e => e.EnrollmentId);
-
-            entity.HasIndex(e => e.StatusId);
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
@@ -186,8 +178,6 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
 
             entity.ToTable("Courses", "Academics");
 
-            entity.HasIndex(e => e.DepartmentId);
-
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.CourseName)
                 .HasMaxLength(100)
@@ -204,14 +194,6 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
             entity.HasKey(e => e.Id);
 
             entity.ToTable("CourseOfferings", "Academics");
-
-            entity.HasIndex(e => e.ClassroomId);
-
-            entity.HasIndex(e => e.CourseId);
-
-            entity.HasIndex(e => e.ProfessorId);
-
-            entity.HasIndex(e => e.SemesterId);
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
@@ -241,8 +223,6 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
 
             entity.HasIndex(e => e.DepartmentId);
 
-            entity.HasIndex(e => e.ProfessorId);
-
             entity.HasOne(d => d.Department).WithMany(p => p.Deans)
                 .HasForeignKey(d => d.DepartmentId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
@@ -271,10 +251,6 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
             entity.HasKey(e => e.Id);
 
             entity.ToTable("Enrollments", "Students");
-
-            entity.HasIndex(e => e.OfferingId);
-
-            entity.HasIndex(e => e.StudentId);
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
@@ -308,8 +284,6 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
 
             entity.ToTable("Grades", "Students");
 
-            entity.HasIndex(e => e.EnrollmentId);
-
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.FinalGrade).HasColumnType("decimal(5, 2)");
@@ -324,14 +298,6 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
             entity.HasKey(e => e.Id);
 
             entity.ToTable("Professors", "Academics");
-
-            entity.HasIndex(e => e.DepartmentId);
-
-            entity.HasIndex(e => e.UserId);
-
-            entity.HasIndex(e => e.StatusId);
-
-            entity.HasIndex(e => e.TitleId);
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
@@ -386,10 +352,6 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
 
             entity.ToTable("Students", "Students");
 
-            entity.HasIndex(e => e.UserId);
-
-            entity.HasIndex(e => e.StatusId);
-
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.StatusId).HasDefaultValue(1);
@@ -443,10 +405,6 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
 
             entity.Property(e => e.DateOfBirth)
                 .HasColumnType("datetime2");
-
-            entity.HasOne(e => e.Address)
-                .WithOne(a => a.User)
-                .HasForeignKey<Address>(e => e.UserId);
 
             entity.HasOne(e => e.Gender)
                 .WithMany(g => g.Users)

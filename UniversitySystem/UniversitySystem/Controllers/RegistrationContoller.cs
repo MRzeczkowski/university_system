@@ -39,7 +39,7 @@ public class RegistrationController : Controller
                             || u.LastName == null
                             || u.DateOfBirth == null
                             || u.Address == null
-                            || u.Gender == null))
+                            || u.GenderId == null))
             .ToListAsync();
 
         var userViewModels = usersToHandle
@@ -142,7 +142,6 @@ public class RegistrationController : Controller
                 _context.Addresses.Add(address);
                 address.UserId = user.Id;
                 await _context.SaveChangesAsync();
-                user.AddressId = address.Id;
             }
         }
 

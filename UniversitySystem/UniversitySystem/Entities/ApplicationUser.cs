@@ -10,13 +10,11 @@ public class ApplicationUser : IdentityUser<long>
 
     public DateTime? DateOfBirth { get; set; }
 
-    public int? AddressId { get; set; }
-
-    public virtual Address? Address { get; set; }
-
     public int? GenderId { get; set; }
 
     public virtual Gender? Gender { get; set; }
+
+    public virtual Address? Address { get; set; }
 
     public virtual StudentProfile? StudentProfile { get; set; }
 
