@@ -5,8 +5,7 @@ namespace UniversitySystem.Models.AccountViewModels
     public class LoginViewModel
     {
         [Required]
-        [EmailAddress]
-        public string Email { get; init; } = null!;
+        public string UserName { get; init; } = null!;
 
         [Required]
         [DataType(DataType.Password)]
