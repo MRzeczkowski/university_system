@@ -147,7 +147,6 @@ public class RegistrationController : Controller
 
         if (IsProfileComplete(user))
         {
-            user.LockoutEnabled = false;
             user.LockoutEnd = null;
             await _emailSender.SendEmailAsync(
                 user.Email!,
