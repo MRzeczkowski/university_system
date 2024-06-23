@@ -1,17 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace UniversitySystem.Models.AccountViewModels
+namespace UniversitySystem.Models.AccountViewModels;
+
+public class LoginViewModel
 {
-    public class LoginViewModel
-    {
-        [Required]
-        public string UserName { get; init; } = null!;
+    [Required]
+    public string UserName { get; init; } = null!;
 
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; init; } = null!;
+    [Required]
+    [DataType(DataType.Password)]
+    public string Password { get; init; } = null!;
 
-        [Display(Name = "Remember me?")]
-        public bool RememberMe { get; init; }
-    }
+    [Display(Name = "Remember me?")]
+    public bool RememberMe { get; init; }
 }
