@@ -29,8 +29,7 @@ public class ManageController : Controller
         _logger = logger;
     }
 
-    [TempData]
-    public string? StatusMessage { get; set; }
+    [TempData] private string? StatusMessage { get; set; }
 
     [HttpGet]
     public async Task<IActionResult> Index()

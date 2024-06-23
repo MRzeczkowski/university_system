@@ -24,7 +24,15 @@
             {
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-area=""
                    asp-controller="Grades" asp-action="Index">
-                    Grades
+                    My grades
+                </a>
+            }
+
+            @if (User.IsInRole("Student"))
+            {
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-area=""
+                   asp-controller="UpcomingClasses" asp-action="Index">
+                    My upcoming classes
                 </a>
             }
 
@@ -51,7 +59,7 @@
                                 Account
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <partial name="_LoginPartial" />
+                                <partial name="_LoginPartial"/>
                             </div>
                         </li>
                     </ul>

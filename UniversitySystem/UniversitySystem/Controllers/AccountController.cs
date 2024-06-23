@@ -32,8 +32,6 @@ public class AccountController : Controller
         _logger = logger;
     }
 
-    [TempData] public string? ErrorMessage { get; set; }
-
     [HttpGet]
     [AllowAnonymous]
     public async Task<IActionResult> Login(string? returnUrl = null)
