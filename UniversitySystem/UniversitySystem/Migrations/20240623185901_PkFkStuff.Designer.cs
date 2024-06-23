@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UniversitySystem.Context;
 
@@ -11,9 +12,11 @@ using UniversitySystem.Context;
 namespace UniversitySystem.Migrations
 {
     [DbContext(typeof(UniversityContext))]
-    partial class UniversityContextModelSnapshot : ModelSnapshot
+    [Migration("20240623185901_PkFkStuff")]
+    partial class PkFkStuff
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -951,7 +954,8 @@ namespace UniversitySystem.Migrations
                         .WithOne("Address")
                         .HasForeignKey("UniversitySystem.Entities.Address", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("Temp1");
 
                     b.Navigation("User");
                 });
@@ -961,7 +965,8 @@ namespace UniversitySystem.Migrations
                     b.HasOne("UniversitySystem.Entities.ApplicationUser", "User")
                         .WithOne("AdminProfile")
                         .HasForeignKey("UniversitySystem.Entities.AdminProfile", "UserId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("Temp5");
 
                     b.Navigation("User");
                 });
@@ -987,7 +992,8 @@ namespace UniversitySystem.Migrations
                 {
                     b.HasOne("UniversitySystem.Entities.Gender", "Gender")
                         .WithMany("Users")
-                        .HasForeignKey("GenderId");
+                        .HasForeignKey("GenderId")
+                        .HasConstraintName("Temp2");
 
                     b.Navigation("Gender");
                 });
@@ -1124,7 +1130,8 @@ namespace UniversitySystem.Migrations
                     b.HasOne("UniversitySystem.Entities.ApplicationUser", "User")
                         .WithOne("ProfessorProfile")
                         .HasForeignKey("UniversitySystem.Entities.ProfessorProfile", "UserId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("Temp4");
 
                     b.Navigation("Department");
 
@@ -1145,7 +1152,8 @@ namespace UniversitySystem.Migrations
                     b.HasOne("UniversitySystem.Entities.ApplicationUser", "User")
                         .WithOne("StudentProfile")
                         .HasForeignKey("UniversitySystem.Entities.StudentProfile", "UserId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("Temp3");
 
                     b.Navigation("Status");
 
