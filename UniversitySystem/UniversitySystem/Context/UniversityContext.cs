@@ -458,11 +458,9 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
             // Primary key is already defined by IdentityUser
 
             entity.Property(e => e.FirstName)
-                .IsRequired()
                 .HasMaxLength(50);
 
             entity.Property(e => e.LastName)
-                .IsRequired()
                 .HasMaxLength(50);
 
             entity.Property(e => e.DateOfBirth)
@@ -470,13 +468,11 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
 
             entity.HasOne(e => e.Address)
                 .WithOne(a => a.User)
-                .HasForeignKey<Address>(e => e.UserId)
-                .IsRequired();
+                .HasForeignKey<Address>(e => e.UserId);
 
             entity.HasOne(e => e.Gender)
                 .WithMany(g => g.Users)
-                .HasForeignKey(e => e.GenderId)
-                .IsRequired();
+                .HasForeignKey(e => e.GenderId);
 
             entity.HasOne(e => e.StudentProfile)
                 .WithOne(s => s.User)
