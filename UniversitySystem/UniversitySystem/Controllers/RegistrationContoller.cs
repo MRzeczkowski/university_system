@@ -139,8 +139,8 @@ public class RegistrationController : Controller
             else
             {
                 var address = ToModel(model.Address);
-                _context.Addresses.Add(address);
                 address.UserId = user.Id;
+                _context.Addresses.Add(address);
                 await _context.SaveChangesAsync();
             }
         }
