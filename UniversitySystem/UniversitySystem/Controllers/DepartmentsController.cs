@@ -63,6 +63,7 @@ public class DepartmentsController : Controller
         }
 
         var department = await _context.Departments
+            .Where(d => !d.IsDeleted)
             .Select(d => new DepartmentViewModel
             {
                 Id = d.Id,
@@ -132,6 +133,7 @@ public class DepartmentsController : Controller
         }
 
         var department = await _context.Departments
+            .Where(d => !d.IsDeleted)
             .Select(d => new DepartmentViewModel
             {
                 Id = d.Id,

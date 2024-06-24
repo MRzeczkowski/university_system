@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using UniversitySystem.Context;
 using UniversitySystem.Entities;
-using UniversitySystem.Models;
+using UniversitySystem.Models.UserRegistrationViewModels;
 using UniversitySystem.Services;
 
 namespace UniversitySystem.Controllers;
@@ -52,7 +52,7 @@ public class RegistrationController : Controller
     private static UserRegistrationViewModel ToViewModel(ApplicationUser u) =>
         new()
         {
-            UserId = u.Id.ToString(),
+            UserId = u.Id,
             Email = u.Email,
             FirstName = u.FirstName,
             LastName = u.LastName,
@@ -119,7 +119,7 @@ public class RegistrationController : Controller
             return View(model);
         }
 
-        var user = await _userManager.FindByIdAsync(model.UserId!);
+        var user = await _userManager.FindByIdAsync(model.UserId.ToString());
         if (user == null)
         {
             return NotFound();
@@ -157,7 +157,7 @@ public class RegistrationController : Controller
         var result = await _userManager.UpdateAsync(user);
         if (result.Succeeded)
         {
-            await _context.SaveChangesAsync(); // Save changes for the user and address
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 

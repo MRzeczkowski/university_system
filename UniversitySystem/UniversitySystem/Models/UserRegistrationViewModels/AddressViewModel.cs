@@ -1,4 +1,4 @@
-namespace UniversitySystem.Models;
+namespace UniversitySystem.Models.UserRegistrationViewModels;
 
 public class AddressViewModel
 {

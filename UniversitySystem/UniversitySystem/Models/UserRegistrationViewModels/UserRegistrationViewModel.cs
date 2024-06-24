@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace UniversitySystem.Models;
+namespace UniversitySystem.Models.UserRegistrationViewModels;
 
 public class UserRegistrationViewModel
 {
-    public string? UserId { get; set; }
+    public long UserId { get; set; }
 
     public string? Email { get; set; }
 
