@@ -30,22 +30,13 @@
     <ItemGroup>
       <AdditionalFiles Include="Views\Account\AccessDenied.cshtml" />
       <AdditionalFiles Include="Views\Account\ConfirmEmail.cshtml" />
-      <AdditionalFiles Include="Views\Account\ConfirmEmailChange.cshtml" />
-      <AdditionalFiles Include="Views\Account\ExternalLogin.cshtml" />
       <AdditionalFiles Include="Views\Account\ForgotPassword.cshtml" />
       <AdditionalFiles Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
       <AdditionalFiles Include="Views\Account\Lockout.cshtml" />
       <AdditionalFiles Include="Views\Account\Login.cshtml" />
-      <AdditionalFiles Include="Views\Account\LoginWith2fa.cshtml" />
-      <AdditionalFiles Include="Views\Account\LoginWithRecoveryCode.cshtml" />
-      <AdditionalFiles Include="Views\Account\Logout.cshtml" />
       <AdditionalFiles Include="Views\Account\Register.cshtml" />
-      <AdditionalFiles Include="Views\Account\RegisterConfirmation.cshtml" />
-      <AdditionalFiles Include="Views\Account\ResendEmailConfirmation.cshtml" />
       <AdditionalFiles Include="Views\Account\ResetPassword.cshtml" />
       <AdditionalFiles Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-      <AdditionalFiles Include="Views\Account\_StatusMessage.cshtml" />
-      <AdditionalFiles Include="Views\Account\_ViewImports.cshtml" />
     </ItemGroup>
 
     <ItemGroup>
