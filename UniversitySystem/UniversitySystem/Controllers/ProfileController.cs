@@ -9,6 +9,7 @@ using UniversitySystem.Models.ProfileViewModels;
 
 namespace UniversitySystem.Controllers;
 
+[Authorize(Roles = "AdministrativeEmployee")]
 public class ProfileController : Controller
 {
     private readonly UniversityContext _context;
@@ -26,13 +27,19 @@ public class ProfileController : Controller
     }
 
     [HttpGet]
-    [Authorize(Roles = "AdministrativeEmployee")]
     public async Task<ViewResult> Index()
     {
         // Many queries should be better for the database since RDBMs usually perform better with small queries instead of fetching whole table.
         // I don't have time for pagination but this would be best.
         var usersWithoutProfiles = await _context.Users
-            .Where(u => u.AdminProfile == null && u.ProfessorProfile == null && u.StudentProfile == null)
+            .Where(u => u.AdminProfile == null
+                        && u.ProfessorProfile == null
+                        && u.StudentProfile == null
+                        && !(u.FirstName == null
+                             || u.LastName == null
+                             || u.DateOfBirth == null
+                             || u.Address == null
+                             || u.GenderId == null))
             .OrderBy(u => u.LastName)
             .Select(u => new UserProfileViewModel
             {
@@ -47,10 +54,12 @@ public class ProfileController : Controller
             .OrderBy(s => s.User.LastName)
             .Select(s => new UserProfileViewModel
             {
+                Title = GetHonorific(s.User.GenderId),
                 UserId = s.User.Id,
                 Name = s.User.FirstName!,
                 Surname = s.User.LastName!,
-                Email = s.User.Email!
+                Email = s.User.Email!,
+                Status = s.Status.StatusDescription
             })
             .ToListAsync();
 
@@ -58,16 +67,19 @@ public class ProfileController : Controller
             .OrderBy(p => p.User.LastName)
             .Select(p => new UserProfileViewModel
             {
+                Title = p.Title.TitleName,
                 UserId = p.User.Id,
                 Name = p.User.FirstName!,
                 Surname = p.User.LastName!,
-                Email = p.User.Email!
+                Email = p.User.Email!,
+                Status = p.Status.StatusDescription
             }).ToListAsync();
 
         var administrators = await _context.AdministrativeEmployees
             .OrderBy(a => a.User.LastName)
             .Select(a => new UserProfileViewModel
             {
+                Title = GetHonorific(a.User.GenderId),
                 UserId = a.User.Id,
                 Name = a.User.FirstName!,
                 Surname = a.User.LastName!,
@@ -85,8 +97,16 @@ public class ProfileController : Controller
         return View(model);
     }
 
+    private static string GetHonorific(int? genderId) =>
+        genderId switch
+        {
+            1 => "Mr.",
+            2 => "Ms.",
+            3 => string.Empty,
+            _ => throw new ArgumentOutOfRangeException(nameof(genderId), genderId, null)
+        };
+
     [HttpGet]
-    [Authorize(Roles = "AdministrativeEmployee")]
     public async Task<IActionResult> RegisterStudent(long userId)
     {
         var model = new StudentProfileViewModel
@@ -105,7 +125,6 @@ public class ProfileController : Controller
     }
 
     [HttpPost]
-    [Authorize(Roles = "AdministrativeEmployee")]
     public async Task<IActionResult> RegisterStudent(StudentProfileViewModel model)
     {
         if (!ModelState.IsValid)
@@ -142,11 +161,10 @@ public class ProfileController : Controller
 
         await _context.SaveChangesAsync();
 
-        return View(model);
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
-    [Authorize(Roles = "AdministrativeEmployee")]
     public async Task<IActionResult> RegisterProfessor(long userId)
     {
         var model = new ProfessorProfileViewModel
@@ -185,7 +203,6 @@ public class ProfileController : Controller
     }
 
     [HttpPost]
-    [Authorize(Roles = "AdministrativeEmployee")]
     public async Task<IActionResult> RegisterProfessor(ProfessorProfileViewModel model)
     {
         if (!ModelState.IsValid)
@@ -218,16 +235,15 @@ public class ProfileController : Controller
             professorProfile.DepartmentId = model.DepartmentId;
             professorProfile.TitleId = model.TitleId;
         }
-        
+
         await _userManager.AddToRoleAsync(user, "Professor");
 
         await _context.SaveChangesAsync();
 
-        return View(model);
+        return RedirectToAction(nameof(Index));
     }
-    
+
     [HttpGet]
-    [Authorize(Roles = "AdministrativeEmployee")]
     public IActionResult RegisterAdministrator(long userId)
     {
         var model = new AdminProfileViewModel
@@ -239,7 +255,6 @@ public class ProfileController : Controller
     }
 
     [HttpPost]
-    [Authorize(Roles = "AdministrativeEmployee")]
     public async Task<IActionResult> RegisterAdministrator(AdminProfileViewModel model)
     {
         if (!ModelState.IsValid)
@@ -268,11 +283,11 @@ public class ProfileController : Controller
         {
             adminProfile.ModifiedDate = DateTime.UtcNow;
         }
-        
+
         await _userManager.AddToRoleAsync(user, "AdministrativeEmployee");
 
         await _context.SaveChangesAsync();
 
-        return View(model);
+        return RedirectToAction(nameof(Index));
     }
 }

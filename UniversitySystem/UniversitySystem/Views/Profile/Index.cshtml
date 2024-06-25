@@ -2,66 +2,144 @@
 
 <h2>User Profiles</h2>
 
-<h3>Users Without Profile</h3>
-<table>
-    <tbody>
-    @foreach (var user in Model.NoProfileUsers)
-    {
+<h4>Users Without Profile</h4>
+@if (Model.NoProfileUsers.Any())
+{
+    <table class="table">
+        <thead>
         <tr>
-            <td>@user.Name</td>
-            <td>@user.Surname</td>
-            <td>@user.Email</td>
-            <td>
-                <a asp-action="RegisterProfessor" asp-route-userId="@user.UserId" class="btn btn-sm">Set up as Professor</a>
-            </td>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Actions</th>
         </tr>
-    }
-    </tbody>
-</table>
-
-<h3>Student Profiles</h3>
-<table>
-    <tbody>
-    @foreach (var user in Model.Students)
-    {
+        </thead>
+        <tbody>
+        @foreach (var user in Model.NoProfileUsers)
+        {
+            <tr>
+                <td>@user.Name</td>
+                <td>@user.Surname</td>
+                <td>@user.Email</td>
+                <td>
+                    <a asp-action="RegisterStudent" asp-route-userId="@user.UserId">To student</a> |
+                    <a asp-action="RegisterProfessor" asp-route-userId="@user.UserId">To professor</a> |
+                    <a asp-action="RegisterAdministrator" asp-route-userId="@user.UserId">To administrator</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <a>None</a>
+}
+<br/>
+<h4>Student Profiles</h4>
+@if (Model.Students.Any())
+{
+    <table class="table">
+        <thead>
         <tr>
-            <td>@user.Name</td>
-            <td>@user.Surname</td>
-            <td>@user.Email</td>
-            <td>
-                <a asp-action="RegisterStudent" asp-route-userId="@user.UserId" class="btn btn-sm">Edit profile</a>
-            </td>
+            <th>Title</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Actions</th>
         </tr>
-    }
-    </tbody>
-</table>
-
-<h3>Professor Profiles</h3>
-<table>
-    @foreach (var user in Model.Professors)
-    {
+        </thead>
+        <tbody>
+        @foreach (var user in Model.Students)
+        {
+            <tr>
+                <td>@user.Title</td>
+                <td>@user.Name</td>
+                <td>@user.Surname</td>
+                <td>@user.Email</td>
+                <td>@user.Status</td>
+                <td>
+                    <a asp-action="RegisterStudent" asp-route-userId="@user.UserId">Edit</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <a>None</a>
+}
+<br/>
+<br/>
+<h4>Professor Profiles</h4>
+@if (Model.Professors.Any())
+{
+    <table class="table">
+        <thead>
         <tr>
-            <td>@user.Name</td>
-            <td>@user.Surname</td>
-            <td>@user.Email</td>
-            <td>
-                <a asp-action="RegisterProfessor" asp-route-userId="@user.UserId" class="btn btn-sm">Edit profile</a>
-            </td>
+            <th>Title</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Actions</th>
         </tr>
-    }
-</table>
-
-<h3>Administrative Profiles</h3>
-<table>
-    @foreach (var user in Model.Administrators)
-    {
+        </thead>
+        <tbody>
+        @foreach (var user in Model.Professors)
+        {
+            <tr>
+                <td>@user.Title</td>
+                <td>@user.Name</td>
+                <td>@user.Surname</td>
+                <td>@user.Email</td>
+                <td>@user.Status</td>
+                <td>
+                    <a asp-action="RegisterProfessor" asp-route-userId="@user.UserId">Edit</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <a>None</a>
+}
+<br/>
+<h4>Administrative Profiles</h4>
+@if (Model.Administrators.Any())
+{
+    <table class="table">
+        <thead>
         <tr>
-            <td>@user.Name</td>
-            <td>@user.Surname</td>
-            <td>@user.Email</td>
-            <td>
-                <a asp-action="RegisterAdministrator" asp-route-userId="@user.UserId" class="btn btn-sm">Edit profile</a>
-            </td>
+            <th>Title</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Actions</th>
         </tr>
-    }
-</table>
+        </thead>
+        <tbody>
+        @foreach (var user in Model.Administrators)
+        {
+            <tr>
+                <td>@user.Title</td>
+                <td>@user.Name</td>
+                <td>@user.Surname</td>
+                <td>@user.Email</td>
+                <td>@user.Status</td>
+                <td>
+                    <a asp-action="RegisterAdministrator" asp-route-userId="@user.UserId">Edit</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <a>None</a>
+}
