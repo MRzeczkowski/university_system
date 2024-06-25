@@ -34,6 +34,13 @@ public static class SampleData
             context.ProfessorStatuses.Add(new ProfessorStatus { StatusDescription = "Retired" });
             context.ProfessorStatuses.Add(new ProfessorStatus { StatusDescription = "Emeritus" });
         }
+        
+        if (!context.AdminStatuses.Any())
+        {
+            context.AdminStatuses.Add(new AdminStatus { StatusDescription = "Active" });
+            context.AdminStatuses.Add(new AdminStatus { StatusDescription = "On Leave" });
+            context.AdminStatuses.Add(new AdminStatus { StatusDescription = "Retired" });
+        }
 
         if (!context.Titles.Any())
         {

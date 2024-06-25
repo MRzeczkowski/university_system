@@ -244,12 +244,25 @@ public class ProfileController : Controller
     }
 
     [HttpGet]
-    public IActionResult RegisterAdministrator(long userId)
+    public async Task<IActionResult> RegisterAdministrator(long userId)
     {
         var model = new AdminProfileViewModel
         {
-            UserId = userId
+            UserId = userId,
+            StatusOptions = _context.AdminStatuses.Select(t => new SelectListItem
+            {
+                Value = t.Id.ToString(),
+                Text = t.StatusDescription
+            }).ToList()
         };
+        
+        var adminProfile = await _context.AdministrativeEmployees.FirstOrDefaultAsync(p => p.UserId == userId);
+        if (adminProfile == null)
+        {
+            return View(model);
+        }
+        
+        model.StatusId = adminProfile.StatusId;
 
         return View(model);
     }
@@ -274,7 +287,8 @@ public class ProfileController : Controller
         {
             adminProfile = new AdminProfile
             {
-                UserId = user.Id
+                UserId = user.Id,
+                StatusId = model.StatusId
             };
 
             _context.AdministrativeEmployees.Add(adminProfile);

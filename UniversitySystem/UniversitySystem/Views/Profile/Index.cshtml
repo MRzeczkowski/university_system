@@ -2,144 +2,190 @@
 
 <h2>User Profiles</h2>
 
-<h4>Users Without Profile</h4>
-@if (Model.NoProfileUsers.Any())
-{
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Email</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var user in Model.NoProfileUsers)
-        {
-            <tr>
-                <td>@user.Name</td>
-                <td>@user.Surname</td>
-                <td>@user.Email</td>
-                <td>
-                    <a asp-action="RegisterStudent" asp-route-userId="@user.UserId">To student</a> |
-                    <a asp-action="RegisterProfessor" asp-route-userId="@user.UserId">To professor</a> |
-                    <a asp-action="RegisterAdministrator" asp-route-userId="@user.UserId">To administrator</a>
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
-}
-else
-{
-    <a>None</a>
-}
-<br/>
-<h4>Student Profiles</h4>
-@if (Model.Students.Any())
-{
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Title</th>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Email</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var user in Model.Students)
-        {
-            <tr>
-                <td>@user.Title</td>
-                <td>@user.Name</td>
-                <td>@user.Surname</td>
-                <td>@user.Email</td>
-                <td>@user.Status</td>
-                <td>
-                    <a asp-action="RegisterStudent" asp-route-userId="@user.UserId">Edit</a>
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
-}
-else
-{
-    <a>None</a>
-}
-<br/>
-<br/>
-<h4>Professor Profiles</h4>
-@if (Model.Professors.Any())
-{
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Title</th>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Email</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var user in Model.Professors)
-        {
-            <tr>
-                <td>@user.Title</td>
-                <td>@user.Name</td>
-                <td>@user.Surname</td>
-                <td>@user.Email</td>
-                <td>@user.Status</td>
-                <td>
-                    <a asp-action="RegisterProfessor" asp-route-userId="@user.UserId">Edit</a>
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
-}
-else
-{
-    <a>None</a>
-}
-<br/>
-<h4>Administrative Profiles</h4>
-@if (Model.Administrators.Any())
-{
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Title</th>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Email</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var user in Model.Administrators)
-        {
-            <tr>
-                <td>@user.Title</td>
-                <td>@user.Name</td>
-                <td>@user.Surname</td>
-                <td>@user.Email</td>
-                <td>@user.Status</td>
-                <td>
-                    <a asp-action="RegisterAdministrator" asp-route-userId="@user.UserId">Edit</a>
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
-}
-else
-{
-    <a>None</a>
-}
+<div class="card">
+    <div class="card-header" id="headingNone">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Users Without Profile
+            </button>
+        </h5>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingNone">
+        <div class="card-body">
+            @if (Model.NoProfileUsers.Any())
+            {
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var user in Model.NoProfileUsers)
+                    {
+                        <tr>
+                            <td>@user.Name</td>
+                            <td>@user.Surname</td>
+                            <td>@user.Email</td>
+                            <td>
+                                <a asp-action="RegisterStudent" asp-route-userId="@user.UserId">To student</a> |
+                                <a asp-action="RegisterProfessor" asp-route-userId="@user.UserId">To professor</a> |
+                                <a asp-action="RegisterAdministrator" asp-route-userId="@user.UserId">To administrator</a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <a>None</a>
+            }
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header" id="headingStudent">
+        <h5 class="mb-0">
+            <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseStudent" aria-expanded="false" aria-controls="collapseStudent">
+                Student Profiles
+            </button>
+        </h5>
+    </div>
+    <div id="collapseStudent" class="collapse" aria-labelledby="headingStudent">
+        <div class="card-body">
+            @if (Model.Students.Any())
+            {
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var user in Model.Students)
+                    {
+                        <tr>
+                            <td>@user.Title</td>
+                            <td>@user.Name</td>
+                            <td>@user.Surname</td>
+                            <td>@user.Email</td>
+                            <td>@user.Status</td>
+                            <td>
+                                <a asp-action="RegisterStudent" asp-route-userId="@user.UserId">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <a>None</a>
+            }
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header" id="headingProfessor">
+        <h5 class="mb-0">
+            <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseProfessor" aria-expanded="false" aria-controls="collapseProfessor">
+                Professor Profiles
+            </button>
+        </h5>
+    </div>
+    <div id="collapseProfessor" class="collapse" aria-labelledby="headingProfessor">
+        <div class="card-body">
+            @if (Model.Professors.Any())
+            {
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var user in Model.Professors)
+                    {
+                        <tr>
+                            <td>@user.Title</td>
+                            <td>@user.Name</td>
+                            <td>@user.Surname</td>
+                            <td>@user.Email</td>
+                            <td>@user.Status</td>
+                            <td>
+                                <a asp-action="RegisterProfessor" asp-route-userId="@user.UserId">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <a>None</a>
+            }
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header" id="headingAdmin">
+        <h5 class="mb-0">
+            <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseAdmin" aria-expanded="false" aria-controls="collapseAdmin">
+                Administrative Profiles
+            </button>
+        </h5>
+    </div>
+    <div id="collapseAdmin" class="collapse" aria-labelledby="headingAdmin">
+        <div class="card-body">
+            @if (Model.Administrators.Any())
+            {
+                <table class="table" data-bs-toggle="collapse">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var user in Model.Administrators)
+                    {
+                        <tr>
+                            <td>@user.Title</td>
+                            <td>@user.Name</td>
+                            <td>@user.Surname</td>
+                            <td>@user.Email</td>
+                            <td>@user.Status</td>
+                            <td>
+                                <a asp-action="RegisterAdministrator" asp-route-userId="@user.UserId">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <a>None</a>
+            }
+        </div>
+    </div>
+</div>

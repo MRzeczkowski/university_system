@@ -16,6 +16,8 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
     public virtual DbSet<Address> Addresses { get; init; } = null!;
 
     public virtual DbSet<AdminProfile> AdministrativeEmployees { get; init; } = null!;
+    
+    public virtual DbSet<AdminStatus> AdminStatuses { get; init; } = null!;
 
     public virtual DbSet<Advisor> Advisors { get; init; } = null!;
 
@@ -89,6 +91,22 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
             entity.HasOne(d => d.User).WithOne(p => p.AdminProfile)
                 .HasForeignKey<AdminProfile>(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
+            
+            entity.HasOne(d => d.Status).WithMany(p => p.Admins)
+                .HasForeignKey(d => d.StatusId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+        });
+
+        modelBuilder.Entity<AdminStatus>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+
+            entity.ToTable("AdministrativeEmployeeStatuses", "Administration");
+
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.Property(e => e.StatusDescription)
+                .HasMaxLength(50)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<Advisor>(entity =>
