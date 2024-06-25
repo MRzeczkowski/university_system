@@ -4,6 +4,7 @@
 
 <h3>Users Without Profile</h3>
 <table>
+    <tbody>
     @foreach (var user in Model.NoProfileUsers)
     {
         <tr>
@@ -11,22 +12,28 @@
             <td>@user.Surname</td>
             <td>@user.Email</td>
             <td>
-                <a asp-action="RegisterProfessor" asp-route-userId="@user.UserId" class="btn btn-primary">Set up as Professor</a>
+                <a asp-action="RegisterProfessor" asp-route-userId="@user.UserId" class="btn btn-sm">Set up as Professor</a>
             </td>
         </tr>
     }
+    </tbody>
 </table>
 
 <h3>Student Profiles</h3>
 <table>
+    <tbody>
     @foreach (var user in Model.Students)
     {
         <tr>
             <td>@user.Name</td>
             <td>@user.Surname</td>
             <td>@user.Email</td>
+            <td>
+                <a asp-action="RegisterStudent" asp-route-userId="@user.UserId" class="btn btn-sm">Edit profile</a>
+            </td>
         </tr>
     }
+    </tbody>
 </table>
 
 <h3>Professor Profiles</h3>
@@ -37,6 +44,9 @@
             <td>@user.Name</td>
             <td>@user.Surname</td>
             <td>@user.Email</td>
+            <td>
+                <a asp-action="RegisterProfessor" asp-route-userId="@user.UserId" class="btn btn-sm">Edit profile</a>
+            </td>
         </tr>
     }
 </table>
@@ -49,6 +59,9 @@
             <td>@user.Name</td>
             <td>@user.Surname</td>
             <td>@user.Email</td>
+            <td>
+                <a asp-action="RegisterAdministrator" asp-route-userId="@user.UserId" class="btn btn-sm">Edit profile</a>
+            </td>
         </tr>
     }
 </table>

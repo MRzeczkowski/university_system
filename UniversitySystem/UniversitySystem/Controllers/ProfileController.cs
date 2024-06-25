@@ -87,6 +87,66 @@ public class ProfileController : Controller
 
     [HttpGet]
     [Authorize(Roles = "AdministrativeEmployee")]
+    public async Task<IActionResult> RegisterStudent(long userId)
+    {
+        var model = new StudentProfileViewModel
+        {
+            EnrollmentYear = DateTime.UtcNow.Year,
+            UserId = userId
+        };
+
+        var studentProfile = await _context.Students.FirstOrDefaultAsync(p => p.UserId == userId);
+        if (studentProfile != null)
+        {
+            model.EnrollmentYear = studentProfile.EnrollmentYear;
+        }
+
+        return View(model);
+    }
+
+    [HttpPost]
+    [Authorize(Roles = "AdministrativeEmployee")]
+    public async Task<IActionResult> RegisterStudent(StudentProfileViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        var user = await _userManager.FindByIdAsync(model.UserId.ToString());
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        var studentProfile = await _context.Students.FirstOrDefaultAsync(p => p.UserId == user.Id);
+
+        if (studentProfile is null)
+        {
+            studentProfile = new StudentProfile
+            {
+                UserId = user.Id,
+                EnrollmentYear = model.EnrollmentYear,
+                StatusId = model.StatusId
+            };
+
+            _context.Students.Add(studentProfile);
+        }
+        else
+        {
+            studentProfile.EnrollmentYear = model.EnrollmentYear;
+            studentProfile.StatusId = model.StatusId;
+        }
+
+        await _userManager.AddToRoleAsync(user, "Student");
+
+        await _context.SaveChangesAsync();
+
+        return View(model);
+    }
+
+    [HttpGet]
+    [Authorize(Roles = "AdministrativeEmployee")]
     public async Task<IActionResult> RegisterProfessor(long userId)
     {
         var model = new ProfessorProfileViewModel
@@ -103,15 +163,23 @@ public class ProfileController : Controller
                 Value = t.Id.ToString(),
                 Text = t.TitleName
             }).ToList(),
+            StatusOptions = _context.ProfessorStatuses.Select(t => new SelectListItem
+            {
+                Value = t.Id.ToString(),
+                Text = t.StatusDescription
+            }).ToList(),
             UserId = userId
         };
 
         var professorProfile = await _context.Professors.FirstOrDefaultAsync(p => p.UserId == userId);
-        if (professorProfile != null)
+        if (professorProfile == null)
         {
-            model.DepartmentId = professorProfile.DepartmentId;
-            model.TitleId = professorProfile.TitleId;
+            return View(model);
         }
+
+        model.DepartmentId = professorProfile.DepartmentId;
+        model.TitleId = professorProfile.TitleId;
+        model.StatusId = professorProfile.StatusId;
 
         return View(model);
     }
@@ -139,7 +207,8 @@ public class ProfileController : Controller
             {
                 UserId = user.Id,
                 DepartmentId = model.DepartmentId,
-                TitleId = model.TitleId
+                TitleId = model.TitleId,
+                StatusId = model.StatusId
             };
 
             _context.Professors.Add(professorProfile);
@@ -149,6 +218,58 @@ public class ProfileController : Controller
             professorProfile.DepartmentId = model.DepartmentId;
             professorProfile.TitleId = model.TitleId;
         }
+        
+        await _userManager.AddToRoleAsync(user, "Professor");
+
+        await _context.SaveChangesAsync();
+
+        return View(model);
+    }
+    
+    [HttpGet]
+    [Authorize(Roles = "AdministrativeEmployee")]
+    public IActionResult RegisterAdministrator(long userId)
+    {
+        var model = new AdminProfileViewModel
+        {
+            UserId = userId
+        };
+
+        return View(model);
+    }
+
+    [HttpPost]
+    [Authorize(Roles = "AdministrativeEmployee")]
+    public async Task<IActionResult> RegisterAdministrator(AdminProfileViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        var user = await _userManager.FindByIdAsync(model.UserId.ToString());
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        var adminProfile = await _context.AdministrativeEmployees.FirstOrDefaultAsync(p => p.UserId == user.Id);
+
+        if (adminProfile is null)
+        {
+            adminProfile = new AdminProfile
+            {
+                UserId = user.Id
+            };
+
+            _context.AdministrativeEmployees.Add(adminProfile);
+        }
+        else
+        {
+            adminProfile.ModifiedDate = DateTime.UtcNow;
+        }
+        
+        await _userManager.AddToRoleAsync(user, "AdministrativeEmployee");
 
         await _context.SaveChangesAsync();
 

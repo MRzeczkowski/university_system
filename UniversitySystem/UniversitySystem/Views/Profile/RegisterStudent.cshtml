@@ -1,0 +1,15 @@
+@model StudentProfileViewModel
+
+<form asp-action="RegisterProfessor" method="post">
+    <input asp-for="UserId" type="hidden"/>
+    <div class="form-group">
+        <label asp-for="StatusId">Title</label>
+        <select asp-for="StatusId" asp-items="Model.StatusOptions" class="form-control"></select>
+    </div>
+    <div class="form-group">
+        <input asp-for="EnrollmentYear" class="form-control" type="number" step="1"/>
+        <span asp-validation-for="EnrollmentYear" class="text-danger"></span>
+    </div>
+    <br/>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

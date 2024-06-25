@@ -13,4 +13,8 @@ public class ProfessorProfileViewModel
     public int TitleId { get; set; }
 
     public IEnumerable<SelectListItem>? TitleOptions { get; set; }
+    
+    public int StatusId { get; set; }
+
+    public IEnumerable<SelectListItem>? StatusOptions { get; set; }
 }

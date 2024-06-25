@@ -1,15 +1,19 @@
-@model UniversitySystem.Models.ProfileViewModels.ProfessorProfileViewModel
+@model ProfessorProfileViewModel
 
 <form asp-action="RegisterProfessor" method="post">
-    <input asp-for="UserId" type="hidden" />
-        <div class="form-group">
-            <label asp-for="TitleId">Title</label>
-            <select asp-for="TitleId" asp-items="Model.TitleOptions" class="form-control"></select>
-        </div>
+    <input asp-for="UserId" type="hidden"/>
+    <div class="form-group">
+        <label asp-for="TitleId">Title</label>
+        <select asp-for="TitleId" asp-items="Model.TitleOptions" class="form-control"></select>
+    </div>
     <div class="form-group">
         <label asp-for="DepartmentId">Department</label>
         <select asp-for="DepartmentId" asp-items="Model.DepartmentOptions" class="form-control"></select>
     </div>
-    <!-- Additional professor-specific fields -->
-    <button type="submit" class="btn btn-primary">Register Professor</button>
+    <div class="form-group">
+        <label asp-for="StatusId">Department</label>
+        <select asp-for="StatusId" asp-items="Model.StatusOptions" class="form-control"></select>
+    </div>
+    <br/>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>

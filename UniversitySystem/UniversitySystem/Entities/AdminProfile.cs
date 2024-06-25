@@ -2,15 +2,15 @@ namespace UniversitySystem.Entities;
 
 public class AdminProfile
 {
-    public int Id { get; init; }
+    public int Id { get; set; }
 
-    public long UserId { get; init; }
+    public long UserId { get; set; }
 
-    public virtual ApplicationUser User { get; init; } = null!;
+    public virtual ApplicationUser User { get; set; } = null!;
 
-    public DateTime CreatedDate { get; init; }
+    public DateTime CreatedDate { get; set; }
 
-    public DateTime? ModifiedDate { get; init; }
+    public DateTime? ModifiedDate { get; set; }
 
-    public bool IsDeleted { get; init; }
+    public bool IsDeleted { get; set; }
 }
