@@ -20,7 +20,6 @@ public class DepartmentsController : Controller
     public async Task<IActionResult> Index()
     {
         var departments = await _context.Departments
-            .Where(d => !d.IsDeleted)
             .Select(d => new DepartmentViewModel
             {
                 Id = d.Id,
@@ -46,8 +45,7 @@ public class DepartmentsController : Controller
         var department = new Department
         {
             Name = viewModel.Name,
-            Budget = viewModel.Budget,
-            CreatedDate = DateTime.Now
+            Budget = viewModel.Budget
         };
         _context.Add(department);
         await _context.SaveChangesAsync();
@@ -63,7 +61,6 @@ public class DepartmentsController : Controller
         }
 
         var department = await _context.Departments
-            .Where(d => !d.IsDeleted)
             .Select(d => new DepartmentViewModel
             {
                 Id = d.Id,
@@ -102,7 +99,6 @@ public class DepartmentsController : Controller
 
         department.Name = viewModel.Name;
         department.Budget = viewModel.Budget;
-        department.ModifiedDate = DateTime.Now;
 
         try
         {
@@ -133,7 +129,6 @@ public class DepartmentsController : Controller
         }
 
         var department = await _context.Departments
-            .Where(d => !d.IsDeleted)
             .Select(d => new DepartmentViewModel
             {
                 Id = d.Id,
@@ -160,8 +155,7 @@ public class DepartmentsController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        department.IsDeleted = true;
-        department.ModifiedDate = DateTime.Now;
+        _context.Departments.Remove(department);
         await _context.SaveChangesAsync();
 
         return RedirectToAction(nameof(Index));

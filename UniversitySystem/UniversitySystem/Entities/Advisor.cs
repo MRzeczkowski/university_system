@@ -2,17 +2,11 @@
 
 public class Advisor
 {
-    public int StudentId { get; init; }
+    public int StudentId { get; set; }
 
-    public int ProfessorId { get; init; }
+    public int ProfessorId { get; set; }
 
-    public DateOnly AssignmentDate { get; init; }
-
-    public DateTime CreatedDate { get; init; }
-
-    public DateTime? ModifiedDate { get; init; }
-
-    public bool IsDeleted { get; init; }
+    public DateOnly AssignmentDate { get; set; }
 
     public virtual ProfessorProfile Professor { get; init; } = null!;
 

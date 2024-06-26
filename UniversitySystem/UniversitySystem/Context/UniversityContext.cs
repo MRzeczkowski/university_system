@@ -16,7 +16,7 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
     public virtual DbSet<Address> Addresses { get; init; } = null!;
 
     public virtual DbSet<AdminProfile> AdministrativeEmployees { get; init; } = null!;
-    
+
     public virtual DbSet<AdminStatus> AdminStatuses { get; init; } = null!;
 
     public virtual DbSet<Advisor> Advisors { get; init; } = null!;
@@ -70,7 +70,7 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
             entity.Property(e => e.Country)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
+
             entity.Property(e => e.PostalCode)
                 .HasMaxLength(10)
                 .IsUnicode(false);
@@ -86,12 +86,11 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
             entity.ToTable("AdministrativeEmployees", "Administration");
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
-            entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
 
             entity.HasOne(d => d.User).WithOne(p => p.AdminProfile)
                 .HasForeignKey<AdminProfile>(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
-            
+
             entity.HasOne(d => d.Status).WithMany(p => p.Admins)
                 .HasForeignKey(d => d.StatusId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
@@ -117,8 +116,6 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
 
             entity.HasIndex(e => e.StudentId);
 
-            entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
-
             entity.HasOne(d => d.Professor).WithMany(p => p.Advisors)
                 .HasForeignKey(d => d.ProfessorId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
@@ -135,7 +132,7 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
             entity.ToTable("Attendance", "Students");
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
-            entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
+
             entity.Property(e => e.StatusId).HasDefaultValue(1);
 
             entity.HasOne(d => d.Enrollment).WithMany(p => p.Attendances)
@@ -184,7 +181,7 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
             entity.Property(e => e.Building)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
+
             entity.Property(e => e.RoomNumber)
                 .HasMaxLength(10)
                 .IsUnicode(false);
@@ -200,7 +197,6 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
             entity.Property(e => e.CourseName)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
 
             entity.HasOne(d => d.Department).WithMany(p => p.Courses)
                 .HasForeignKey(d => d.DepartmentId)
@@ -214,7 +210,6 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
             entity.ToTable("CourseOfferings", "Academics");
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
-            entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
 
             entity.HasOne(d => d.Classroom).WithMany(p => p.CourseOfferings)
                 .HasForeignKey(d => d.ClassroomId)
@@ -258,7 +253,7 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Budget).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
+
             entity.Property(e => e.Name)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -271,7 +266,6 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
             entity.ToTable("Enrollments", "Students");
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
-            entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
 
             entity.HasOne(d => d.Offering).WithMany(p => p.Enrollments)
                 .HasForeignKey(d => d.OfferingId)
@@ -303,7 +297,7 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
             entity.ToTable("Grades", "Students");
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
-            entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
+
             entity.Property(e => e.FinalGrade).HasColumnType("decimal(5, 2)");
 
             entity.HasOne(d => d.Enrollment).WithMany(p => p.Grades)
@@ -318,7 +312,7 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
             entity.ToTable("Professors", "Academics");
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
-            entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
+
             entity.Property(e => e.StatusId).HasDefaultValue(1);
 
             entity.HasOne(d => d.Department).WithMany(p => p.Professors)
@@ -371,7 +365,7 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
             entity.ToTable("Students", "Students");
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
-            entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
+
             entity.Property(e => e.StatusId).HasDefaultValue(1);
 
             entity.HasOne(d => d.User).WithOne(p => p.StudentProfile)
@@ -427,7 +421,7 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
             entity.HasOne(e => e.Gender)
                 .WithMany(g => g.Users)
                 .HasForeignKey(e => e.GenderId);
-            
+
             entity.HasOne(e => e.Address)
                 .WithOne(g => g.User)
                 .HasForeignKey<Address>(e => e.UserId);

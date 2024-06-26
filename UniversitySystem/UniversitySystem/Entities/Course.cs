@@ -4,15 +4,9 @@ public class Course
 {
     public int Id { get; init; }
 
-    public string CourseName { get; init; } = null!;
+    public string CourseName { get; set; } = null!;
 
-    public int DepartmentId { get; init; }
-
-    public DateTime CreatedDate { get; init; }
-
-    public DateTime? ModifiedDate { get; init; }
-
-    public bool IsDeleted { get; init; }
+    public int DepartmentId { get; set; }
 
     public virtual ICollection<CourseOffering> CourseOfferings { get; init; } = new List<CourseOffering>();
 

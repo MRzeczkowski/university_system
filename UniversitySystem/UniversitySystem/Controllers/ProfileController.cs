@@ -170,7 +170,6 @@ public class ProfileController : Controller
         var model = new ProfessorProfileViewModel
         {
             DepartmentOptions = _context.Departments
-                .Where(d => !d.IsDeleted)
                 .Select(d => new SelectListItem
                 {
                     Value = d.Id.ToString(),
@@ -295,7 +294,7 @@ public class ProfileController : Controller
         }
         else
         {
-            adminProfile.ModifiedDate = DateTime.UtcNow;
+            adminProfile.StatusId = model.StatusId;
         }
 
         await _userManager.AddToRoleAsync(user, "AdministrativeEmployee");

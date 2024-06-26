@@ -4,29 +4,23 @@ public class CourseOffering
 {
     public int Id { get; init; }
 
-    public int CourseId { get; init; }
+    public int CourseId { get; set; }
 
     public virtual Course Course { get; init; } = null!;
 
-    public int SemesterId { get; init; }
+    public int SemesterId { get; set; }
 
     public virtual Semester Semester { get; init; } = null!;
 
-    public int Year { get; init; }
+    public int Year { get; set; }
 
-    public int ProfessorId { get; init; }
+    public int ProfessorId { get; set; }
 
     public virtual ProfessorProfile Professor { get; init; } = null!;
 
-    public int ClassroomId { get; init; }
+    public int ClassroomId { get; set; }
 
     public virtual Classroom Classroom { get; init; } = null!;
-
-    public DateTime CreatedDate { get; init; }
-
-    public DateTime? ModifiedDate { get; init; }
-
-    public bool IsDeleted { get; init; }
 
     public virtual ICollection<ClassSession> ClassSessions { get; init; } = new List<ClassSession>();
 
