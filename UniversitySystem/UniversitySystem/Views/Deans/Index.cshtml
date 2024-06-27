@@ -1,0 +1,33 @@
+@model IEnumerable<DeanViewModel>
+
+@{
+    ViewData["Title"] = "Deans List";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Department</th>
+        <th>Professor</th>
+        <th>Effective Date</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var dean in Model)
+    {
+        <tr>
+            <td>@dean.DepartmentName</td>
+            <td>@dean.ProfessorName</td>
+            <td>@dean.EffectiveDate</td>
+            <td>
+                <a asp-action="Delete" asp-route-departmentId="@dean.DepartmentId" asp-route-professorId="@dean.ProfessorId" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-primary">Add Dean</a>
