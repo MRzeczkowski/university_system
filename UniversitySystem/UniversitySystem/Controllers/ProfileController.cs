@@ -112,7 +112,12 @@ public class ProfileController : Controller
         var model = new StudentProfileViewModel
         {
             EnrollmentYear = DateTime.UtcNow.Year,
-            UserId = userId
+            UserId = userId,
+            StatusOptions = _context.StudentStatuses.Select(t => new SelectListItem
+            {
+                Value = t.Id.ToString(),
+                Text = t.StatusDescription
+            }).ToList()
         };
 
         var studentProfile = await _context.Students.FirstOrDefaultAsync(p => p.UserId == userId);
