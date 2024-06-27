@@ -135,8 +135,8 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
 
             entity.Property(e => e.StatusId).HasDefaultValue(1);
 
-            entity.HasOne(d => d.Enrollment).WithMany(p => p.Attendances)
-                .HasForeignKey(d => d.EnrollmentId)
+            entity.HasOne(d => d.ClassSession).WithMany(p => p.Attendances)
+                .HasForeignKey(d => d.ClassSessionId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
             entity.HasOne(d => d.Status).WithMany(p => p.Attendances)

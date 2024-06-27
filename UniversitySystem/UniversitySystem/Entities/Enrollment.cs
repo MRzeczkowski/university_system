@@ -14,7 +14,5 @@ public class Enrollment
 
     public DateOnly EnrollmentDate { get; set; }
 
-    public virtual ICollection<Attendance> Attendances { get; init; } = new List<Attendance>();
-
     public virtual ICollection<Grade> Grades { get; init; } = new List<Grade>();
 }

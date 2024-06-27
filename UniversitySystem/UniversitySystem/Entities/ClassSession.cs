@@ -4,11 +4,13 @@ public class ClassSession
 {
     public int Id { get; init; }
 
-    public int OfferingId { get; init; }
+    public DateTime SessionStart { get; set; }
 
-    public DateTime SessionStart { get; init; }
+    public DateTime SessionEnd { get; set; }
 
-    public DateTime SessionEnd { get; init; }
+    public int OfferingId { get; set; }
 
     public virtual CourseOffering Offering { get; init; } = null!;
+
+    public virtual ICollection<Attendance> Attendances { get; init; } = null!;
 }
