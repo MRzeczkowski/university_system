@@ -9,8 +9,8 @@ public class ClassSessionViewModel
     public DateTime SessionStart { get; set; }
 
     public DateTime SessionEnd { get; set; }
-    
+
     public int OfferingId { get; set; }
 
-    public IEnumerable<SelectListItem> OfferingOptions { get; set; }
+    public IEnumerable<SelectListItem>? OfferingOptions { get; set; }
 }

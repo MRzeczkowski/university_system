@@ -11,4 +11,8 @@ public class Attendance
     public int ClassSessionId { get; set; }
 
     public virtual ClassSession ClassSession { get; init; } = null!;
+
+    public int EnrollmentId { get; set; }
+
+    public virtual Enrollment Enrollment { get; init; } = null!;
 }

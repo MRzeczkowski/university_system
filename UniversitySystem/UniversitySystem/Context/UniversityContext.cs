@@ -120,6 +120,10 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
                 .HasForeignKey(d => d.ClassSessionId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
+            entity.HasOne(d => d.Enrollment).WithMany(p => p.Attendances)
+                .HasForeignKey(d => d.EnrollmentId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
             entity.HasOne(d => d.Status).WithMany(p => p.Attendances)
                 .HasForeignKey(d => d.StatusId)
                 .OnDelete(DeleteBehavior.ClientSetNull);

@@ -37,6 +37,8 @@ public class ClassSessionController : Controller
     {
         var model = new ClassSessionViewModel
         {
+            SessionStart = DateTime.Now.Date.AddHours(9),
+            SessionEnd = DateTime.Now.Date.AddHours(10),
             OfferingOptions = await GetOfferingOptions()
         };
 
@@ -53,10 +55,20 @@ public class ClassSessionController : Controller
             {
                 OfferingId = model.OfferingId,
                 SessionStart = model.SessionStart,
-                SessionEnd = model.SessionEnd,
+                SessionEnd = model.SessionEnd
             };
 
+            var attendances = await _context.Enrollments
+                .Where(e => e.OfferingId == model.OfferingId)
+                .Select(e => new Attendance
+                {
+                    EnrollmentId = e.Id,
+                    ClassSession = classSession,
+                    StatusId = 1 // Absent by default.
+                }).ToListAsync();
+
             _context.Add(classSession);
+            _context.AddRange(attendances);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
