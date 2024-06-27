@@ -1,0 +1,35 @@
+@model IEnumerable<EnrollmentViewModel>
+
+@{
+    ViewData["Title"] = "Your Enrollments";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Course Name</th>
+        <th>Semester</th>
+        <th>Year</th>
+        <th>Enrollment Date</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.CourseName</td>
+            <td>@item.Semester</td>
+            <td>@item.Year</td>
+            <td>@item.EnrollmentDate.ToShortDateString()</td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Withdraw</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-primary">Enroll in New Course</a>
