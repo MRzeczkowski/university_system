@@ -20,8 +20,6 @@ public class ProfessorProfile
 
     public virtual ProfessorStatus Status { get; init; } = null!;
 
-    public virtual ICollection<Advisor> Advisors { get; init; } = new List<Advisor>();
-
     public virtual ICollection<CourseOffering> CourseOfferings { get; init; } = new List<CourseOffering>();
 
     public virtual ICollection<Dean> Deans { get; init; } = new List<Dean>();

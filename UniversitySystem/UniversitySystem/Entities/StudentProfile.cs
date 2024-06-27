@@ -14,7 +14,5 @@ public class StudentProfile
 
     public virtual StudentStatus Status { get; init; } = null!;
 
-    public virtual ICollection<Advisor> Advisors { get; init; } = new List<Advisor>();
-
     public virtual ICollection<Enrollment> Enrollments { get; init; } = new List<Enrollment>();
 }

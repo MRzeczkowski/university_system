@@ -19,8 +19,6 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
 
     public virtual DbSet<AdminStatus> AdminStatuses { get; init; } = null!;
 
-    public virtual DbSet<Advisor> Advisors { get; init; } = null!;
-
     public virtual DbSet<Attendance> Attendances { get; init; } = null!;
 
     public virtual DbSet<AttendanceStatus> AttendanceStatuses { get; init; } = null!;
@@ -106,23 +104,6 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
             entity.Property(e => e.StatusDescription)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-        });
-
-        modelBuilder.Entity<Advisor>(entity =>
-        {
-            entity.HasKey(e => new { e.StudentId, e.ProfessorId });
-
-            entity.ToTable("Advisors", "Students");
-
-            entity.HasIndex(e => e.StudentId);
-
-            entity.HasOne(d => d.Professor).WithMany(p => p.Advisors)
-                .HasForeignKey(d => d.ProfessorId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
-
-            entity.HasOne(d => d.Student).WithMany(p => p.Advisors)
-                .HasForeignKey(d => d.StudentId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<Attendance>(entity =>
