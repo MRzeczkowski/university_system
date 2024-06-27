@@ -1,0 +1,25 @@
+@model ClassSessionViewModel
+
+@{
+    ViewData["Title"] = "Create Class Session";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="OfferingId"></label>
+        <select asp-for="OfferingId" class="form-control" asp-items="Model.OfferingOptions"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="SessionStart"></label>
+        <input asp-for="SessionStart" class="form-control" type="datetime-local"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="SessionEnd"></label>
+        <input asp-for="SessionEnd" class="form-control" type="datetime-local"/>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+
+<a asp-action="Index">Back to List</a>
