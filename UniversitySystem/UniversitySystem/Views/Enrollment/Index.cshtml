@@ -12,7 +12,8 @@
         <th>Course Name</th>
         <th>Semester</th>
         <th>Year</th>
-        <th>Enrollment Date</th>
+        <th>Points</th>
+        <th>Grade</th>
         <th>Actions</th>
     </tr>
     </thead>
@@ -23,7 +24,8 @@
             <td>@item.CourseName</td>
             <td>@item.Semester</td>
             <td>@item.Year</td>
-            <td>@item.EnrollmentDate.ToShortDateString()</td>
+            <td>@item.Points</td>
+            <td>@item.Grade</td>
             <td>
                 <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Withdraw</a>
             </td>

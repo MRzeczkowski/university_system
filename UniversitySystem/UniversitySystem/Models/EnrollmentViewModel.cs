@@ -18,7 +18,9 @@ public class EnrollmentViewModel
 
     public int Year { get; set; }
 
-    public DateOnly EnrollmentDate { get; set; }
+    public int? Points { get; set; }
+    
+    public decimal? Grade { get; set; }
 
     public IEnumerable<SelectListItem>? CourseOfferingOptions { get; set; } = new List<SelectListItem>();
 }

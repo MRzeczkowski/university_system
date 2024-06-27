@@ -20,18 +20,13 @@
                 Home
             </a>
 
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-area=""
+               asp-controller="Enrollment" asp-action="Index">
+                Enrollments
+            </a>
+
             @if (User.IsInRole("Student"))
             {
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-area=""
-                   asp-controller="Grades" asp-action="Index">
-                    My grades
-                </a>
-
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-area=""
-                   asp-controller="Enrollment" asp-action="Index">
-                    My courses
-                </a>
-
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-area=""
                    asp-controller="UpcomingClasses" asp-action="Index">
                     My upcoming classes
@@ -69,7 +64,7 @@
                    asp-controller="CourseOffering" asp-action="Index">
                     Course offerings
                 </a>
-                
+
                 <a class="list-group-item list-group-item-action list-group-item-light p-3" asp-area=""
                    asp-controller="ClassSession" asp-action="Index">
                     Class sessions

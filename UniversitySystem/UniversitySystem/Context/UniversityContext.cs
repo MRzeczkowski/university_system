@@ -39,8 +39,6 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
 
     public virtual DbSet<Gender> Genders { get; init; } = null!;
 
-    public virtual DbSet<Grade> Grades { get; init; } = null!;
-
     public virtual DbSet<ProfessorProfile> Professors { get; init; } = null!;
 
     public virtual DbSet<ProfessorStatus> ProfessorStatuses { get; init; } = null!;
@@ -252,6 +250,8 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
+            entity.Property(e => e.Grade).HasPrecision(2, 1);
+
             entity.HasOne(d => d.Offering).WithMany(p => p.Enrollments)
                 .HasForeignKey(d => d.OfferingId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
@@ -273,21 +273,6 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
             entity.Property(e => e.Description)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-        });
-
-        modelBuilder.Entity<Grade>(entity =>
-        {
-            entity.HasKey(e => e.Id);
-
-            entity.ToTable("Grades", "Students");
-
-            entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
-            entity.Property(e => e.FinalGrade).HasColumnType("decimal(5, 2)");
-
-            entity.HasOne(d => d.Enrollment).WithMany(p => p.Grades)
-                .HasForeignKey(d => d.EnrollmentId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<ProfessorProfile>(entity =>

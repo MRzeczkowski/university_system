@@ -58,6 +58,7 @@
       <_ContentIncludedByDefault Remove="Views\Account\Manage\_ManageNav.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Account\Manage\_StatusMessage.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Account\Manage\_ViewImports.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Grades\Index.cshtml" />
     </ItemGroup>
 
     <ItemGroup>

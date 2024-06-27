@@ -9,7 +9,6 @@ using UniversitySystem.Models;
 
 namespace UniversitySystem.Controllers;
 
-[Authorize(Roles = "Student")]
 public class EnrollmentController : Controller
 {
     private readonly UniversityContext _context;
@@ -23,6 +22,7 @@ public class EnrollmentController : Controller
         _userManager = userManager;
     }
 
+    [Authorize(Roles = "Student")]
     public async Task<IActionResult> Index()
     {
         var user = await _userManager.GetUserAsync(User);
@@ -42,12 +42,14 @@ public class EnrollmentController : Controller
                 CourseName = e.Offering.Course.CourseName,
                 Semester = e.Offering.Semester.Name,
                 Year = e.Offering.Year,
-                EnrollmentDate = e.EnrollmentDate
+                Points = e.Points,
+                Grade = e.Grade
             }).ToListAsync();
 
         return View(enrollments);
     }
 
+    [Authorize(Roles = "Student")]
     public async Task<IActionResult> Create()
     {
         var model = new EnrollmentViewModel
@@ -60,6 +62,7 @@ public class EnrollmentController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Student")]
     public async Task<IActionResult> Create(EnrollmentViewModel model)
     {
         var user = await _userManager.GetUserAsync(User);
@@ -79,8 +82,7 @@ public class EnrollmentController : Controller
             var enrollment = new Enrollment
             {
                 StudentId = student.Id,
-                OfferingId = model.OfferingId,
-                EnrollmentDate = model.EnrollmentDate
+                OfferingId = model.OfferingId
             };
 
             _context.Enrollments.Add(enrollment);
@@ -94,6 +96,7 @@ public class EnrollmentController : Controller
     }
 
     [HttpGet]
+    [Authorize(Roles = "AdministrativeEmployee")]
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -119,6 +122,7 @@ public class EnrollmentController : Controller
 
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "AdministrativeEmployee")]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         var enrollment = await _context.Enrollments.FirstOrDefaultAsync(e => e.Id == id);
