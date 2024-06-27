@@ -9,6 +9,7 @@ using UniversitySystem.Models;
 
 namespace UniversitySystem.Controllers;
 
+[Authorize]
 public class EnrollmentController : Controller
 {
     private readonly UniversityContext _context;
@@ -22,23 +23,41 @@ public class EnrollmentController : Controller
         _userManager = userManager;
     }
 
-    [Authorize(Roles = "Student")]
     public async Task<IActionResult> Index()
     {
         var user = await _userManager.GetUserAsync(User);
-
         if (user == null)
+        {
             return Challenge();
+        }
 
         var userId = user.Id;
+        IQueryable<Enrollment> query;
 
-        var enrollments = await _context.Enrollments
-            .Where(e => e.Student.UserId == userId)
+        if (User.IsInRole("Student"))
+        {
+            query = _context.Enrollments.Where(e => e.Student.UserId == userId);
+        }
+        else if (User.IsInRole("Professor"))
+        {
+            query = _context.Enrollments
+                .Where(e => e.Offering.Professor.UserId == userId);
+        }
+        else if (User.IsInRole("AdministrativeEmployee"))
+        {
+            query = _context.Enrollments;
+        }
+        else
+        {
+            return Forbid();
+        }
+
+        var enrollments = await query
             .Select(e => new EnrollmentViewModel
             {
                 Id = e.Id,
                 StudentId = e.StudentId,
-                StudentName = e.Student.User.FirstName + " " + e.Student.User.LastName,
+                StudentName = $"{e.Student.User.FirstName} {e.Student.User.LastName}",
                 CourseName = e.Offering.Course.CourseName,
                 Semester = e.Offering.Semester.Name,
                 Year = e.Offering.Year,
@@ -93,6 +112,60 @@ public class EnrollmentController : Controller
         model.CourseOfferingOptions = await GetCourseOfferingOptions();
 
         return View(model);
+    }
+    
+    [Authorize(Roles = "Professor")]
+    public async Task<IActionResult> Edit(int? id)
+    {
+        if (id == null) return NotFound();
+
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null) return Challenge();
+
+        var enrollment = await _context.Enrollments
+            .Where(e => e.Id == id && e.Offering.Professor.UserId == user.Id)
+            .Select(e => new EnrollmentViewModel
+            {
+                Id = e.Id,
+                StudentId = e.StudentId,
+                StudentName = $"{e.Student.User.FirstName} {e.Student.User.LastName}",
+                CourseName = e.Offering.Course.CourseName,
+                Semester = e.Offering.Semester.Name,
+                Year = e.Offering.Year,
+                Points = e.Points,
+                Grade = e.Grade
+            })
+            .FirstOrDefaultAsync();
+
+        if (enrollment == null) return NotFound();
+
+        return View(enrollment);
+    }
+    
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Professor")]
+    public async Task<IActionResult> Edit(EnrollmentViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        var enrollment = await _context.Enrollments.FindAsync(model.Id);
+        if (enrollment == null) return NotFound();
+
+        var user = await _userManager.GetUserAsync(User);
+        if (enrollment.Offering.Professor.UserId != user.Id)
+        {
+            return Forbid();
+        }
+
+        enrollment.Points = model.Points;
+        enrollment.Grade = model.Grade;
+
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]

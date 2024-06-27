@@ -14,7 +14,10 @@
         <th>Year</th>
         <th>Points</th>
         <th>Grade</th>
-        <th>Actions</th>
+        @if (User.IsInRole("Professor") || User.IsInRole("AdministrativeEmployee"))
+        {
+            <th>Actions</th>
+        }
     </tr>
     </thead>
     <tbody>
@@ -27,11 +30,22 @@
             <td>@item.Points</td>
             <td>@item.Grade</td>
             <td>
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Withdraw</a>
+                @if (User.IsInRole("Professor"))
+                {
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-danger">Grade</a>
+                }
+
+                @if (User.IsInRole("AdministrativeEmployee"))
+                {
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Withdraw</a>
+                }
             </td>
         </tr>
     }
     </tbody>
 </table>
 
-<a asp-action="Create" class="btn btn-primary">Enroll in New Course</a>
+@if (User.IsInRole("Student"))
+{
+    <a asp-action="Create" class="btn btn-primary">Enroll in New Course</a>
+}
