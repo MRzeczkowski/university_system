@@ -4,15 +4,15 @@ public class CourseOffering
 {
     public int Id { get; init; }
 
-    public int CourseId { get; set; }
-
-    public virtual Course Course { get; init; } = null!;
+    public int Year { get; set; }
 
     public int SemesterId { get; set; }
 
     public virtual Semester Semester { get; init; } = null!;
 
-    public int Year { get; set; }
+    public int CourseId { get; set; }
+
+    public virtual Course Course { get; init; } = null!;
 
     public int ProfessorId { get; set; }
 

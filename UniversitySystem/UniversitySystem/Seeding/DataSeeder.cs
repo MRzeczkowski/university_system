@@ -72,6 +72,7 @@ public static class DataSeeder
                 };
 
                 context.Add(adminProfile);
+                context.SaveChanges();
             }
         }
     }
@@ -95,6 +96,7 @@ public static class DataSeeder
             context.AttendanceStatuses.Add(new AttendanceStatus { StatusName = "Absent" });
             context.AttendanceStatuses.Add(new AttendanceStatus { StatusName = "Present" });
             context.AttendanceStatuses.Add(new AttendanceStatus { StatusName = "Excused" });
+            context.SaveChanges();
         }
     }
 
@@ -104,6 +106,7 @@ public static class DataSeeder
         {
             context.Semesters.Add(new Semester { Name = "Winter" });
             context.Semesters.Add(new Semester { Name = "Summer" });
+            context.SaveChanges();
         }
     }
 
@@ -116,6 +119,7 @@ public static class DataSeeder
             context.Titles.Add(new Title { TitleName = "Assistant Professor" });
             context.Titles.Add(new Title { TitleName = "Lecturer" });
             context.Titles.Add(new Title { TitleName = "Senior Lecturer" });
+            context.SaveChanges();
         }
     }
 
@@ -126,6 +130,7 @@ public static class DataSeeder
             context.AdminStatuses.Add(new AdminStatus { StatusDescription = "Active" });
             context.AdminStatuses.Add(new AdminStatus { StatusDescription = "On Leave" });
             context.AdminStatuses.Add(new AdminStatus { StatusDescription = "Retired" });
+            context.SaveChanges();
         }
     }
 
@@ -137,6 +142,7 @@ public static class DataSeeder
             context.ProfessorStatuses.Add(new ProfessorStatus { StatusDescription = "On Leave" });
             context.ProfessorStatuses.Add(new ProfessorStatus { StatusDescription = "Retired" });
             context.ProfessorStatuses.Add(new ProfessorStatus { StatusDescription = "Emeritus" });
+            context.SaveChanges();
         }
     }
 
@@ -148,6 +154,7 @@ public static class DataSeeder
             context.StudentStatuses.Add(new StudentStatus { StatusDescription = "Graduated" });
             context.StudentStatuses.Add(new StudentStatus { StatusDescription = "Suspended" });
             context.StudentStatuses.Add(new StudentStatus { StatusDescription = "Withdrawn" });
+            context.SaveChanges();
         }
     }
 
@@ -158,6 +165,7 @@ public static class DataSeeder
             context.Genders.Add(new Gender { Description = "Male" });
             context.Genders.Add(new Gender { Description = "Female" });
             context.Genders.Add(new Gender { Description = "Prefer Not to Say" });
+            context.SaveChanges();
         }
     }
 
@@ -198,6 +206,7 @@ public static class DataSeeder
                 ClassSessionId = context.ClassSessions.First().Id,
                 EnrollmentId = context.Enrollments.First().Id
             });
+            context.SaveChanges();
         }
     }
 
@@ -210,6 +219,7 @@ public static class DataSeeder
                 StudentId = context.Students.First().Id,
                 OfferingId = context.CourseOfferings.First().Id
             });
+            context.SaveChanges();
         }
     }
 
@@ -227,8 +237,10 @@ public static class DataSeeder
                 NormalizedUserName = studentEmail.ToUpper(),
                 EmailConfirmed = true,
                 SecurityStamp = Guid.NewGuid().ToString("D"),
-                DateOfBirth = new DateTime(1996, 9, 17),
-                GenderId = 1,
+                FirstName = "Joanna",
+                LastName = "Nowak",
+                DateOfBirth = new DateTime(1999, 6, 25),
+                GenderId = 2,
                 Address = new Address
                 {
                     Street = "Kacza",
@@ -252,6 +264,7 @@ public static class DataSeeder
                 };
 
                 context.Add(adminProfile);
+                context.SaveChanges();
             }
         }
     }
@@ -267,6 +280,7 @@ public static class DataSeeder
                 OfferingId = context.CourseOfferings.First().Id,
                 ClassroomId = context.Classrooms.First().Id
             });
+            context.SaveChanges();
         }
     }
 
@@ -276,10 +290,12 @@ public static class DataSeeder
         {
             context.CourseOfferings.Add(new CourseOffering
             {
-                SemesterId = 1,
                 Year = 2024,
+                SemesterId = 1,
+                CourseId = context.Courses.First().Id,
                 ProfessorId = context.Professors.First().Id
             });
+            context.SaveChanges();
         }
     }
 
@@ -293,6 +309,7 @@ public static class DataSeeder
                 RoomNumber = "123a",
                 Capacity = 15
             });
+            context.SaveChanges();
         }
     }
 
@@ -310,7 +327,9 @@ public static class DataSeeder
                 NormalizedUserName = professorEmail.ToUpper(),
                 EmailConfirmed = true,
                 SecurityStamp = Guid.NewGuid().ToString("D"),
-                DateOfBirth = new DateTime(1996, 9, 17),
+                FirstName = "Jan",
+                LastName = "Kowalski",
+                DateOfBirth = new DateTime(1976, 12, 1),
                 GenderId = 1,
                 Address = new Address
                 {
@@ -336,6 +355,7 @@ public static class DataSeeder
                 };
 
                 context.Add(adminProfile);
+                context.SaveChanges();
             }
         }
     }
@@ -349,6 +369,7 @@ public static class DataSeeder
                 CourseName = "Programming",
                 DepartmentId = context.Departments.First().Id
             });
+            context.SaveChanges();
         }
     }
 
@@ -361,6 +382,7 @@ public static class DataSeeder
                 Name = "Computer science",
                 Budget = 1000000
             });
+            context.SaveChanges();
         }
     }
 }
