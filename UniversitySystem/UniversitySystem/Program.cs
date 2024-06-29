@@ -1,4 +1,4 @@
-using UniversitySystem.Models;
+using UniversitySystem.Seeding;
 
 namespace UniversitySystem;
 
@@ -6,11 +6,17 @@ public static class Program
 {
     public static void Main(string[] args)
     {
-        var app = CreateWebHostBuilder(args).Build();
+        var builder = CreateWebHostBuilder(args);
+
+        var app = builder.Build();
 
         var scope = app.Services.CreateScope();
-        
-        SampleData.Initialize(scope.ServiceProvider);
+
+        DataSeeder.SeedRequiredData(scope.ServiceProvider);
+
+#if DEBUG
+        DataSeeder.SeedTestData(scope.ServiceProvider);
+#endif
 
         app.Run();
     }
