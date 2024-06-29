@@ -13,6 +13,10 @@
         <select asp-for="OfferingId" class="form-control" asp-items="Model.OfferingOptions"></select>
     </div>
     <div class="form-group">
+        <label asp-for="ClassroomId"></label>
+        <select asp-for="ClassroomId" class="form-control" asp-items="Model.ClassroomOptions"></select>
+    </div>
+    <div class="form-group">
         <label asp-for="SessionStart"></label>
         <input asp-for="SessionStart" class="form-control" type="datetime-local"/>
     </div>

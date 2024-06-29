@@ -10,5 +10,5 @@ public class Classroom
 
     public int Capacity { get; set; }
 
-    public virtual ICollection<CourseOffering> CourseOfferings { get; init; } = new List<CourseOffering>();
+    public virtual ICollection<ClassSession> ClassSessions { get; init; } = new List<ClassSession>();
 }

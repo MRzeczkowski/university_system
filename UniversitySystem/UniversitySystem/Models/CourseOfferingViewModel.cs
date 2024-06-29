@@ -25,10 +25,4 @@ public class CourseOfferingViewModel
     public string? ProfessorName { get; set; }
 
     public IEnumerable<SelectListItem>? ProfessorOptions { get; set; } = new List<SelectListItem>();
-
-    public int ClassroomId { get; set; }
-
-    public string? ClassroomDescription { get; set; }
-
-    public IEnumerable<SelectListItem>? ClassroomOptions { get; set; } = new List<SelectListItem>();
 }

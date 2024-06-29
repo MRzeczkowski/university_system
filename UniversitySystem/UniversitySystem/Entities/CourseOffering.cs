@@ -18,10 +18,6 @@ public class CourseOffering
 
     public virtual ProfessorProfile Professor { get; init; } = null!;
 
-    public int ClassroomId { get; set; }
-
-    public virtual Classroom Classroom { get; init; } = null!;
-
     public virtual ICollection<ClassSession> ClassSessions { get; init; } = new List<ClassSession>();
 
     public virtual ICollection<Enrollment> Enrollments { get; init; } = new List<Enrollment>();

@@ -10,6 +10,7 @@
     <thead>
     <tr>
         <th>Course Offering</th>
+        <th>Classroom</th>
         <th>Session Start</th>
         <th>Session End</th>
         <th>Actions</th>
@@ -19,7 +20,8 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>@item.OfferingId</td>
+            <td>@item.OfferingDescription</td>
+            <td>@item.ClassroomDescription</td>
             <td>@item.SessionStart</td>
             <td>@item.SessionEnd</td>
             <td>

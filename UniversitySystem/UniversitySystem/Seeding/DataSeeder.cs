@@ -173,9 +173,9 @@ public static class DataSeeder
 
         SeedProfessors(userManager, context);
 
-        SeedClassrooms(context);
-
         SeedCourseOfferings(context);
+
+        SeedClassrooms(context);
 
         SeedClassSessions(context);
 
@@ -262,9 +262,10 @@ public static class DataSeeder
         {
             context.ClassSessions.Add(new ClassSession
             {
-                OfferingId = context.CourseOfferings.First().Id,
                 SessionStart = new DateTime(2024, 9, 17, 9, 0, 0),
-                SessionEnd = new DateTime(2024, 9, 17, 10, 0, 0)
+                SessionEnd = new DateTime(2024, 9, 17, 10, 0, 0),
+                OfferingId = context.CourseOfferings.First().Id,
+                ClassroomId = context.Classrooms.First().Id
             });
         }
     }
@@ -277,8 +278,7 @@ public static class DataSeeder
             {
                 SemesterId = 1,
                 Year = 2024,
-                ProfessorId = context.Professors.First().Id,
-                ClassroomId = context.Classrooms.First().Id
+                ProfessorId = context.Professors.First().Id
             });
         }
     }

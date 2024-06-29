@@ -9,7 +9,6 @@
         <th>Semester</th>
         <th>Year</th>
         <th>Professor</th>
-        <th>Classroom</th>
         <th>Actions</th>
     </tr>
     </thead>
@@ -21,7 +20,6 @@
             <td>@item.SemesterName</td>
             <td>@item.Year</td>
             <td>@item.ProfessorName</td>
-            <td>@item.ClassroomDescription</td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
                 <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>

@@ -152,6 +152,10 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
             entity.HasOne(d => d.Offering).WithMany(p => p.ClassSessions)
                 .HasForeignKey(d => d.OfferingId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
+
+            entity.HasOne(d => d.Classroom).WithMany(p => p.ClassSessions)
+                .HasForeignKey(d => d.ClassroomId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<Classroom>(entity =>
@@ -193,10 +197,6 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
             entity.ToTable("CourseOfferings", "Academics");
 
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
-            entity.HasOne(d => d.Classroom).WithMany(p => p.CourseOfferings)
-                .HasForeignKey(d => d.ClassroomId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
 
             entity.HasOne(d => d.Course).WithMany(p => p.CourseOfferings)
                 .HasForeignKey(d => d.CourseId)

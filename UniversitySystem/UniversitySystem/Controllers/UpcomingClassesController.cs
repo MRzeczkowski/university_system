@@ -35,7 +35,7 @@ public class UpcomingClassesController : Controller
                 SessionStart = cs.SessionStart,
                 SessionEnd = cs.SessionEnd,
                 ProfessorName = $"{cs.Offering.Professor.User.FirstName} {cs.Offering.Professor.User.LastName}",
-                Room = cs.Offering.Classroom.RoomNumber
+                Room = cs.Classroom.RoomNumber
             })
             .OrderBy(cs => cs.SessionStart)
             .ToList();

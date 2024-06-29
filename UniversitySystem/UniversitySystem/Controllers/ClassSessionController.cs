@@ -24,9 +24,11 @@ public class ClassSessionController : Controller
             .Select(cs => new ClassSessionViewModel
             {
                 Id = cs.Id,
-                OfferingId = cs.OfferingId,
                 SessionStart = cs.SessionStart,
-                SessionEnd = cs.SessionEnd
+                SessionEnd = cs.SessionEnd,
+                OfferingDescription =
+                    $"{cs.Offering.Course.CourseName} - {cs.Offering.Semester.Name} {cs.Offering.Year}",
+                ClassroomDescription = $"{cs.Classroom.Building} {cs.Classroom.RoomNumber}"
             })
             .ToListAsync();
 
@@ -39,7 +41,8 @@ public class ClassSessionController : Controller
         {
             SessionStart = DateTime.Now.Date.AddHours(9),
             SessionEnd = DateTime.Now.Date.AddHours(10),
-            OfferingOptions = await GetOfferingOptions()
+            OfferingOptions = await GetOfferingOptions(),
+            ClassroomOptions = await GetClassroomOptions()
         };
 
         return View(model);
@@ -53,9 +56,10 @@ public class ClassSessionController : Controller
         {
             var classSession = new ClassSession
             {
-                OfferingId = model.OfferingId,
                 SessionStart = model.SessionStart,
-                SessionEnd = model.SessionEnd
+                SessionEnd = model.SessionEnd,
+                OfferingId = model.OfferingId,
+                ClassroomId = model.ClassroomId
             };
 
             var attendances = await _context.Enrollments
@@ -88,10 +92,12 @@ public class ClassSessionController : Controller
         var model = new ClassSessionViewModel
         {
             Id = classSession.Id,
-            OfferingId = classSession.OfferingId,
             SessionStart = classSession.SessionStart,
             SessionEnd = classSession.SessionEnd,
-            OfferingOptions = await GetOfferingOptions()
+            OfferingId = classSession.OfferingId,
+            OfferingOptions = await GetOfferingOptions(),
+            ClassroomId = classSession.ClassroomId,
+            ClassroomOptions = await GetClassroomOptions()
         };
 
         return View(model);
@@ -104,6 +110,7 @@ public class ClassSessionController : Controller
         if (!ModelState.IsValid)
         {
             model.OfferingOptions = await GetOfferingOptions();
+            model.ClassroomOptions = await GetClassroomOptions();
             return View(model);
         }
 
@@ -116,6 +123,8 @@ public class ClassSessionController : Controller
         classSession.OfferingId = model.OfferingId;
         classSession.SessionStart = model.SessionStart;
         classSession.SessionEnd = model.SessionEnd;
+        classSession.ClassroomId = model.ClassroomId;
+
         await _context.SaveChangesAsync();
 
         return RedirectToAction(nameof(Index));
@@ -188,9 +197,13 @@ public class ClassSessionController : Controller
             .Select(cs => new ClassSessionViewModel
             {
                 Id = cs.Id,
-                OfferingId = cs.OfferingId,
                 SessionStart = cs.SessionStart,
-                SessionEnd = cs.SessionEnd
+                SessionEnd = cs.SessionEnd,
+                OfferingId = cs.OfferingId,
+                OfferingDescription =
+                    $"{cs.Offering.Course.CourseName} - {cs.Offering.Semester.Name} {cs.Offering.Year}",
+                ClassroomId = cs.ClassroomId,
+                ClassroomDescription = $"{cs.Classroom.Building} {cs.Classroom.RoomNumber}"
             })
             .FirstOrDefaultAsync(d => d.Id == id);
 
@@ -223,5 +236,12 @@ public class ClassSessionController : Controller
         {
             Value = co.Id.ToString(),
             Text = $"{co.Course.CourseName} - {co.Semester.Name} {co.Year}"
+        }).ToListAsync();
+
+    private async Task<IEnumerable<SelectListItem>> GetClassroomOptions() =>
+        await _context.Classrooms.Select(c => new SelectListItem
+        {
+            Value = c.Id.ToString(),
+            Text = $"{c.Building} {c.RoomNumber}"
         }).ToListAsync();
 }
