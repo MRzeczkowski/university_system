@@ -174,23 +174,16 @@ public static class DataSeeder
         var context = serviceProvider.GetRequiredService<UniversityContext>();
 
         SeedDepartments(context);
-
         SeedCourses(context);
 
         var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
         SeedProfessors(userManager, context);
-
         SeedCourseOfferings(context);
-
         SeedClassrooms(context);
-
         SeedClassSessions(context);
-
         SeedStudents(userManager, context);
-
         SeedEnrollments(context);
-
         SeedAttendances(context);
 
         context.SaveChanges();

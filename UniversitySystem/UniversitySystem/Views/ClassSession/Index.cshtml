@@ -25,9 +25,17 @@
             <td>@item.SessionStart</td>
             <td>@item.SessionEnd</td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a> |
-                <a asp-action="MarkAttendance" asp-route-id="@item.Id" class="btn btn-danger">Mark attendances</a>
+                @if (User.IsInRole("AdministrativeEmployee"))
+                {
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
+                    <text>|</text>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                }
+
+                @if (User.IsInRole("Professor"))
+                {
+                    <a asp-action="MarkAttendance" asp-route-id="@item.Id" class="btn btn-danger">Mark attendances</a>    
+                }
             </td>
         </tr>
     }
