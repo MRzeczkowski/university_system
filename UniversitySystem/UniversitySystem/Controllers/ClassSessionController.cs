@@ -121,6 +121,62 @@ public class ClassSessionController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    [Authorize(Roles = "Professor")]
+    public async Task<IActionResult> MarkAttendance(int classSessionId)
+    {
+        var classSession = await _context.ClassSessions.FirstOrDefaultAsync(cs => cs.Id == classSessionId);
+
+        if (classSession == null)
+        {
+            return NotFound();
+        }
+
+        var attendanceViewModels = classSession.Attendances
+            .Select(a => new AttendanceViewModel
+            {
+                AttendanceId = a.Id,
+                StudentName = $"{a.Enrollment.Student.User.FirstName} {a.Enrollment.Student.User.LastName}",
+                StatusId = a.StatusId
+            }).ToList();
+
+        var statusOptions = await _context.AttendanceStatuses
+            .Select(s => new SelectListItem
+            {
+                Value = s.Id.ToString(),
+                Text = s.StatusName
+            }).ToListAsync();
+
+        var model = new AttendancesViewModel
+        {
+            Attendances = attendanceViewModels,
+            StatusOptions = statusOptions
+        };
+
+        return View(model);
+    }
+
+    [HttpPost]
+    [Authorize(Roles = "Professor")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> MarkAttendance(AttendancesViewModel model)
+    {
+        var attendances = await _context.Attendances
+            .Where(a => model.Attendances.Select(m => m.AttendanceId).Contains(a.Id))
+            .ToListAsync();
+
+        foreach (var attendance in attendances)
+        {
+            var attendanceViewModel = model.Attendances.FirstOrDefault(m => m.AttendanceId == attendance.Id);
+            if (attendanceViewModel != null)
+            {
+                attendance.StatusId = attendanceViewModel.StatusId;
+            }
+        }
+
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
+
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)

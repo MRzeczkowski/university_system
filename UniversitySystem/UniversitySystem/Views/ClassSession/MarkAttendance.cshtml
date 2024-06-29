@@ -1,0 +1,28 @@
+@model AttendancesViewModel
+
+<h2>Mark Attendance</h2>
+
+<form asp-action="MarkAttendance" method="post">
+    <input type="hidden" name="classSessionId" value="@ViewBag.ClassSessionId" />
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Student Name</th>
+            <th>Attendance status</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Attendances)
+        {
+            <tr>
+                <td>@item.StudentName</td>
+                <td>
+                    <input asp-for="@item.StatusId" type="checkbox" value="true" />
+                    <select asp-for="@item.StatusId" asp-items="Model.StatusOptions" class="form-control"></select>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-primary">Save Attendance</button>
+</form>
