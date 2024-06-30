@@ -8,14 +8,13 @@ This is a rudimentary system for managing a University. Some features are missin
  - thesis related stuff
  - deleting various entities that are related to many other entities
  - academic year management, right now this has to be done more by hand
+ - https
 
 ## General Features
 
-- **User Authentication and Authorization**: Login and role-based access control. Users are authenticated and authorized to access specific parts of the application based on their roles.
-
-## Role-Specific Features
-
-### Unauthorized Users
+- The navigation bar on the right-hand side can be toggled.
+- Login and role-based access control. Users are authenticated and authorized to access specific parts of the application based on their roles.
+- Users can manage their account by clicking on their username under Account and change their password, email and phone number.
 
 When accessing the website a user can register using their email and a password.
 
@@ -28,7 +27,11 @@ Users with configured and approved accounts can login or change their password.
 
 ![](./images/unauthorized_login.png)
 
+## Role-Specific Features
+
 ### All Users
+
+Each authorized user can access Enrollments tab but depending on their roles they'll be able to do different things, more below.
 
 ### Students
 
