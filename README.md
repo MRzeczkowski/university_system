@@ -94,7 +94,7 @@ This was developed with MSSQL like databases in mind, using Entity Framework, so
 ### Schema
 
 You can view the University database schema below:
-![](./images/university_db_.png)
+![](./images/university_db.png)
 
 
 ### Initial data
