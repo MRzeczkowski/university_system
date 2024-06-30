@@ -88,7 +88,9 @@ public class EnrollmentController : Controller
         var user = await _userManager.GetUserAsync(User);
 
         if (user == null)
+        {
             return Challenge();
+        }
 
         var userId = user.Id;
         var student = await _context.Students.FirstOrDefaultAsync(s => s.UserId == userId);
@@ -218,11 +220,33 @@ public class EnrollmentController : Controller
         return RedirectToAction(nameof(Index), new { studentId = enrollment.StudentId });
     }
 
-    private async Task<IEnumerable<SelectListItem>> GetCourseOfferingOptions() =>
-        await _context.CourseOfferings
+    private async Task<IEnumerable<SelectListItem>> GetCourseOfferingOptions()
+    {
+        var user = await _userManager.GetUserAsync(User);
+        var userId = user.Id;
+
+        var studentId = await _context.Students
+            .Where(s => s.UserId == userId)
+            .Select(s => s.Id)
+            .FirstOrDefaultAsync();
+
+        if (studentId == 0)
+        {
+            return new List<SelectListItem>();
+        }
+
+        var enrolledOfferingIds = await _context.Enrollments
+            .Where(e => e.StudentId == studentId)
+            .Select(e => e.OfferingId)
+            .ToListAsync();
+
+        return await _context.CourseOfferings
+            .Where(co => !enrolledOfferingIds.Contains(co.Id))
             .Select(co => new SelectListItem
             {
                 Value = co.Id.ToString(),
                 Text = $"{co.Course.CourseName} - {co.Semester.Name} {co.Year}"
-            }).ToListAsync();
+            })
+            .ToListAsync();
+    }
 }
