@@ -112,40 +112,4 @@ public class ClassroomController : Controller
 
         return RedirectToAction(nameof(Index));
     }
-
-    public async Task<IActionResult> Delete(int? id)
-    {
-        if (id == null)
-        {
-            return NotFound();
-        }
-
-        var classroom = await _context.Classrooms.FirstOrDefaultAsync(m => m.Id == id);
-        if (classroom == null)
-        {
-            return NotFound();
-        }
-
-        var viewModel = new ClassroomViewModel
-        {
-            Id = classroom.Id,
-            Building = classroom.Building,
-            RoomNumber = classroom.RoomNumber,
-            Capacity = classroom.Capacity
-        };
-
-        return View(viewModel);
-    }
-
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int id)
-    {
-        var classroom = await _context.Classrooms.FindAsync(id);
-
-        _context.Classrooms.Remove(classroom!);
-        await _context.SaveChangesAsync();
-
-        return RedirectToAction(nameof(Index));
-    }
 }
