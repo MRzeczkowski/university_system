@@ -100,66 +100,9 @@ public class DepartmentsController : Controller
         department.Name = viewModel.Name;
         department.Budget = viewModel.Budget;
 
-        try
-        {
-            _context.Update(department);
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!DepartmentExists(id))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
-        }
-
-        return RedirectToAction(nameof(Index));
-    }
-
-    [HttpGet]
-    public async Task<IActionResult> Delete(int? id)
-    {
-        if (id == null)
-        {
-            return NotFound();
-        }
-
-        var department = await _context.Departments
-            .Select(d => new DepartmentViewModel
-            {
-                Id = d.Id,
-                Name = d.Name,
-                Budget = d.Budget
-            })
-            .FirstOrDefaultAsync(d => d.Id == id);
-
-        if (department == null)
-        {
-            return NotFound();
-        }
-
-        return View(department);
-    }
-
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int id)
-    {
-        var department = await _context.Departments.FindAsync(id);
-        if (department == null)
-        {
-            return RedirectToAction(nameof(Index));
-        }
-
-        _context.Departments.Remove(department);
+        _context.Update(department);
         await _context.SaveChangesAsync();
 
         return RedirectToAction(nameof(Index));
     }
-
-    private bool DepartmentExists(int id) => _context.Departments.Any(e => e.Id == id);
 }
