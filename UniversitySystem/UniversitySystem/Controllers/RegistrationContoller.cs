@@ -112,6 +112,7 @@ public class RegistrationController : Controller
 
     [HttpPost]
     [Authorize(Roles = "AdministrativeEmployee")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> EditProfile(UserRegistrationViewModel model)
     {
         if (!ModelState.IsValid)

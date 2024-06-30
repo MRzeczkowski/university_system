@@ -131,6 +131,7 @@ public class ProfileController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> RegisterStudent(StudentProfileViewModel model)
     {
         if (!ModelState.IsValid)
@@ -208,6 +209,7 @@ public class ProfileController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> RegisterProfessor(ProfessorProfileViewModel model)
     {
         if (!ModelState.IsValid)
@@ -273,6 +275,7 @@ public class ProfileController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> RegisterAdministrator(AdminProfileViewModel model)
     {
         if (!ModelState.IsValid)

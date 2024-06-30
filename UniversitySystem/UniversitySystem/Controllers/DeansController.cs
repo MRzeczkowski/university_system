@@ -64,7 +64,6 @@ public class DeansController : Controller
 
             _context.Deans.Add(dean);
 
-            // Find the professor's user account and add to the AdministrativeEmployee role if not already added
             var professor = await _context.Professors
                 .FirstOrDefaultAsync(p => p.Id == model.ProfessorId);
 
