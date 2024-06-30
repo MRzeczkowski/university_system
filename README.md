@@ -87,6 +87,10 @@ Administrative Employees have most amount of permissions:
 
 ## For developers
 
+### Tooling
+
+Feel free to use `docker-compose.yaml` to quickly setup your local database server.
+
 ### Database setup
 
 This was developed with MSSQL like databases in mind, using Entity Framework, so please use `dotnet ef database update --context UniversityContext` to set everything up.
