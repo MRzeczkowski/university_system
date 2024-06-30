@@ -78,5 +78,4 @@ _[Ss]cripts
 *.nupkg
 *.ncrunchsolution
 *.dot[Cc]over
-
-./UniversitySystem/.idea/.idea.UniversitySystem/.idea
+UniversitySystem/.idea/*
