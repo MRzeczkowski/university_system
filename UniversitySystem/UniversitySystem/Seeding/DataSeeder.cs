@@ -178,6 +178,7 @@ public static class DataSeeder
 
         var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
+        SeedPendingUser(userManager, context);
         SeedProfessors(userManager, context);
         SeedCourseOfferings(context);
         SeedClassrooms(context);
@@ -350,6 +351,28 @@ public static class DataSeeder
                 context.Add(adminProfile);
                 context.SaveChanges();
             }
+        }
+    }
+    
+    private static void SeedPendingUser(UserManager<ApplicationUser> userManager, UniversityContext context)
+    {
+        const string pendingEmail = "pending@uni.com";
+
+        if (userManager.FindByEmailAsync(pendingEmail).GetAwaiter().GetResult() == null)
+        {
+            var testProfessor = new ApplicationUser
+            {
+                Email = pendingEmail,
+                NormalizedEmail = pendingEmail.ToUpper(),
+                UserName = pendingEmail,
+                NormalizedUserName = pendingEmail.ToUpper(),
+                EmailConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString("D"),
+                LockoutEnabled = true,
+                LockoutEnd = DateTimeOffset.MaxValue
+            };
+
+            userManager.CreateAsync(testProfessor, Password).GetAwaiter().GetResult();
         }
     }
 

@@ -108,7 +108,12 @@ public class AccountController : Controller
         // New user is locked out until AdministrativeEmployee sets up the rest of his account. 
         var user = new ApplicationUser
         {
-            UserName = model.Email, Email = model.Email, LockoutEnabled = true, LockoutEnd = DateTimeOffset.MaxValue
+            UserName = model.Email,
+            Email = model.Email,
+            // Email confirmed by default since I didn't setup email sending.
+            EmailConfirmed = true,
+            LockoutEnabled = true,
+            LockoutEnd = DateTimeOffset.MaxValue
         };
         var result = await _userManager.CreateAsync(user, model.Password);
         if (result.Succeeded)
