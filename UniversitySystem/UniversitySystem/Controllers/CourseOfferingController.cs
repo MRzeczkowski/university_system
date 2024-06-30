@@ -128,46 +128,6 @@ public class CourseOfferingController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    public async Task<IActionResult> Delete(int? id)
-    {
-        if (id == null)
-        {
-            return NotFound();
-        }
-
-        var courseOffering = await _context.CourseOfferings.FirstOrDefaultAsync(m => m.Id == id);
-
-        if (courseOffering == null)
-        {
-            return NotFound();
-        }
-
-        var model = new CourseOfferingViewModel
-        {
-            Id = courseOffering.Id,
-            CourseName = courseOffering.Course.CourseName,
-            SemesterName = courseOffering.Semester.Name,
-            Year = courseOffering.Year,
-            ProfessorName = $"{courseOffering.Professor.User.FirstName} {courseOffering.Professor.User.LastName}"
-        };
-
-        return View(model);
-    }
-
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int id)
-    {
-        var courseOffering = await _context.CourseOfferings.FindAsync(id);
-        if (courseOffering != null)
-        {
-            _context.CourseOfferings.Remove(courseOffering);
-            await _context.SaveChangesAsync();
-        }
-
-        return RedirectToAction(nameof(Index));
-    }
-
     private async Task<IEnumerable<SelectListItem>> GetCourseOptions() =>
         await _context.Courses.Select(c => new SelectListItem
         {
