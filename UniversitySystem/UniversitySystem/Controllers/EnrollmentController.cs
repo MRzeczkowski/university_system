@@ -162,7 +162,7 @@ public class EnrollmentController : Controller
         }
 
         var user = await _userManager.GetUserAsync(User);
-        if (enrollment.Offering.Professor.UserId != user.Id)
+        if (enrollment.Offering.Professor.UserId != user!.Id)
         {
             return Forbid();
         }
@@ -223,7 +223,7 @@ public class EnrollmentController : Controller
     private async Task<IEnumerable<SelectListItem>> GetCourseOfferingOptions()
     {
         var user = await _userManager.GetUserAsync(User);
-        var userId = user.Id;
+        var userId = user!.Id;
 
         var studentId = await _context.Students
             .Where(s => s.UserId == userId)
