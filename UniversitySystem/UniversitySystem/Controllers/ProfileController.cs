@@ -83,7 +83,8 @@ public class ProfileController : Controller
                 UserId = a.User.Id,
                 Name = a.User.FirstName!,
                 Surname = a.User.LastName!,
-                Email = a.User.Email!
+                Email = a.User.Email!,
+                Status = a.Status.StatusDescription
             }).ToListAsync();
 
         var model = new UserProfilesPageViewModel
