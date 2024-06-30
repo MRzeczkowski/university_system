@@ -10,5 +10,5 @@ public class Dean
     
     public virtual ProfessorProfile Professor { get; init; } = null!;
 
-    public DateOnly EffectiveDate { get; init; }
+    public DateTime EffectiveDate { get; init; }
 }

@@ -179,7 +179,9 @@ public static class DataSeeder
         var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
         SeedPendingUser(userManager, context);
+        SeedUserWithoutProfile(userManager, context);
         SeedProfessors(userManager, context);
+        SeedDeans(userManager, context);
         SeedCourseOfferings(context);
         SeedClassrooms(context);
         SeedClassSessions(context);
@@ -200,6 +202,14 @@ public static class DataSeeder
                 ClassSessionId = context.ClassSessions.First().Id,
                 EnrollmentId = context.Enrollments.First().Id
             });
+
+            context.Attendances.Add(new Attendance
+            {
+                StatusId = 1,
+                ClassSessionId = context.ClassSessions.First().Id,
+                EnrollmentId = context.Enrollments.Skip(1).First().Id
+            });
+
             context.SaveChanges();
         }
     }
@@ -213,14 +223,60 @@ public static class DataSeeder
                 StudentId = context.Students.First().Id,
                 OfferingId = context.CourseOfferings.First().Id
             });
+
+            context.Enrollments.Add(new Enrollment
+            {
+                StudentId = context.Students.Skip(1).First().Id,
+                OfferingId = context.CourseOfferings.First().Id
+            });
             context.SaveChanges();
         }
     }
 
     private static void SeedStudents(UserManager<ApplicationUser> userManager, UniversityContext context)
     {
-        const string studentEmail = "stud@uni.com";
+        SeedStudent(
+            userManager,
+            context,
+            "stud@uni.com",
+            "Joanna",
+            "Nowak",
+            2,
+            new Address
+            {
+                Street = "Kacza",
+                HouseNumber = 42,
+                City = "Ciechanów",
+                PostalCode = "06-400",
+                Country = "Poland"
+            });
 
+        SeedStudent(
+            userManager,
+            context,
+            "stud2@uni.com",
+            "Janusz",
+            "Nowak",
+            1,
+            new Address
+            {
+                Street = "Kacza",
+                HouseNumber = 42,
+                City = "Ciechanów",
+                PostalCode = "06-400",
+                Country = "Poland"
+            });
+    }
+
+    private static void SeedStudent(
+        UserManager<ApplicationUser> userManager,
+        UniversityContext context,
+        string studentEmail,
+        string firstName,
+        string lastName,
+        int genderId,
+        Address address)
+    {
         if (userManager.FindByEmailAsync(studentEmail).GetAwaiter().GetResult() == null)
         {
             var testStudent = new ApplicationUser
@@ -231,18 +287,11 @@ public static class DataSeeder
                 NormalizedUserName = studentEmail.ToUpper(),
                 EmailConfirmed = true,
                 SecurityStamp = Guid.NewGuid().ToString("D"),
-                FirstName = "Joanna",
-                LastName = "Nowak",
+                FirstName = firstName,
+                LastName = lastName,
                 DateOfBirth = new DateTime(1999, 6, 25),
-                GenderId = 2,
-                Address = new Address
-                {
-                    Street = "Kacza",
-                    HouseNumber = 42,
-                    City = "Ciechanów",
-                    PostalCode = "06-400",
-                    Country = "Poland"
-                }
+                GenderId = genderId,
+                Address = address
             };
 
             var result = userManager.CreateAsync(testStudent, Password).GetAwaiter().GetResult();
@@ -287,6 +336,14 @@ public static class DataSeeder
                 Year = 2024,
                 SemesterId = 1,
                 CourseId = context.Courses.First().Id,
+                ProfessorId = context.Professors.First().Id
+            });
+
+            context.CourseOfferings.Add(new CourseOffering
+            {
+                Year = 2024,
+                SemesterId = 1,
+                CourseId = context.Courses.Skip(1).First().Id,
                 ProfessorId = context.Professors.First().Id
             });
             context.SaveChanges();
@@ -353,7 +410,65 @@ public static class DataSeeder
             }
         }
     }
-    
+
+    private static void SeedDeans(UserManager<ApplicationUser> userManager, UniversityContext context)
+    {
+        const string deanEmail = "dean@uni.com";
+
+        if (userManager.FindByEmailAsync(deanEmail).GetAwaiter().GetResult() == null)
+        {
+            var testDean = new ApplicationUser
+            {
+                Email = deanEmail,
+                NormalizedEmail = deanEmail.ToUpper(),
+                UserName = deanEmail,
+                NormalizedUserName = deanEmail.ToUpper(),
+                EmailConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString("D"),
+                FirstName = "Jakub",
+                LastName = "Wiśniewski",
+                DateOfBirth = new DateTime(1970, 3, 21),
+                GenderId = 1,
+                Address = new Address
+                {
+                    Street = "Warszawska",
+                    HouseNumber = 22,
+                    City = "Ciechanów",
+                    PostalCode = "06-400",
+                    Country = "Poland"
+                }
+            };
+
+            var result = userManager.CreateAsync(testDean, Password).GetAwaiter().GetResult();
+            if (result.Succeeded)
+            {
+                userManager.AddToRoleAsync(testDean, AdminRole).GetAwaiter().GetResult();
+                userManager.AddToRoleAsync(testDean, ProfessorRole).GetAwaiter().GetResult();
+
+                var adminProfile = new ProfessorProfile
+                {
+                    UserId = testDean.Id,
+                    StatusId = 1,
+                    TitleId = 1,
+                    DepartmentId = context.Departments.First().Id
+                };
+
+                context.Add(adminProfile);
+                context.SaveChanges();
+
+                var dean = new Dean
+                {
+                    ProfessorId = adminProfile.Id,
+                    DepartmentId = context.Departments.First().Id,
+                    EffectiveDate = DateTime.Now
+                };
+
+                context.Add(dean);
+                context.SaveChanges();
+            }
+        }
+    }
+
     private static void SeedPendingUser(UserManager<ApplicationUser> userManager, UniversityContext context)
     {
         const string pendingEmail = "pending@uni.com";
@@ -373,6 +488,42 @@ public static class DataSeeder
             };
 
             userManager.CreateAsync(testProfessor, Password).GetAwaiter().GetResult();
+            context.SaveChanges();
+        }
+    }
+
+    private static void SeedUserWithoutProfile(UserManager<ApplicationUser> userManager, UniversityContext context)
+    {
+        const string pendingEmail = "noprofile@uni.com";
+
+        if (userManager.FindByEmailAsync(pendingEmail).GetAwaiter().GetResult() == null)
+        {
+            var testProfessor = new ApplicationUser
+            {
+                Email = pendingEmail,
+                NormalizedEmail = pendingEmail.ToUpper(),
+                UserName = pendingEmail,
+                NormalizedUserName = pendingEmail.ToUpper(),
+                EmailConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString("D"),
+                LockoutEnabled = true,
+                LockoutEnd = DateTimeOffset.MaxValue,
+                FirstName = "Kamil",
+                LastName = "Kowalski",
+                DateOfBirth = new DateTime(199, 12, 21),
+                GenderId = 1,
+                Address = new Address
+                {
+                    Street = "Ptasia",
+                    HouseNumber = 21,
+                    City = "Ciechanów",
+                    PostalCode = "06-400",
+                    Country = "Poland"
+                }
+            };
+
+            userManager.CreateAsync(testProfessor, Password).GetAwaiter().GetResult();
+            context.SaveChanges();
         }
     }
 
@@ -383,6 +534,12 @@ public static class DataSeeder
             context.Courses.Add(new Course
             {
                 CourseName = "Programming",
+                DepartmentId = context.Departments.First().Id
+            });
+
+            context.Courses.Add(new Course
+            {
+                CourseName = "Discrete mathematics",
                 DepartmentId = context.Departments.First().Id
             });
             context.SaveChanges();

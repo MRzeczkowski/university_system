@@ -26,6 +26,8 @@ public class DeansController : Controller
         var deans = await _context.Deans
             .Select(d => new DeanViewModel
             {
+                DepartmentId = d.DepartmentId,
+                ProfessorId = d.ProfessorId,
                 DepartmentName = d.Department.Name,
                 ProfessorName = $"{d.Professor.User.FirstName} {d.Professor.User.LastName}",
                 EffectiveDate = d.EffectiveDate
@@ -39,6 +41,7 @@ public class DeansController : Controller
     {
         var model = new DeanViewModel
         {
+            EffectiveDate = DateTime.Now,
             DepartmentOptions = await GetDepartmentOptions(),
             ProfessorOptions = await GetProfessorOptions()
         };

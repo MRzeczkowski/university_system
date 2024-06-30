@@ -12,7 +12,7 @@ public class DeanViewModel
 
     public string ProfessorName { get; set; }
 
-    public DateOnly EffectiveDate { get; set; }
+    public DateTime EffectiveDate { get; set; }
 
     public IEnumerable<SelectListItem> DepartmentOptions { get; set; }
 

@@ -9,6 +9,10 @@
 <table class="table">
     <thead>
     <tr>
+        @if (User.IsInRole("Professor") || User.IsInRole("AdministrativeEmployee"))
+        {
+            <th>Student Name</th>
+        }
         <th>Course Name</th>
         <th>Semester</th>
         <th>Year</th>
@@ -24,6 +28,10 @@
     @foreach (var item in Model)
     {
         <tr>
+            @if (User.IsInRole("Professor") || User.IsInRole("AdministrativeEmployee"))
+            {
+                <td>@item.StudentName</td>
+            }
             <td>@item.CourseName</td>
             <td>@item.Semester</td>
             <td>@item.Year</td>
