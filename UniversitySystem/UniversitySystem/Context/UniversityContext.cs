@@ -116,7 +116,7 @@ public class UniversityContext : IdentityDbContext<ApplicationUser, ApplicationR
 
             entity.HasOne(d => d.ClassSession).WithMany(p => p.Attendances)
                 .HasForeignKey(d => d.ClassSessionId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne(d => d.Enrollment).WithMany(p => p.Attendances)
                 .HasForeignKey(d => d.EnrollmentId)
