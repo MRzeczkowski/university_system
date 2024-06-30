@@ -3,22 +3,27 @@
 <h2>Mark Attendance</h2>
 
 <form asp-action="MarkAttendance" method="post">
-    <input type="hidden" name="classSessionId" value="@ViewBag.ClassSessionId" />
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" asp-for="ClassSessionId" />
+
     <table class="table">
         <thead>
         <tr>
             <th>Student Name</th>
-            <th>Attendance status</th>
+            <th>Attendance Status</th>
         </tr>
         </thead>
         <tbody>
-        @foreach (var item in Model.Attendances)
+        @for (var i = 0; i < Model.Attendances.Count; i++)
         {
             <tr>
-                <td>@item.StudentName</td>
                 <td>
-                    <input asp-for="@item.StatusId" type="checkbox" value="true" />
-                    <select asp-for="@item.StatusId" asp-items="Model.StatusOptions" class="form-control"></select>
+                    @Html.HiddenFor(m => m.Attendances[i].AttendanceId)
+                    @Html.DisplayFor(m => m.Attendances[i].StudentName)
+                </td>
+                <td>
+                    <select asp-for="@Model.Attendances[i].StatusId" asp-items="Model.StatusOptions" class="form-control"></select>
                 </td>
             </tr>
         }

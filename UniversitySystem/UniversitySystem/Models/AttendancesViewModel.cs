@@ -4,6 +4,8 @@ namespace UniversitySystem.Models;
 
 public class AttendancesViewModel
 {
+    public int ClassSessionId { get; set; }
+
     public List<AttendanceViewModel> Attendances { get; set; }
 
     public IEnumerable<SelectListItem>? StatusOptions { get; set; }

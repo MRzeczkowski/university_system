@@ -8,7 +8,6 @@ using UniversitySystem.Models;
 
 namespace UniversitySystem.Controllers;
 
-[Authorize(Roles = "AdministrativeEmployee")]
 public class ClassSessionController : Controller
 {
     private readonly UniversityContext _context;
@@ -18,6 +17,7 @@ public class ClassSessionController : Controller
         _context = context;
     }
 
+    [Authorize(Roles = "AdministrativeEmployee,Professor")]
     public async Task<IActionResult> Index()
     {
         var classSessions = await _context.ClassSessions
@@ -35,6 +35,7 @@ public class ClassSessionController : Controller
         return View(classSessions);
     }
 
+    [Authorize(Roles = "AdministrativeEmployee")]
     public async Task<IActionResult> Create()
     {
         var model = new ClassSessionViewModel
@@ -50,6 +51,7 @@ public class ClassSessionController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "AdministrativeEmployee")]
     public async Task<IActionResult> Create(ClassSessionViewModel model)
     {
         if (ModelState.IsValid)
@@ -81,6 +83,7 @@ public class ClassSessionController : Controller
         return View(model);
     }
 
+    [Authorize(Roles = "AdministrativeEmployee")]
     public async Task<IActionResult> Edit(int id)
     {
         var classSession = await _context.ClassSessions.FindAsync(id);
@@ -105,6 +108,7 @@ public class ClassSessionController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "AdministrativeEmployee")]
     public async Task<IActionResult> Edit(ClassSessionViewModel model)
     {
         if (!ModelState.IsValid)
@@ -131,9 +135,9 @@ public class ClassSessionController : Controller
     }
 
     [Authorize(Roles = "Professor")]
-    public async Task<IActionResult> MarkAttendance(int classSessionId)
+    public async Task<IActionResult> MarkAttendance(int id)
     {
-        var classSession = await _context.ClassSessions.FirstOrDefaultAsync(cs => cs.Id == classSessionId);
+        var classSession = await _context.ClassSessions.FirstOrDefaultAsync(cs => cs.Id == id);
 
         if (classSession == null)
         {
@@ -157,6 +161,7 @@ public class ClassSessionController : Controller
 
         var model = new AttendancesViewModel
         {
+            ClassSessionId = id,
             Attendances = attendanceViewModels,
             StatusOptions = statusOptions
         };
@@ -186,6 +191,7 @@ public class ClassSessionController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    [Authorize(Roles = "AdministrativeEmployee")]
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -217,6 +223,7 @@ public class ClassSessionController : Controller
 
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "AdministrativeEmployee")]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
         var classSession = await _context.ClassSessions.FindAsync(id);
