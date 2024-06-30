@@ -8,6 +8,7 @@ using UniversitySystem.Models;
 
 namespace UniversitySystem.Controllers;
 
+[Authorize]
 public class ClassSessionController : Controller
 {
     private readonly UniversityContext _context;
@@ -35,7 +36,7 @@ public class ClassSessionController : Controller
         return View(classSessions);
     }
 
-    [Authorize(Roles = "AdministrativeEmployee")]
+    [Authorize(Roles = "AdministrativeEmployee,Professor")]
     public async Task<IActionResult> Create()
     {
         var model = new ClassSessionViewModel
@@ -51,7 +52,7 @@ public class ClassSessionController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    [Authorize(Roles = "AdministrativeEmployee")]
+    [Authorize(Roles = "AdministrativeEmployee,Professor")]
     public async Task<IActionResult> Create(ClassSessionViewModel model)
     {
         if (ModelState.IsValid)

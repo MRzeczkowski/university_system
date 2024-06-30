@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -62,7 +63,7 @@ public class EnrollmentController : Controller
                 Semester = e.Offering.Semester.Name,
                 Year = e.Offering.Year,
                 Points = e.Points,
-                Grade = e.Grade
+                Grade = e.Grade.ToString()
             }).ToListAsync();
 
         return View(enrollments);
@@ -113,7 +114,7 @@ public class EnrollmentController : Controller
 
         return View(model);
     }
-    
+
     [Authorize(Roles = "Professor")]
     public async Task<IActionResult> Edit(int? id)
     {
@@ -133,7 +134,7 @@ public class EnrollmentController : Controller
                 Semester = e.Offering.Semester.Name,
                 Year = e.Offering.Year,
                 Points = e.Points,
-                Grade = e.Grade
+                Grade = e.Grade.ToString()
             })
             .FirstOrDefaultAsync();
 
@@ -141,7 +142,7 @@ public class EnrollmentController : Controller
 
         return View(enrollment);
     }
-    
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Authorize(Roles = "Professor")]
@@ -153,7 +154,10 @@ public class EnrollmentController : Controller
         }
 
         var enrollment = await _context.Enrollments.FindAsync(model.Id);
-        if (enrollment == null) return NotFound();
+        if (enrollment == null)
+        {
+            return NotFound();
+        }
 
         var user = await _userManager.GetUserAsync(User);
         if (enrollment.Offering.Professor.UserId != user.Id)
@@ -162,7 +166,10 @@ public class EnrollmentController : Controller
         }
 
         enrollment.Points = model.Points;
-        enrollment.Grade = model.Grade;
+        if (model.Grade != null)
+        {
+            enrollment.Grade = decimal.Parse(model.Grade, CultureInfo.InvariantCulture);
+        }
 
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
